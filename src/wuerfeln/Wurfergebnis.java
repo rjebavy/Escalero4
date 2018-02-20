@@ -17,6 +17,22 @@ public class Wurfergebnis {
 	public Wurfergebnis(Wuerfel[] wsatz) {
 		this.wuerfelsatz = wsatz; 
 	}
+
+	
+	// Vergleiche alle Würfel paarweise.
+	public void vergleicheAlle(Wuerfel[] wuerfelsatz) {
+		this.vergleicheZwei(wuerfelsatz[2], wuerfelsatz[1]); 
+		this.vergleicheZwei(wuerfelsatz[4], wuerfelsatz[5]); 
+		this.vergleicheZwei(wuerfelsatz[2], wuerfelsatz[3]); 
+		this.vergleicheZwei(wuerfelsatz[4], wuerfelsatz[3]); 
+		this.vergleicheZwei(wuerfelsatz[3], wuerfelsatz[1]); 
+		this.vergleicheZwei(wuerfelsatz[3], wuerfelsatz[5]); 
+		this.vergleicheZwei(wuerfelsatz[1], wuerfelsatz[4]); 
+		this.vergleicheZwei(wuerfelsatz[5], wuerfelsatz[2]); 
+		this.vergleicheZwei(wuerfelsatz[4], wuerfelsatz[2]); 
+		this.vergleicheZwei(wuerfelsatz[1], wuerfelsatz[5]);
+	} 
+
 	
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
