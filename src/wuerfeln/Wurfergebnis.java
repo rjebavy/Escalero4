@@ -19,6 +19,19 @@ public class Wurfergebnis {
 	}
 	
 	
+	// alle Auswerteeigenschaften auf 0 setzen. 
+	public void initialisiereAuswerten() {
+		this.setBild1(0);
+		this.setBild2(0);
+		this.setBilder1(0);
+		this.setBilder2(0);
+		this.setGleich1(0);
+		this.setGleich2(0);
+		this.setUngleich(0);
+		this.setAss(0);
+		this.setNeun(0);
+	}
+	
 	
 
 	// Standard Getter & Setter

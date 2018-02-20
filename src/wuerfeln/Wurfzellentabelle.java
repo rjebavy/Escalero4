@@ -27,8 +27,15 @@ public class Wurfzellentabelle extends Application {
 		// Wurf & Würfelsatz initialisieren
 		Wurf wurf = new Wurf(3);
 		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
+		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
 
+		//TESTS: 
+			// Wurfergebnis; initialisiereAuswerten()
+			ergebnis.initialisiereAuswerten();
+			System.out.println(ergebnis.toString());
 		
+			
+			
 		// Alle FX Nodes erzeugen und initialisieren	
 		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
 		Label serviert = hinzufuegenServierfeld();
