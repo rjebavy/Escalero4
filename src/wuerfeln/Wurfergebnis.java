@@ -21,44 +21,38 @@ public class Wurfergebnis {
 	
 	// vergleiche alle Würfel paarweise.
 	public void vergleicheAlle(Wuerfel[] wuerfelsatz) {
-		this.vergleicheZwei(wuerfelsatz[1], wuerfelsatz[0]); 
-		this.vergleicheZwei(wuerfelsatz[3], wuerfelsatz[4]); 
-		this.vergleicheZwei(wuerfelsatz[1], wuerfelsatz[2]); 
-		this.vergleicheZwei(wuerfelsatz[3], wuerfelsatz[2]); 
-		this.vergleicheZwei(wuerfelsatz[2], wuerfelsatz[0]); 
-		this.vergleicheZwei(wuerfelsatz[2], wuerfelsatz[4]); 
-		this.vergleicheZwei(wuerfelsatz[0], wuerfelsatz[3]); 
-		this.vergleicheZwei(wuerfelsatz[4], wuerfelsatz[1]); 
-		this.vergleicheZwei(wuerfelsatz[3], wuerfelsatz[1]); 
-		this.vergleicheZwei(wuerfelsatz[0], wuerfelsatz[4]); 
+		this.vergleicheZwei(wuerfelsatz[1].getWert(), wuerfelsatz[0].getWert()); 
+		this.vergleicheZwei(wuerfelsatz[2].getWert(), wuerfelsatz[0].getWert()); 
+		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[3].getWert()); 
+		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[4].getWert()); 
 	} 
 
 	// vergleiche zwei Würfel. 
-	public void vergleicheZwei(Wuerfel w1, Wuerfel w2) {
+	public void vergleicheZwei(int w1, int w2) {
 		if(w1 == w2) {
-			if(this.getGleich1() > 0 || this.getGleich2() > 0) {
-				if(this.getBilder1() > 0 && this.getBilder2() > 0) {
-					if(w1.getWert() == this.getBild1()) {
-						this.weiteresBild1(w1.getWert());
+			if(gleich1 > 0 || gleich2 > 0) {
+				if(bilder1 > 0 && bilder2 > 0) {
+					if(w1 == bild1) {
+						this.weiteresBild1(w1);
 					}
-					if(w1.getWert() == this.getBild2()) {
-						this.weiteresBild2(w1.getWert());
+					if(w1 == bild2) {
+						this.weiteresBild2(w1);
 					}
-					
+		
 				}
-				if(this.getBilder1() > 0 && this.getBilder2() == 0) {
-					this.weiteresBild2(w1.getWert());
+				if(bilder1 > 0 && bilder2 == 0) {
+					this.weiteresBild2(w1);
 				}
 			}
-			if(this.getGleich1() == 0 || this.getGleich2() == 0) {
-				this.weiteresBild1(w1.getWert());
+			if(gleich1 == 0 && gleich2 == 0) {
+				this.weiteresBild1(w1);
 			}			
 		} 
 		if(w1 != w2) {
 			this.nocheinUngleicher();
 			this.gibtseinAss(w1, w2); 
 			this.gibtseineNeun(w1, w2);
-		}
+		} 
 	} 
 	
 	// vergleicheZwei hat ein neues oder wiederholtes Bild1 festgestellt.
@@ -81,21 +75,21 @@ public class Wurfergebnis {
 	}  
 
 	// vergleicheZwei sucht Asse, möglicherweise große Straße.
-	public void gibtseinAss(Wuerfel w1, Wuerfel w2) {
-		if(w1.getWert() == 6) {
+	public void gibtseinAss(int w1, int w2) {
+		if(w1 == 6) {
 			this.nocheinAss();
 		}
-		if(w2.getWert() == 6) {
+		if(w2 == 6) {
 			this.nocheinAss();
 		}
 	}  
 	
 	// vergleicheZwei sucht Neunen, möglicherweise kleine Straße. 
-	public void gibtseineNeun(Wuerfel w1, Wuerfel w2) {
-		if(w1.getWert() == 1) {
+	public void gibtseineNeun(int w1, int w2) {
+		if(w1 == 1) {
 			this.nocheineNeun();
 		}
-		if(w2.getWert() == 1) {
+		if(w2 == 1) {
 			this.nocheineNeun();
 		} 
 	} 
