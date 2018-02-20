@@ -17,6 +17,83 @@ public class Wurfergebnis {
 	public Wurfergebnis(Wuerfel[] wsatz) {
 		this.wuerfelsatz = wsatz; 
 	}
+	
+	
+	
 
+	// Standard Getter & Setter
+	public int getBild1() {
+		return bild1;
+	}
+	
+	public void setBild1(int bild1) {
+		this.bild1 = bild1;
+	}
 
+	public int getBild2() {
+		return bild2;
+	}
+
+	public void setBild2(int bild2) {
+		this.bild2 = bild2;
+	}
+
+	public int getBilder1() {
+		return bilder1;
+	}
+
+	public void setBilder1(int bilder1) {
+		this.bilder1 = bilder1;
+	}
+
+	public int getBilder2() {
+		return bilder2;
+	}
+
+	public void setBilder2(int bilder2) {
+		this.bilder2 = bilder2;
+	}
+
+	public int getGleich1() {
+		return gleich1;
+	}
+
+	public void setGleich1(int gleich1) {
+		this.gleich1 = gleich1;
+	}
+
+	public int getGleich2() {
+		return gleich2;
+	}
+
+	public void setGleich2(int gleich2) {
+		this.gleich2 = gleich2;
+	}
+
+	public int getUngleich() {
+		return ungleich;
+	}
+
+	public void setUngleich(int ungleich) {
+		this.ungleich = ungleich;
+	}
+
+	public int getAss() {
+		return ass;
+	}
+
+	public void setAss(int ass) {
+		this.ass = ass;
+	}
+
+	public int getNeun() {
+		return neun;
+	}
+
+	public void setNeun(int neun) {
+		this.neun = neun;
+	}
+
+	
+	
 }
