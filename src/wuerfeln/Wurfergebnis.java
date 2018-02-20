@@ -61,6 +61,14 @@ public class Wurfergebnis {
 		}
 	} 
 	
+	// vergleicheZwei hat ein neues oder wiederholtes Bild1 festgestellt.
+	public void weiteresBild1(int wert) {
+		this.bilder1++; 
+		this.bild1 = wert; 
+		this.gleich1++; 
+	} 	
+	
+	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
 		this.setBild1(0);
