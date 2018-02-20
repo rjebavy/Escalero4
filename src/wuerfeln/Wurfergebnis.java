@@ -21,10 +21,11 @@ public class Wurfergebnis {
 	
 	// vergleiche alle Würfel paarweise.
 	public void vergleicheAlle(Wuerfel[] wuerfelsatz) {
-		this.vergleicheZwei(wuerfelsatz[1].getWert(), wuerfelsatz[0].getWert()); 
-		this.vergleicheZwei(wuerfelsatz[2].getWert(), wuerfelsatz[0].getWert()); 
+		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[1].getWert()); 
+		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[2].getWert()); 
 		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[3].getWert()); 
 		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[4].getWert()); 
+
 	} 
 
 	// vergleiche zwei Würfel. 
