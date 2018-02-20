@@ -90,7 +90,15 @@ public class Wurfergebnis {
 		}
 	}  
 	
-	
+	// vergleicheZwei hat ein neue oder weitere Neun festgestellt. 
+	public void gibtseineNeun(Wuerfel w1, Wuerfel w2) {
+		if(w1.getWert() == 1) {
+			this.nocheineNeun();
+		}
+		if(w2.getWert() == 1) {
+			this.nocheineNeun();
+		} 
+	} 
 	
 	
 	
