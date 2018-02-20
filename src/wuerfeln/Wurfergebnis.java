@@ -80,7 +80,7 @@ public class Wurfergebnis {
 		this.ungleich++; 
 	}  
 
-	// vergleicheZwei hat ein neues oder weiteres Ass festgestellt.
+	// vergleicheZwei sucht Asse, möglicherweise große Straße.
 	public void gibtseinAss(Wuerfel w1, Wuerfel w2) {
 		if(w1.getWert() == 6) {
 			this.nocheinAss();
@@ -90,7 +90,7 @@ public class Wurfergebnis {
 		}
 	}  
 	
-	// vergleicheZwei hat ein neue oder weitere Neun festgestellt. 
+	// vergleicheZwei sucht Neunen, möglicherweise kleine Straße. 
 	public void gibtseineNeun(Wuerfel w1, Wuerfel w2) {
 		if(w1.getWert() == 1) {
 			this.nocheineNeun();
@@ -100,6 +100,10 @@ public class Wurfergebnis {
 		} 
 	} 
 	
+	// gibtseinAss hat ein neues oder weiteres Ass festgestellt.
+	public void nocheinAss() {
+		this.ass++; 
+	} 
 	
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
