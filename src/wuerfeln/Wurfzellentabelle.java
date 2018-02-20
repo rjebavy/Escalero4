@@ -27,12 +27,11 @@ public class Wurfzellentabelle extends Application {
 		// Wurf & Würfelsatz initialisieren
 		Wurf wurf = new Wurf(3);
 		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
-		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
+
 
 		//TESTS: 
-			// Wurfergebnis; initialisiereAuswerten()
-			ergebnis.initialisiereAuswerten();
-			System.out.println(ergebnis.toString());
+			// teste ...
+
 		
 			
 			
@@ -262,6 +261,11 @@ public class Wurfzellentabelle extends Application {
 		if(wurf.getWurfzaehler() == 0) hf.setDisable(true);
 		wurf.wuerfleUngehaltene(wsatz);
 		this.aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
+		if(wurf.getWurfzaehler() == 0) {
+			Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
+			ergebnis.initialisiereAuswerten();
+			System.out.println(ergebnis.toString());
+		}
 	}
 
 	
