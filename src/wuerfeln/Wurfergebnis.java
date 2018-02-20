@@ -21,6 +21,12 @@ public class Wurfergebnis {
 	
 	// vergleiche alle Würfel paarweise.
 	public void vergleicheAlle(Wuerfel[] wuerfelsatz) {
+		// Fehlersuche: 
+		System.out.println("vergleicheAlle; w0 mit w1: w0 = " + wuerfelsatz[0].getWert() + ", w1 = " + wuerfelsatz[1].getWert());
+		System.out.println("vergleicheAlle; w0 mit w2: w0 = " + wuerfelsatz[0].getWert() + ", w2 = " + wuerfelsatz[2].getWert()); 
+		System.out.println("vergleicheAlle; w0 mit w3: w0 = " + wuerfelsatz[0].getWert() + ", w3 = " + wuerfelsatz[3].getWert()); 
+		System.out.println("vergleicheAlle; w0 mit w4: w0 = " + wuerfelsatz[0].getWert() + ", w4 = " + wuerfelsatz[4].getWert()); 
+		
 		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[1].getWert()); 
 		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[2].getWert()); 
 		this.vergleicheZwei(wuerfelsatz[0].getWert(), wuerfelsatz[3].getWert()); 
