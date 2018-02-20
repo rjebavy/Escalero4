@@ -74,6 +74,11 @@ public class Wurfergebnis {
 		this.bild2 = wert; 
 		this.gleich2++; 
 	} 
+
+	// vergleicheZwei hat ein neue oder wiederholte Ungleichheit festgestellt.
+	public void nocheinUngleicher() {
+		this.ungleich++; 
+	}  
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
