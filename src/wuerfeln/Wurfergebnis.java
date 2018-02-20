@@ -104,7 +104,11 @@ public class Wurfergebnis {
 	public void nocheinAss() {
 		this.ass++; 
 	} 
-	
+
+	// gibtseineNeun hat eine neue oder weitere Neun festgestellt.
+	public void nocheineNeun() {
+		this.neun++; 
+	} 
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
