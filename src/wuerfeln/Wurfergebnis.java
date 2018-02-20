@@ -79,6 +79,20 @@ public class Wurfergebnis {
 	public void nocheinUngleicher() {
 		this.ungleich++; 
 	}  
+
+	// vergleicheZwei hat ein neues oder weiteres Ass festgestellt.
+	public void gibtseinAss(Wuerfel w1, Wuerfel w2) {
+		if(w1.getWert() == 6) {
+			this.nocheinAss();
+		}
+		if(w2.getWert() == 6) {
+			this.nocheinAss();
+		}
+	}  
+	
+	
+	
+	
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
