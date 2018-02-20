@@ -35,7 +35,30 @@ public class Wurfergebnis {
 
 	// vergleiche zwei Würfel. 
 	public void vergleicheZwei(Wuerfel w1, Wuerfel w2) {
-		System.out.println("vergleiche zwei");; 
+		if(w1 == w2) {
+			if(this.getGleich1() > 0 || this.getGleich2() > 0) {
+				if(this.getBilder1() > 0 && this.getBilder2() > 0) {
+					if(w1.getWert() == this.getBild1()) {
+						this.weiteresBild1(w1.getWert());
+					}
+					if(w1.getWert() == this.getBild2()) {
+						this.weiteresBild2(w1.getWert());
+					}
+					
+				}
+				if(this.getBilder1() > 0 && this.getBilder2() == 0) {
+					this.weiteresBild2(w1.getWert());
+				}
+			}
+			if(this.getGleich1() == 0 || this.getGleich2() == 0) {
+				this.weiteresBild1(w1.getWert());
+			}			
+		} 
+		if(w1 != w2) {
+			this.nocheinUngleicher();
+			this.gibtseinAss(w1, w2); 
+			this.gibtseineNeun(w1, w2);
+		}
 	} 
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
