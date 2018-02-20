@@ -265,6 +265,9 @@ public class Wurfzellentabelle extends Application {
 			Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
 			ergebnis.initialisiereAuswerten();
 			System.out.println(ergebnis.toString());
+			ergebnis.vergleicheAlle(wsatz);
+			System.out.println(ergebnis.toString());
+
 		}
 	}
 
