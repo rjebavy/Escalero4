@@ -59,15 +59,6 @@ public class Wurfergebnis {
 
 
 
-	// vergleicheZwei sucht Asse, möglicherweise große Straße.
-	public void gibtseinAss(int w1, int w2) {
-		if(w1 == 6) {
-			this.nocheinAss();
-		}
-		if(w2 == 6) {
-			this.nocheinAss();
-		}
-	}  
 	
 	// vergleicheZwei sucht Neunen, möglicherweise kleine Straße. 
 	public void gibtseineNeun(int w1, int w2) {
