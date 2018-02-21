@@ -29,7 +29,7 @@ public class Wurfergebnis {
 		
 	}
 
-	// zählt die Bilder des übergebenen Würfelsatzes hoch. 
+	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
 	public void zaehleAlleBilder(Wuerfel[] wsatz) {
 		for(int w = 0; w < 5; w++){
 			zaehleBilder(wsatz[w].getWert());
