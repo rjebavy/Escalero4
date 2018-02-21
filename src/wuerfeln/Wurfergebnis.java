@@ -231,16 +231,15 @@ public class Wurfergebnis {
 	public void setAss(int ass) {
 		this.ass = ass;
 	}
-	
+
 
 	// Standard toString
 	@Override
 	public String toString() {
 		return "Wurfergebnis [bild1=" + bild1 + ", bild2=" + bild2 + ", bilder1=" + bilder1 + ", bilder2=" + bilder2
-				+ ", gleich1=" + gleich1 + ", gleich2=" + gleich2 + ", ungleich=" + ungleich + ", ass=" + ass
-				+ ", neun=" + neun + "]";
+				+ ", gleich1=" + gleich1 + ", gleich2=" + gleich2 + ", ungleich=" + ungleich + ", neun=" + neun
+				+ ", zehn=" + zehn + ", bube=" + bube + ", dame=" + dame + ", koenig=" + koenig + ", ass=" + ass + "]";
 	}
-
 	
 	
 }
