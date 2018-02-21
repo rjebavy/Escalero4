@@ -58,6 +58,23 @@ public class Wurfergebnis {
 		}
 	}	
 	
+	// Gibt es genau zwei Würfel mit dem selben Bild?
+	public boolean gibtseinPaar() {
+		boolean paar = false; 
+		int ctr = 0; 
+		do { 
+			if(neun == 2){paar = true;}
+			if(zehn == 2){paar = true;}
+			if(bube == 2){paar = true;}
+			if(dame == 2){paar = true;}
+			if(koenig == 2){paar = true;}
+			if(ass == 2){paar = true;}
+			ctr++; 
+		} while (ctr != 1); 
+		System.out.println("gibtseinTrio; counter: " + ctr + ", trio: " + paar); 
+		return paar; 
+	} 
+	
 	// Gibt es genau drei Würfel mit dem selben Bild? Hilfsmethode für FullHouse-Erkennung. 
 	public boolean gibtseinTrio() {
 		boolean trio = false; 
