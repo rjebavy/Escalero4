@@ -36,6 +36,29 @@ public class Wurfergebnis {
 		}
 	}
 	
+	// zählt das Bild des übergebenen Wertes hoch. 
+	public void zaehleBilder(int wert) {
+		switch (wert) {
+		case 1:
+			neun++;
+			break;
+		case 2:
+			zehn++;
+			break;
+		case 3:
+			bube++;
+			break;
+		case 4:
+			dame++;
+			break;
+		case 5:
+			koenig++;
+			break;
+		case 6:
+			ass++;
+			break;
+		}
+	}	
 	
 
 	
