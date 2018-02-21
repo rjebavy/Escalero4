@@ -97,8 +97,9 @@ public class Wurfergebnis {
 		this.setGleich1(0);
 		this.setGleich2(0);
 		this.setUngleich(0);
-		this.setAss(0);
 		this.setNeun(0);
+		this.setNeun(0);
+		this.setAss(0);
 	}
 	
 	
@@ -160,14 +161,6 @@ public class Wurfergebnis {
 		this.ungleich = ungleich;
 	}
 
-	public int getAss() {
-		return ass;
-	}
-
-	public void setAss(int ass) {
-		this.ass = ass;
-	}
-
 	public int getNeun() {
 		return neun;
 	}
@@ -175,7 +168,47 @@ public class Wurfergebnis {
 	public void setNeun(int neun) {
 		this.neun = neun;
 	}
+	
+	public int getZehn() {
+		return zehn;
+	}
 
+	public void setZehn(int zehn) {
+		this.zehn = zehn;
+	}
+
+	public int getBube() {
+		return bube;
+	}
+
+	public void setBube(int bube) {
+		this.bube = bube;
+	}
+
+	public int getDame() {
+		return dame;
+	}
+
+	public void setDame(int dame) {
+		this.dame = dame;
+	}
+
+	public int getKoenig() {
+		return koenig;
+	}
+
+	public void setKoenig(int koenig) {
+		this.koenig = koenig;
+	}
+
+	public int getAss() {
+		return ass;
+	}
+
+	public void setAss(int ass) {
+		this.ass = ass;
+	}
+	
 
 	// Standard toString
 	@Override
