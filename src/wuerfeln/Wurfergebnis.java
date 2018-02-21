@@ -98,11 +98,14 @@ public class Wurfergebnis {
 	
 	// Ermittelt ob das Würfelbildmuster ein FullHouse ist. 
 	public boolean istFullHouse() {
+		boolean fullhouse = false; 
 		if(this.gibtseinTrio() && this.gibtseinPaar()) {
-		return true; 
+		fullhouse = true; 
+		return fullhouse; 
 		}
-	return false; 
-	} 
+	System.out.println("istFullHouse; fullhouse: " + fullhouse);
+	return fullhouse; 
+	}
 	
 	// Ermittelt ob es ein wertbares Würfelbildmuster aller Würfel gibt. Auch verwendet um Servierung zu erkennen. 
 	public boolean validesMuster() {
