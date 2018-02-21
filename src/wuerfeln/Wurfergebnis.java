@@ -106,6 +106,26 @@ public class Wurfergebnis {
 	System.out.println("istFullHouse; fullhouse: " + fullhouse);
 	return fullhouse; 
 	}
+
+	
+	
+	
+	// Ermittelt ob das Würfelbildmuster ein Grande ist. Auch verwendet um Servierung zu erkennen. 
+	public boolean istGrande() {
+		boolean grande = false; 
+		int ctr = 0; 
+		do { 
+			if(neun == 5){grande = true;}
+			if(zehn == 5){grande = true;}
+			if(bube == 5){grande = true;}
+			if(dame == 5){grande = true;}
+			if(koenig == 5){grande = true;}
+			if(ass == 5){grande = true;}
+			ctr++; 
+		} while (ctr != 1); 
+		System.out.println("istGrande; counter: " + ctr + ", grande: " + grande); 
+		return grande; 
+	} 
 	
 	// Ermittelt ob es ein wertbares Würfelbildmuster aller Würfel gibt. Auch verwendet um Servierung zu erkennen. 
 	public boolean validesMuster() {
