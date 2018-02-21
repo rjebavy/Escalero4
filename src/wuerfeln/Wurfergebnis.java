@@ -24,7 +24,8 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		this.gibtseinTrio();	
+		this.gibtseinTrio();
+		this.gibtseinPaar();
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
@@ -58,7 +59,7 @@ public class Wurfergebnis {
 		}
 	}	
 	
-	// Gibt es genau zwei Würfel mit dem selben Bild?
+	// Gibt es genau zwei Würfel mit dem selben Bild? Hilfsmethode für FullHouse-Erkennung. 
 	public boolean gibtseinPaar() {
 		boolean paar = false; 
 		int ctr = 0; 
@@ -71,7 +72,7 @@ public class Wurfergebnis {
 			if(ass == 2){paar = true;}
 			ctr++; 
 		} while (ctr != 1); 
-		System.out.println("gibtseinTrio; counter: " + ctr + ", trio: " + paar); 
+		System.out.println("gibtseinPaar; counter: " + ctr + ", paar: " + paar); 
 		return paar; 
 	} 
 	
