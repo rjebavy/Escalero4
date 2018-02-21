@@ -24,8 +24,9 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		this.gibtseinTrio();
-		this.gibtseinPaar();
+		this.istFullHouse();
+		this.istPoker();
+		this.istGrande();
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
@@ -101,6 +102,7 @@ public class Wurfergebnis {
 		boolean fullhouse = false; 
 		if(this.gibtseinTrio() && this.gibtseinPaar()) {
 		fullhouse = true; 
+		System.out.println("istFullHouse; fullhouse: " + fullhouse);
 		return fullhouse; 
 		}
 	System.out.println("istFullHouse; fullhouse: " + fullhouse);
