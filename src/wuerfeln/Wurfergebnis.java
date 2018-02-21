@@ -9,8 +9,13 @@ public class Wurfergebnis {
 	private int gleich1;
 	private int gleich2;
 	private int ungleich;
-	private int ass;
 	private int neun;
+	private int zehn;
+	private int bube;
+	private int dame;
+	private int koenig;
+	private int ass;
+
 	
 	
 	// Konstruktor hier nur mit Eigenschaft Würfelsatz
