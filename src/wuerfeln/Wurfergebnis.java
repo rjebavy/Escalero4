@@ -58,7 +58,7 @@ public class Wurfergebnis {
 		}
 	}	
 	
-	// Gibt es genau drei Würfel mit dem selben Bild?
+	// Gibt es genau drei Würfel mit dem selben Bild? Hilfsmethode für FullHouse-Erkennung. 
 	public boolean gibtseinTrio() {
 		boolean trio = false; 
 		int ctr = 0; 
