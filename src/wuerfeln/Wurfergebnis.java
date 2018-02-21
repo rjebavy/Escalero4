@@ -59,11 +59,6 @@ public class Wurfergebnis {
 
 
 
-	
-	// gibtseinAss hat ein neues oder weiteres Ass festgestellt.
-	public void nocheinAss() {
-		this.ass++; 
-	} 
 
 	// gibtseineNeun hat eine neue oder weitere Neun festgestellt.
 	public void nocheineNeun() {
