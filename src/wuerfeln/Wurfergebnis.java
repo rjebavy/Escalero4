@@ -60,16 +60,6 @@ public class Wurfergebnis {
 
 
 	
-	// vergleicheZwei sucht Neunen, möglicherweise kleine Straße. 
-	public void gibtseineNeun(int w1, int w2) {
-		if(w1 == 1) {
-			this.nocheineNeun();
-		}
-		if(w2 == 1) {
-			this.nocheineNeun();
-		} 
-	} 
-	
 	// gibtseinAss hat ein neues oder weiteres Ass festgestellt.
 	public void nocheinAss() {
 		this.ass++; 
