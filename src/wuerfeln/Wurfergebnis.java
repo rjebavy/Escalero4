@@ -23,34 +23,9 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		
 	}
+
 	
-	// vergleiche zwei Würfel. 
-	public void vergleicheZwei(int w1, int w2) {
-		if(w1 == w2) {
-			if(gleich1 > 0 || gleich2 > 0) {
-				if(bilder1 > 0 && bilder2 > 0) {
-					if(w1 == bild1) {
-						this.weiteresBild1(w1);
-					}
-					if(w1 == bild2) {
-						this.weiteresBild2(w1);
-					}
-		
-				}
-				if(bilder1 > 0 && bilder2 == 0) {
-					this.weiteresBild2(w1);
-				}
-			}
-			if(gleich1 == 0 && gleich2 == 0) {
-				this.weiteresBild1(w1);
-			}			
-		} 
-		if(w1 != w2) {
-			this.nocheinUngleicher();
-			this.gibtseinAss(w1, w2); 
-			this.gibtseineNeun(w1, w2);
-		} 
-	} 
+
 	
 	// vergleicheZwei hat ein neues oder wiederholtes Bild1 festgestellt.
 	public void weiteresBild1(int wert) {
