@@ -24,7 +24,6 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		this.istPoker();
 		this.istGrande();
 	}
 
@@ -93,8 +92,15 @@ public class Wurfergebnis {
 		return trio; 
 	} 
 	
+	// FAKE 1 
+	public boolean istKleineStrasse() {
+		return false;
+	}
 	
-	
+	// FAKE 2 
+	public boolean istGrosseStrasse() {
+		return false;
+	}
 	
 	// Ermittelt ob das Würfelbildmuster ein FullHouse ist. Auch verwendet um Servierung zu erkennen. 
 	public boolean istFullHouse() {
@@ -144,13 +150,12 @@ public class Wurfergebnis {
 	
 	// Ermittelt ob es ein wertbares Würfelbildmuster aller Würfel gibt. Auch verwendet um Servierung zu erkennen. 
 	public boolean validesMuster() {
-		if(this.istGrande() || this.istPoker() || this.istFullHouse() || this.istGrosseStrasse || this.istKleineStrasse ) {
+		if(this.istGrande() || this.istPoker() || this.istFullHouse() || this.istGrosseStrasse() || this.istKleineStrasse()) {
 		return true; 
 		}
 	return false; 
 	} 
-	
-	
+		
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
