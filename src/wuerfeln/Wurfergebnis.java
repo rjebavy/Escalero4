@@ -104,6 +104,14 @@ public class Wurfergebnis {
 	return false; 
 	} 
 	
+	// Ermittelt ob es ein wertbares Würfelbildmuster aller Würfel gibt. Auch verwendet um Servierung zu erkennen. 
+	public boolean validesMuster() {
+		if(this.istGrande() || this.istPoker() || this.istFullHouse() || this.istGrosseStrasse || this.istKleineStrasse ) {
+		return true; 
+		}
+	return false; 
+	} 
+	
 	
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
