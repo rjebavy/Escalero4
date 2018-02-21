@@ -93,6 +93,19 @@ public class Wurfergebnis {
 		return trio; 
 	} 
 	
+	
+	
+	
+	// Ermittelt ob das Würfelbildmuster ein FullHouse ist. 
+	public boolean istFullHouse() {
+		if(this.gibtseinTrio() && this.gibtseinPaar()) {
+		return true; 
+		}
+	return false; 
+	} 
+	
+	
+	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
 		this.setGleich1(0);
