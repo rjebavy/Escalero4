@@ -56,10 +56,22 @@ public class Wurfergebnis {
 		}
 	}	
 	
-
-
-
-
+	// Gibt es genau drei Würfel mit dem selben Bild?
+	public boolean gibtseinTrio() {
+		boolean trio = false; 
+		int ctr = 0; 
+		do { 
+			if(neun == 3){trio = true;}
+			if(zehn == 3){trio = true;}
+			if(bube == 3){trio = true;}
+			if(dame == 3){trio = true;}
+			if(koenig == 3){trio = true;}
+			if(ass == 3){trio = true;}
+			ctr++; 
+		} while (ctr != 1); 
+		System.out.println("gibtseinTrio; counter: " + ctr + ", trio: " + trio); 
+		return trio; 
+	} 
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
@@ -73,8 +85,7 @@ public class Wurfergebnis {
 		this.setKoenig(0);
 		this.setAss(0);
 	}
-	
-	
+		
 
 	// Standard Getter & Setter
 	public int getGleich1() {
