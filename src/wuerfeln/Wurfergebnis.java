@@ -62,13 +62,6 @@ public class Wurfergebnis {
 	
 
 
-	// vergleicheZwei hat ein neues oder wiederholtes Bild2 festgestellt.
-	public void weiteresBild2(int wert) {
-		this.bilder2++; 
-		this.bild2 = wert; 
-		this.gleich2++; 
-	} 
-
 	// vergleicheZwei hat ein neue oder wiederholte Ungleichheit festgestellt.
 	public void nocheinUngleicher() {
 		this.ungleich++; 
