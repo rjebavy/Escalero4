@@ -22,7 +22,9 @@ public class Wurfergebnis {
 
 	// Elternmethode für's Auswerten ... 
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
-		
+		this.zaehleAlleBilder(wuerfelsatz);
+		System.out.println(this.toString());
+		this.gibtseinTrio();	
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
