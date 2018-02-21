@@ -18,6 +18,11 @@ public class Wurfergebnis {
 		this.wuerfelsatz = wsatz; 
 	}
 
+
+	// Elternmethode für's Auswerten ... 
+	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
+		
+	}
 	
 	// vergleiche zwei Würfel. 
 	public void vergleicheZwei(int w1, int w2) {
