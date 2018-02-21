@@ -96,7 +96,7 @@ public class Wurfergebnis {
 	
 	
 	
-	// Ermittelt ob das Würfelbildmuster ein FullHouse ist. 
+	// Ermittelt ob das Würfelbildmuster ein FullHouse ist. Auch verwendet um Servierung zu erkennen. 
 	public boolean istFullHouse() {
 		boolean fullhouse = false; 
 		if(this.gibtseinTrio() && this.gibtseinPaar()) {
@@ -107,9 +107,23 @@ public class Wurfergebnis {
 	return fullhouse; 
 	}
 
-	
-	
-	
+	// Ermittelt ob das Würfelbildmuster ein Poker ist. Auch verwendet um Servierung zu erkennen. 
+	public boolean istPoker() {
+		boolean poker = false; 
+		int ctr = 0; 
+		do { 
+			if(neun == 4){poker = true;}
+			if(zehn == 4){poker = true;}
+			if(bube == 4){poker = true;}
+			if(dame == 4){poker = true;}
+			if(koenig == 4){poker = true;}
+			if(ass == 4){poker = true;}
+			ctr++; 
+		} while (ctr != 1); 
+		System.out.println("istPoker; counter: " + ctr + ", poker: " + poker); 
+		return poker; 
+	} 
+		
 	// Ermittelt ob das Würfelbildmuster ein Grande ist. Auch verwendet um Servierung zu erkennen. 
 	public boolean istGrande() {
 		boolean grande = false; 
