@@ -24,7 +24,6 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		this.istFullHouse();
 		this.istPoker();
 		this.istGrande();
 	}
