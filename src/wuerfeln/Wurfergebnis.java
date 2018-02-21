@@ -58,10 +58,6 @@ public class Wurfergebnis {
 	
 
 
-	// vergleicheZwei hat ein neue oder wiederholte Ungleichheit festgestellt.
-	public void nocheinUngleicher() {
-		this.ungleich++; 
-	}  
 
 	// vergleicheZwei sucht Asse, möglicherweise große Straße.
 	public void gibtseinAss(int w1, int w2) {
