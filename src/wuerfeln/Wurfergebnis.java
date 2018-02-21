@@ -99,6 +99,10 @@ public class Wurfergebnis {
 		this.setGleich2(0);
 		this.setUngleich(0);
 		this.setNeun(0);
+		this.setZehn(0);
+		this.setBube(0);
+		this.setDame(0);
+		this.setKoenig(0);
 		this.setAss(0);
 	}
 	
