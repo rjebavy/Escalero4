@@ -2,9 +2,6 @@ package wuerfeln;
 
 public class Wurfergebnis {
 	private Wuerfel[] wuerfelsatz = new Wuerfel[5];
-	private int gleich1;
-	private int gleich2;
-	private int ungleich;
 	private int neun;
 	private int zehn;
 	private int bube;
@@ -205,9 +202,6 @@ public class Wurfergebnis {
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
 	public void initialisiereAuswerten() {
-		this.setGleich1(0);
-		this.setGleich2(0);
-		this.setUngleich(0);
 		this.setNeun(0);
 		this.setZehn(0);
 		this.setBube(0);
@@ -218,30 +212,6 @@ public class Wurfergebnis {
 		
 
 	// Standard Getter & Setter
-	public int getGleich1() {
-		return gleich1;
-	}
-
-	public void setGleich1(int gleich1) {
-		this.gleich1 = gleich1;
-	}
-
-	public int getGleich2() {
-		return gleich2;
-	}
-
-	public void setGleich2(int gleich2) {
-		this.gleich2 = gleich2;
-	}
-
-	public int getUngleich() {
-		return ungleich;
-	}
-
-	public void setUngleich(int ungleich) {
-		this.ungleich = ungleich;
-	}
-
 	public int getNeun() {
 		return neun;
 	}
@@ -290,13 +260,13 @@ public class Wurfergebnis {
 		this.ass = ass;
 	}
 
-
+	
 	// Standard toString
 	@Override
 	public String toString() {
-		return "Wurfergebnis [gleich1=" + gleich1 + ", gleich2=" + gleich2 + ", ungleich=" + ungleich + ", neun=" + neun
-				+ ", zehn=" + zehn + ", bube=" + bube + ", dame=" + dame + ", koenig=" + koenig + ", ass=" + ass + "]";
+		return "Wurfergebnis [neun=" + neun + ", zehn=" + zehn + ", bube=" + bube + ", dame=" + dame + ", koenig="
+				+ koenig + ", ass=" + ass + "]";
 	}
-	
+
 	
 }
