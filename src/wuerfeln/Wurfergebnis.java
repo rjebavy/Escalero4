@@ -136,9 +136,16 @@ public class Wurfergebnis {
 	return kleinestr; 
 	}
 	
-	// FAKE 2 
+	// Ermittelt ob das Würfelbildmuster eine große Strasse ist. Auch verwendet um Servierung zu erkennen. 
 	public boolean istGrosseStrasse() {
-		return false;
+		boolean grossestr = false; 
+		if(this.istObenUnten() && neun == 1) {
+		grossestr = true; 
+		System.out.println("istGrosseStrasse; grossestr: " + grossestr);
+		return grossestr; 
+		}
+	System.out.println("istGrosseStrasse; grossestr: " + grossestr);
+	return grossestr; 
 	}
 	
 	// Ermittelt ob das Würfelbildmuster ein FullHouse ist. Auch verwendet um Servierung zu erkennen. 
