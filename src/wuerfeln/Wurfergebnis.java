@@ -24,7 +24,7 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		sindFuenfVerschiedene();
+		this.istKleineStrasse();
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
@@ -92,7 +92,18 @@ public class Wurfergebnis {
 		return trio; 
 	} 
 
-	
+	// Ermittelt ob das Muster [10][B][D][K] vorhanden ist. Hilfsmethode für Strassen-Erkennung. 
+	public boolean istObenUnten() {
+		boolean obenunten = false; 
+		int zaehler = 0; 
+		if(zehn == 1){zaehler++;}
+		if(bube == 1){zaehler++;}
+		if(dame == 1){zaehler++;}
+		if(koenig == 1){zaehler++;}
+		if(zaehler == 4) {obenunten = true;}
+		System.out.println("istGrande; zaehler: " + zaehler + ", obenunten: " + obenunten); 
+		return obenunten; 
+	} 	
 	
 	// Ermittelt ob im Würfelbildmuster alle fünf verschieden sind. Hilfsmethode für Strassen-Erkennung. 
 	public boolean sindFuenfVerschiedene() {
@@ -105,7 +116,7 @@ public class Wurfergebnis {
 		if(koenig == 1){zaehler++;}
 		if(ass == 1){zaehler++;}
 		if(zaehler == 5) {fuenfversch = true;}
-		System.out.println("istGrande; zaehler: " + zaehler + ", fuenfversch: " + fuenfversch); 
+		System.out.println("sindFuenfVerschiedene; zaehler: " + zaehler + ", fuenfversch: " + fuenfversch); 
 		return fuenfversch; 
 	}
 		
@@ -114,9 +125,10 @@ public class Wurfergebnis {
 		boolean kleinestr = false; 
 		if(this.sindFuenfVerschiedene() && neun == 1) {
 		kleinestr = true; 
+		System.out.println("istKleineStrasse; kleinestr: " + kleinestr);
 		return kleinestr; 
 		}
-	System.out.println("istFullHouse; kleinestr: " + kleinestr);
+	System.out.println("istKleineStrasse; kleinestr: " + kleinestr);
 	return kleinestr; 
 	}
 	
