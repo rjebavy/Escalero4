@@ -21,7 +21,7 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		istGrosseStrasse();
+		this.validesMuster(); 
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
@@ -193,11 +193,14 @@ public class Wurfergebnis {
 	
 	// Ermittelt ob es ein wertbares Würfelbildmuster aller Würfel gibt. Auch verwendet um Servierung zu erkennen. 
 	public boolean validesMuster() {
+		boolean validm = false; 
 		if(this.istGrande() || this.istPoker() || this.istFullHouse() || this.istGrosseStrasse() || this.istKleineStrasse()) {
-		return true; 
-		}
-	return false; 
-	} 
+		validm = true; 
+		System.out.println("validesMuster; validm: " + validm);
+		return validm; 		}
+	System.out.println("validesMuster; validm: " + validm);
+	return validm; 
+	}
 		
 	
 	// alle Auswerteeigenschaften auf 0 setzen. 
