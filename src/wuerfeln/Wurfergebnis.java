@@ -91,7 +91,24 @@ public class Wurfergebnis {
 		System.out.println("gibtseinTrio; counter: " + ctr + ", trio: " + trio); 
 		return trio; 
 	} 
+
 	
+	
+	// Ermittelt ob im Würfelbildmuster alle fünf verschieden sind. Hilfsmethode für Strassen-Erkennung. 
+	public boolean sindFuenfVerschiedene() {
+		boolean fuenfversch = false; 
+		int zaehler = 0; 
+		if(neun == 1){zaehler++;}
+		if(zehn == 1){zaehler++;}
+		if(bube == 1){zaehler++;}
+		if(dame == 1){zaehler++;}
+		if(koenig == 1){zaehler++;}
+		if(ass == 1){zaehler++;}
+		if(zaehler == 5) {fuenfversch = true;}
+		System.out.println("istGrande; zaehler: " + zaehler + ", fuenfversch: " + fuenfversch); 
+		return fuenfversch; 
+	}
+		
 	// FAKE 1 
 	public boolean istKleineStrasse() {
 		return false;
