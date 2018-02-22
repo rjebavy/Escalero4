@@ -109,9 +109,15 @@ public class Wurfergebnis {
 		return fuenfversch; 
 	}
 		
-	// FAKE 1 
+	// Ermittelt ob das Würfelbildmuster eine kleine Strasse ist. Auch verwendet um Servierung zu erkennen. 
 	public boolean istKleineStrasse() {
-		return false;
+		boolean kleinestr = false; 
+		if(this.sindFuenfVerschiedene() && neun == 1) {
+		kleinestr = true; 
+		return kleinestr; 
+		}
+	System.out.println("istFullHouse; kleinestr: " + kleinestr);
+	return kleinestr; 
 	}
 	
 	// FAKE 2 
