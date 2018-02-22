@@ -24,7 +24,7 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		this.istGrande();
+		sindFuenfVerschiedene();
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
