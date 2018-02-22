@@ -24,7 +24,7 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		this.istKleineStrasse();
+		this.istObenUnten();
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
@@ -101,7 +101,11 @@ public class Wurfergebnis {
 		if(dame == 1){zaehler++;}
 		if(koenig == 1){zaehler++;}
 		if(zaehler == 4) {obenunten = true;}
-		System.out.println("istGrande; zaehler: " + zaehler + ", obenunten: " + obenunten); 
+		if(zaehler == 3 && zehn == 2) {obenunten = true;}
+		if(zaehler == 3 && bube == 2) {obenunten = true;}
+		if(zaehler == 3 && dame == 2) {obenunten = true;}
+		if(zaehler == 3 && koenig == 2) {obenunten = true;}
+		System.out.println("istObenUnten; zaehler: " + zaehler + ", obenunten: " + obenunten); 
 		return obenunten; 
 	} 	
 	
