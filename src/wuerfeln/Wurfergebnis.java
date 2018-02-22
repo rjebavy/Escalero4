@@ -24,7 +24,7 @@ public class Wurfergebnis {
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
 		System.out.println(this.toString());
-		this.istObenUnten();
+		this.istKleineStrasse();
 	}
 
 	// Schleife zum Zählen der Bilder des übergebenen Würfelsatzes. 
@@ -127,7 +127,7 @@ public class Wurfergebnis {
 	// Ermittelt ob das Würfelbildmuster eine kleine Strasse ist. Auch verwendet um Servierung zu erkennen. 
 	public boolean istKleineStrasse() {
 		boolean kleinestr = false; 
-		if(this.sindFuenfVerschiedene() && neun == 1) {
+		if(this.istObenUnten() && neun == 1) {
 		kleinestr = true; 
 		System.out.println("istKleineStrasse; kleinestr: " + kleinestr);
 		return kleinestr; 
