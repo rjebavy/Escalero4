@@ -27,7 +27,15 @@ public class Wurf {
 			nichtgehalten[h] = true;
 			 System.out.println("Haltemaske, Würfel " + h + " = " + nichtgehalten[h]);
 			}
+		// Da kein Würfel gehalten wird ist auch Servierung möglich.
+		
+		
 	}	
+
+	// Setzt Wurfeigenschaft moeglicheServierung auf wahr.
+	public void setzeServierungMoeglich() {
+		this.moeglicheServierung = true; 
+	} 
 	
 	// Den angegebenen Würfel halten. 
 	public boolean halten(int wuerfel) {
