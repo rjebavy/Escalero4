@@ -6,6 +6,9 @@ public class Wurf {
 	private boolean[] nichtgehalten = new boolean[5]; 
 	private boolean moeglicheServierung = false; 
 	
+	// Dieser Kommentar nur für Git commit GitHub Remote Escalero4 Push/Pull Test. 27.2.18-20:20. 
+	
+	
 	// Konstruktor hier nur mit Eigenschaft Wurfzähler
 	public Wurf(int wurf) {
 		this.wurfzaehler = wurf; 
