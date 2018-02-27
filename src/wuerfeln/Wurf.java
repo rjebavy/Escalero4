@@ -4,6 +4,7 @@ public class Wurf {
 	private int wurfzaehler; 
 	private Wuerfel[] wuerfelsatz = new Wuerfel[5];
 	private boolean[] nichtgehalten = new boolean[5]; 
+	private boolean moeglicheServierung = false; 
 	
 	// Konstruktor hier nur mit Eigenschaft Wurfzähler
 	public Wurf(int wurf) {
@@ -27,7 +28,7 @@ public class Wurf {
 			 System.out.println("Haltemaske, Würfel " + h + " = " + nichtgehalten[h]);
 			}
 	}	
-
+	
 	// Den angegebenen Würfel halten. 
 	public boolean halten(int wuerfel) {
 		if(wuerfel >= 0 && wuerfel <= 4) {
