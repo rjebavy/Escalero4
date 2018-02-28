@@ -1,10 +1,11 @@
 package wuerfeln;
 
 public class Wurf {
-	private int wurfzaehler; 
-	private Wuerfel[] wuerfelsatz = new Wuerfel[5];
-	private boolean[] nichtgehalten = new boolean[5]; 
-	private boolean moeglicheServierung = false; 
+	private int wurfzaehler; // zählt von 3 auf 0 runter, je Spieler 3 Würfe pro Runde. 
+	private Wuerfel[] wuerfelsatz = new Wuerfel[5]; // Würfelsatz für Würfelfeld mit fünf Würfeln. 
+	private boolean[] nichtgehalten = new boolean[5]; // Boolean Array für Haltefeld mit fünf CheckBoxen. 
+	private boolean moeglicheServierung = false; // Wird jedesmal auf 'wahr' gesetzt wenn kein Würfel gehalten ist. 
+	private int gehalten; // Zählt 1 rauf bei halten(), 1 runter bei freigeben(), Indikator für kein Würfel gehalten.  
 	
 	// Dieser Kommentar nur für Git commit GitHub Remote Escalero4 Push/Pull Test. 27.2.18-20:20. 
 	
