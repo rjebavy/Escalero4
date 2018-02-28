@@ -1,11 +1,11 @@
 package wuerfeln;
 
 public class Wurf {
-	private int wurfzaehler; // zählt von 3 auf 0 runter, je Spieler 3 Würfe pro Runde. 
+	private int wurfzaehler = 0; // zählt von 3 auf 0 runter, je Spieler 3 Würfe pro Runde. 
 	private Wuerfel[] wuerfelsatz = new Wuerfel[5]; // Würfelsatz für Würfelfeld mit fünf Würfeln. 
 	private boolean[] nichtgehalten = new boolean[5]; // Boolean Array für Haltefeld mit fünf CheckBoxen. 
 	private boolean moeglicheServierung = false; // Wird jedesmal auf 'wahr' gesetzt wenn kein Würfel gehalten ist. 
-	private int gehalten; // Zählt 1 rauf bei halten(), 1 runter bei freigeben(), Indikator für kein Würfel gehalten.  
+	private int gehalten = 0; // Zählt 1 rauf bei halten(), 1 runter bei freigeben(), Indikator für kein Würfel gehalten.  
 	
 	// Dieser Kommentar nur für Git commit GitHub Remote Escalero4 Push/Pull Test. 27.2.18-20:20. 
 	
@@ -46,7 +46,9 @@ public class Wurf {
 			nichtgehalten[wuerfel] = false;
 			System.out.println("Haltemaske, Würfel " + wuerfel + " = " + nichtgehalten[wuerfel]);
 			// gehalten 1 raufzählen, als Indikator für mögliche Servierung wenn kein Würfel gehalten. 
-			gehalten++;
+			if(gehalten < 5) {
+				gehalten++; 
+			}
 			return true;
 				}
 		System.out.println("\nWürfelnummer außerhalb erlaubten Bereichs (0-4)!");
