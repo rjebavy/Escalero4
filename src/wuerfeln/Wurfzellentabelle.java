@@ -133,7 +133,7 @@ public class Wurfzellentabelle extends Application {
 		if(w.isMoeglicheServierung() == true && e.validesMuster() == true){
 		// TODO: Audiosignal; Tada.wav? 
 			sfeld.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
-			sfeld.setTextFill(Color.BLACK);
+			sfeld.setTextFill(Color.WHITE);
 			System.out.println("aktualisiereServierfeld, Servierung erkannt, grün");
 		}
 	}
