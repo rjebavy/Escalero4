@@ -50,7 +50,7 @@ public class Wurfzellentabelle extends Application {
 		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
 		this.aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
 			
-		HBox haltefeld = hinzufuegenHaltefeld(wurf); 
+		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
 		wurf.initialisiereHaltemaske();
 		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
 		Button wuerfeln = hinzufügenWuerfelnKnopf();
@@ -138,16 +138,20 @@ public class Wurfzellentabelle extends Application {
 		}
 	}
 	
-	public void aktualisiereHaltezelle(Wurf w, CheckBox cb, int i) {
+	public void aktualisiereHaltezelle(Wurf w, CheckBox cb, int i, Wurfergebnis ergebnis, Label serviert) {
 		cb.setOnAction(e->{
-			if(cb.isSelected())
+			if(cb.isSelected()) {
 				w.halten(i);
-			if(!cb.isSelected())
+				aktualisiereServierfeld(w, serviert, ergebnis);
+			}
+			if(!cb.isSelected()) {
 				w.freigeben(i);
+				aktualisiereServierfeld(w, serviert, ergebnis);
+			}
 		});
 	}
 	
-	public HBox hinzufuegenHaltefeld(Wurf w) {
+	public HBox hinzufuegenHaltefeld(Wurf w, Wurfergebnis ergebnis, Label serviert) {
 		HBox hfeld = new HBox();
 		hfeld.setPadding(new Insets(5, 5, 5, 5));
 		hfeld.setSpacing(10);	
@@ -156,7 +160,7 @@ public class Wurfzellentabelle extends Application {
 		HBox hz1 = new HBox();
 		Label lh1 = new Label("h: ");
 		CheckBox cb1 = new CheckBox();
-		this.aktualisiereHaltezelle(w, cb1, 0);
+		this.aktualisiereHaltezelle(w, cb1, 0, ergebnis, serviert);
 		hz1.setMinSize(50, 10);
 		hz1.setAlignment(Pos.CENTER);
 		hz1.getChildren().addAll(lh1, cb1);		
@@ -164,7 +168,7 @@ public class Wurfzellentabelle extends Application {
 		HBox hz2 = new HBox();
 		Label lh2 = new Label("h: ");
 		CheckBox cb2 = new CheckBox();
-		this.aktualisiereHaltezelle(w, cb2, 1);
+		this.aktualisiereHaltezelle(w, cb2, 1, ergebnis, serviert);
 		hz2.setMinSize(50, 10);
 		hz2.setAlignment(Pos.CENTER);
 		hz2.getChildren().addAll(lh2, cb2);	
@@ -172,7 +176,7 @@ public class Wurfzellentabelle extends Application {
 		HBox hz3 = new HBox();
 		Label lh3 = new Label("h: ");
 		CheckBox cb3 = new CheckBox();
-		this.aktualisiereHaltezelle(w, cb3, 2);
+		this.aktualisiereHaltezelle(w, cb3, 2, ergebnis, serviert);
 		hz3.setMinSize(50, 10);
 		hz3.setAlignment(Pos.CENTER);
 		hz3.getChildren().addAll(lh3, cb3);	
@@ -180,7 +184,7 @@ public class Wurfzellentabelle extends Application {
 		HBox hz4 = new HBox();
 		Label lh4 = new Label("h: ");
 		CheckBox cb4 = new CheckBox();
-		this.aktualisiereHaltezelle(w, cb4, 3);
+		this.aktualisiereHaltezelle(w, cb4, 3, ergebnis, serviert);
 		hz4.setMinSize(50, 10);
 		hz4.setAlignment(Pos.CENTER);
 		hz4.getChildren().addAll(lh4, cb4);	
@@ -188,7 +192,7 @@ public class Wurfzellentabelle extends Application {
 		HBox hz5 = new HBox();
 		Label lh5 = new Label("h: ");
 		CheckBox cb5 = new CheckBox();
-		this.aktualisiereHaltezelle(w, cb5, 4);
+		this.aktualisiereHaltezelle(w, cb5, 4, ergebnis, serviert);
 		hz5.setMinSize(50, 10);
 		hz5.setAlignment(Pos.CENTER);
 		hz5.getChildren().addAll(lh5, cb5);	
