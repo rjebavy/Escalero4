@@ -120,17 +120,20 @@ public class Wurfzellentabelle extends Application {
 	// Servierfeld entsprechend der Bedingungen - unmöglich, möglich, serviert  - gestalten. 
 	public void aktualisiereServierfeld(Wurf w, Label sfeld, Wurfergebnis e) {
 		if(w.isMoeglicheServierung() == false){
-		sfeld.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
-		sfeld.setTextFill(Color.LIGHTGRAY);
+			sfeld.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+			sfeld.setTextFill(Color.LIGHTGRAY);
+			System.out.println("aktualisiereServierfeld, Servierung unmöglich, rot");
 		}
 		if(w.isMoeglicheServierung() == true && e.validesMuster() == false){
 			sfeld.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
 			sfeld.setTextFill(Color.LIGHTGRAY);
+			System.out.println("aktualisiereServierfeld, Servierung möglich, gelb");
 		}
 		if(w.isMoeglicheServierung() == true && e.validesMuster() == true){
 		// TODO: Audiosignal; Tada.wav? 
-		sfeld.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
-		sfeld.setTextFill(Color.BLACK);
+			sfeld.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+			sfeld.setTextFill(Color.BLACK);
+			System.out.println("aktualisiereServierfeld, Servierung erkannt, grün");
 		}
 	}
 	
