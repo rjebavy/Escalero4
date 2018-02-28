@@ -106,4 +106,17 @@ public class Wurf {
 	public int getWurfzaehler() {
 		return wurfzaehler;
 	}
+
+	
+	
+	// Standard Getter & Setter
+	public boolean isMoeglicheServierung() {
+		return moeglicheServierung;
+	}
+
+	public int getGehalten() {
+		return gehalten;
+	}
+	
+	
 }
