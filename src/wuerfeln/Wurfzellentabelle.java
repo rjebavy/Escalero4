@@ -27,6 +27,7 @@ public class Wurfzellentabelle extends Application {
 		// Wurf & Würfelsatz initialisieren
 		Wurf wurf = new Wurf(3);
 		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
+		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
 
 
 		//TESTS: 
@@ -53,7 +54,7 @@ public class Wurfzellentabelle extends Application {
 		wurf.initialisiereHaltemaske();
 		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
 		Button wuerfeln = hinzufügenWuerfelnKnopf();
-		wuerfeln.setOnAction(event->this.wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5));
+		wuerfeln.setOnAction(event->this.wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
 
 		GridPane wzt = new GridPane();
 		wzt.setPadding(new Insets(2, 2, 2, 2));
@@ -274,14 +275,13 @@ public class Wurfzellentabelle extends Application {
 		}
 	}
 	
-	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Label wz1, Label wz2, Label wz3, Label wz4, Label wz5) {
+	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Wurfergebnis ergebnis, Label wz1, Label wz2, Label wz3, Label wz4, Label wz5) {
 		wurf.wurfRunterzaehlen();
 		this.aktualisiereWurfzaehler(wurf, wurfzaehler, wuerfeln);
 		if(wurf.getWurfzaehler() == 2 || wurf.getWurfzaehler() == 1) hf.setDisable(false);
 		if(wurf.getWurfzaehler() == 0) hf.setDisable(true);
 		wurf.wuerfleUngehaltene(wsatz);
 		this.aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
-		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
 		ergebnis.initialisiereAuswerten();
 		System.out.println(ergebnis.toString());
 		ergebnis.auswertenAlle(wsatz);
