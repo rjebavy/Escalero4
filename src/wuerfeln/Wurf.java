@@ -45,6 +45,8 @@ public class Wurf {
 		if(wuerfel >= 0 && wuerfel <= 4) {
 			nichtgehalten[wuerfel] = false;
 			System.out.println("Haltemaske, Würfel " + wuerfel + " = " + nichtgehalten[wuerfel]);
+			// gehalten 1 raufzählen, als Indikator für mögliche Servierung wenn kein Würfel gehalten. 
+			gehalten++;
 			return true;
 				}
 		System.out.println("\nWürfelnummer außerhalb erlaubten Bereichs (0-4)!");
