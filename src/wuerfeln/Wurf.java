@@ -48,6 +48,7 @@ public class Wurf {
 			// gehalten 1 raufzählen, als Indikator für mögliche Servierung wenn kein Würfel gehalten. 
 			if(gehalten < 5) {
 				gehalten++; 
+				System.out.println("halten, Würfel " + wuerfel + "; gehalten = " + gehalten);
 			}
 			return true;
 				}
@@ -63,6 +64,7 @@ public class Wurf {
 			// gehalten 1 runterzählen, wenn 0 - d.h. kein Würfel gehalten - dann Servierung möglich setzen. 
 			if(gehalten > 0) {
 				gehalten--; 
+				System.out.println("freigeben, Würfel " + wuerfel + "; gehalten = " + gehalten);
 			}
 			if(gehalten == 0){
 				this.setzeServierungMoeglich();
