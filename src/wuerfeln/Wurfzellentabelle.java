@@ -123,9 +123,9 @@ public class Wurfzellentabelle extends Application {
 		sfeld.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 		sfeld.setTextFill(Color.LIGHTGRAY);
 		}
-		if(w.isMoeglicheServierung() == true){
-		sfeld.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
-		sfeld.setTextFill(Color.LIGHTGRAY);
+		if(w.isMoeglicheServierung() == true && e.validesMuster() == false){
+			sfeld.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
+			sfeld.setTextFill(Color.LIGHTGRAY);
 		}
 		if(w.isMoeglicheServierung() == true && e.validesMuster() == true){
 		// TODO: Audiosignal; Tada.wav? 
