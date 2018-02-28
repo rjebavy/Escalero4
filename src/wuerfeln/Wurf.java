@@ -60,6 +60,13 @@ public class Wurf {
 		if(wuerfel >= 0 && wuerfel <= 4) {
 			nichtgehalten[wuerfel] = true;
 			System.out.println("Haltemaske, Würfel " + wuerfel + " = " + nichtgehalten[wuerfel]);
+			// gehalten 1 runterzählen, wenn 0 - d.h. kein Würfel gehalten - dann Servierung möglich setzen. 
+			if(gehalten > 0) {
+				gehalten--; 
+			}
+			if(gehalten == 0){
+				this.setzeServierungMoeglich();
+			}
 			return true;
 				}
 		System.out.println("\nWürfelnummer außerhalb erlaubten Bereichs (0-4)!");
