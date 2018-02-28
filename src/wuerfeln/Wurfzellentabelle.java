@@ -125,7 +125,7 @@ public class Wurfzellentabelle extends Application {
 			sfeld.setTextFill(Color.LIGHTGRAY);
 			System.out.println("aktualisiereServierfeld, Servierung unmöglich, rot");
 		}
-		if(w.isMoeglicheServierung() == true && e.validesMuster() == false){
+		if(w.getGehalten() == 0 && e.validesMuster() == false){
 			sfeld.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
 			sfeld.setTextFill(Color.LIGHTGRAY);
 			System.out.println("aktualisiereServierfeld, Servierung möglich, gelb");
