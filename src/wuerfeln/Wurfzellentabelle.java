@@ -120,7 +120,7 @@ public class Wurfzellentabelle extends Application {
 
 	// Servierfeld entsprechend der Bedingungen - unmöglich, möglich, serviert  - gestalten. 
 	public void aktualisiereServierfeld(Wurf w, Label sfeld, Wurfergebnis e) {
-		if(w.isMoeglicheServierung() == false){
+		if(w.isMoeglicheServierung() == false || w.getGehalten() > 0){
 			sfeld.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 			sfeld.setTextFill(Color.LIGHTGRAY);
 			System.out.println("aktualisiereServierfeld, Servierung unmöglich, rot");
