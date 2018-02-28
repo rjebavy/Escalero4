@@ -20,7 +20,7 @@ public class Wurfergebnis {
 	// Elternmethode für's Auswerten ... 
 	public void auswertenAlle(Wuerfel[] wuerfelsatz) {
 		this.zaehleAlleBilder(wuerfelsatz);
-		System.out.println(this.toString());
+		// System.out.println(this.toString());
 		this.validesMuster(); 
 	}
 
@@ -68,7 +68,7 @@ public class Wurfergebnis {
 			if(ass == 2){paar = true;}
 			ctr++; 
 		} while (ctr != 1); 
-		System.out.println("gibtseinPaar; counter: " + ctr + ", paar: " + paar); 
+		// System.out.println("gibtseinPaar; counter: " + ctr + ", paar: " + paar); 
 		return paar; 
 	} 
 	
@@ -85,7 +85,7 @@ public class Wurfergebnis {
 			if(ass == 3){trio = true;}
 			ctr++; 
 		} while (ctr != 1); 
-		System.out.println("gibtseinTrio; counter: " + ctr + ", trio: " + trio); 
+		// System.out.println("gibtseinTrio; counter: " + ctr + ", trio: " + trio); 
 		return trio; 
 	} 
 
@@ -102,7 +102,7 @@ public class Wurfergebnis {
 		if(zaehler == 3 && bube == 2) {obenunten = true;}
 		if(zaehler == 3 && dame == 2) {obenunten = true;}
 		if(zaehler == 3 && koenig == 2) {obenunten = true;}
-		System.out.println("istObenUnten; zaehler: " + zaehler + ", obenunten: " + obenunten); 
+		// System.out.println("istObenUnten; zaehler: " + zaehler + ", obenunten: " + obenunten); 
 		return obenunten; 
 	} 	
 		
@@ -111,10 +111,10 @@ public class Wurfergebnis {
 		boolean kleinestr = false; 
 		if(this.istObenUnten() && neun == 1) {
 		kleinestr = true; 
-		System.out.println("istKleineStrasse; kleinestr: " + kleinestr);
+		// System.out.println("istKleineStrasse; kleinestr: " + kleinestr);
 		return kleinestr; 
 		}
-	System.out.println("istKleineStrasse; kleinestr: " + kleinestr);
+	// System.out.println("istKleineStrasse; kleinestr: " + kleinestr);
 	return kleinestr; 
 	}
 	
@@ -123,10 +123,10 @@ public class Wurfergebnis {
 		boolean grossestr = false; 
 		if(this.istObenUnten() && ass == 1) {
 		grossestr = true; 
-		System.out.println("istGrosseStrasse; grossestr: " + grossestr);
+		// System.out.println("istGrosseStrasse; grossestr: " + grossestr);
 		return grossestr; 
 		}
-	System.out.println("istGrosseStrasse; grossestr: " + grossestr);
+	// System.out.println("istGrosseStrasse; grossestr: " + grossestr);
 	return grossestr; 
 	}
 	
@@ -135,10 +135,10 @@ public class Wurfergebnis {
 		boolean fullhouse = false; 
 		if(this.gibtseinTrio() && this.gibtseinPaar()) {
 		fullhouse = true; 
-		System.out.println("istFullHouse; fullhouse: " + fullhouse);
+		// System.out.println("istFullHouse; fullhouse: " + fullhouse);
 		return fullhouse; 
 		}
-	System.out.println("istFullHouse; fullhouse: " + fullhouse);
+	// System.out.println("istFullHouse; fullhouse: " + fullhouse);
 	return fullhouse; 
 	}
 
@@ -155,7 +155,7 @@ public class Wurfergebnis {
 			if(ass == 4){poker = true;}
 			ctr++; 
 		} while (ctr != 1); 
-		System.out.println("istPoker; counter: " + ctr + ", poker: " + poker); 
+		// System.out.println("istPoker; counter: " + ctr + ", poker: " + poker); 
 		return poker; 
 	} 
 		
@@ -172,7 +172,7 @@ public class Wurfergebnis {
 			if(ass == 5){grande = true;}
 			ctr++; 
 		} while (ctr != 1); 
-		System.out.println("istGrande; counter: " + ctr + ", grande: " + grande); 
+		// System.out.println("istGrande; counter: " + ctr + ", grande: " + grande); 
 		return grande; 
 	} 
 	
@@ -181,9 +181,9 @@ public class Wurfergebnis {
 		boolean validm = false; 
 		if(this.istGrande() || this.istPoker() || this.istFullHouse() || this.istGrosseStrasse() || this.istKleineStrasse()) {
 		validm = true; 
-		System.out.println("validesMuster; validm: " + validm);
+		// System.out.println("validesMuster; validm: " + validm);
 		return validm; 		}
-	System.out.println("validesMuster; validm: " + validm);
+	// System.out.println("validesMuster; validm: " + validm);
 	return validm; 
 	}
 		
