@@ -24,6 +24,8 @@ public class Wurfzellentabelle extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		
+	// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
 		// Wurf & Würfelsatz initialisieren
 		Wurf wurf = new Wurf(3);
 		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
@@ -60,6 +62,7 @@ public class Wurfzellentabelle extends Application {
 		wuerfeln.setOnAction(event->this.wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
 
 		GridPane wzt = new GridPane();
+		wzt.setMinSize(500, 125);
 		wzt.setPadding(new Insets(2, 2, 2, 2));
 		wzt.setHgap(5);
 		wzt.setVgap(5);
@@ -69,6 +72,8 @@ public class Wurfzellentabelle extends Application {
 		wzt.add(haltefeld, 3, 3, 15, 1);
 		wzt.add(wuerfeln, 20, 0, 4, 4);
 		wzt.setAlignment(Pos.CENTER);
+	// WÜRFELTABLEAU, Ende. 
+		
 		
 		primaryStage.setScene(new Scene(wzt, 500, 125));
 		primaryStage.setTitle("Escalero4 -  Wurfzellentabelle");
@@ -112,7 +117,7 @@ public class Wurfzellentabelle extends Application {
 	public Label hinzufuegenServierfeld() {
 		Label sfeld = new Label("serviert"); // 5 Smileys; Unicode [Alt]+[1]; leider nicht!  
 		// sfeld.setPadding(new Insets(5, 5, 5, 5));
-		sfeld.setMinSize(30, 10);;
+		sfeld.setMinSize(30, 10);
 		sfeld.setAlignment(Pos.CENTER);
 		sfeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
 		sfeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID,null, new BorderWidths(1))));
