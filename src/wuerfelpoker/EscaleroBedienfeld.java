@@ -135,7 +135,16 @@ public class EscaleroBedienfeld extends Application {
 
 	}
 	
+	// Das Eintrageknopffeld mit zwei Knopffeldern oben und unten. 
+	public VBox hinzufuegenEintrageknopffelder() {
+		VBox etknfeld = new VBox(); 
+		HBox etrgknoepfeoben = hinzufuegenKnoepfeOben(); 
+		HBox etrgknoepfeunten = hinzufuegenKnoepfeUnten(); 
+		return etknfeld; 
+	}
 
+
+	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
 	public Button hinzufuegenWuerfelnKnopf() {
