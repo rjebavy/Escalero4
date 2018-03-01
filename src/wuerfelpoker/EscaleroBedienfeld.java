@@ -32,7 +32,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.102
+	* @version 0.105
 	* @author Reinhard Jebavy
 	*/
 
@@ -149,6 +149,15 @@ public class EscaleroBedienfeld extends Application {
 		return knoben; 
 
 	}	
+	
+	// Das Knopffeld oben mit fünf Knöpfen [St][Fu][Po][Gr][-]. 
+	public HBox hinzufuegenKnoepfeUnten() {
+		HBox knunten = new HBox(); 
+		return knunten; 
+
+	}
+
+// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
