@@ -91,12 +91,24 @@ public class EscaleroBedienfeld extends Application {
 	// WÜRFELTABLEAU, Ende. 
 		
 
+	// ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 		
+		GridPane ergebnistableau = new GridPane();
+		ergebnistableau.setMinSize(340, 112);
+		ergebnistableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+		HBox reihenfeld = hinzufuegenReihenfeld(); 
+		VBox eintrageknopffelder = hinzufuegenEintrageknopffelder(); 
+		// GridPane.add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan).
+		ergebnistableau.add(reihenfeld, 0, 0, 1, 1);
+		ergebnistableau.add(eintrageknopffelder, 0, 1, 1, 1);
+		ergebnistableau.setAlignment(Pos.CENTER);
+	
+	// ERGEBNISTABLEAU, Ende. 		
+		
+		
 	// Top Level FX Node item: ESCALEROBEDIENFELD
 		// Temporäre Dummy-Tableaus
 		VBox spielstandtableau = new VBox();
 		spielstandtableau.setMinSize(340, 340);
-		GridPane ergebnistableau = new GridPane();
-		ergebnistableau.setMinSize(340, 112);
 		VBox bedientableau = new VBox();
 		bedientableau.setMinSize(340, 139);
 	// Top-top-level Container Escalero Bedienfeld
@@ -112,6 +124,12 @@ public class EscaleroBedienfeld extends Application {
 							
 	}
 
+	
+	
+
+	
+
+	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
 	public Button hinzufuegenWuerfelnKnopf() {
 		Button btw = new Button("W"); 
