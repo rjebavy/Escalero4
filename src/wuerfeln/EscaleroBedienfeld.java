@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Wurfzellentabelle extends Application {
+public class EscaleroBedienfeld extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -58,7 +58,7 @@ public class Wurfzellentabelle extends Application {
 		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
 		wurf.initialisiereHaltemaske();
 		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
-		Button wuerfeln = hinzufügenWuerfelnKnopf();
+		Button wuerfeln = hinzufuegenWuerfelnKnopf();
 		wuerfeln.setOnAction(event->this.wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
 
 		GridPane wzt = new GridPane();
@@ -76,14 +76,14 @@ public class Wurfzellentabelle extends Application {
 		
 		
 		primaryStage.setScene(new Scene(wzt, 500, 125));
-		primaryStage.setTitle("Escalero4 -  Wurfzellentabelle");
+		primaryStage.setTitle("Escalero4 - Bedienfeld");
 		primaryStage.setResizable(true);
 		primaryStage.show();
 							
 	}
 
-// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes der Wurfzellentabelle	
-	public Button hinzufügenWuerfelnKnopf() {
+// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
+	public Button hinzufuegenWuerfelnKnopf() {
 		Button btw = new Button("W"); 
 		btw.setFont(Font.font("Cambria", 48));
 		btw.setMinSize(40, 40); 
@@ -298,9 +298,10 @@ public class Wurfzellentabelle extends Application {
 		System.out.println(ergebnis.toString());
 		ergebnis.auswertenAlle(wsatz);
 		aktualisiereServierfeld(wurf, serviert, ergebnis); 
-		
 	}
+	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 
 
+	
 	
 	public static void main(String[] args) {
 		launch(args);
