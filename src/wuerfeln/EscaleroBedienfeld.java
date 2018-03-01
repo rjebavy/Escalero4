@@ -37,7 +37,7 @@ public class EscaleroBedienfeld extends Application {
 			// Auswerten erfolgreich getestet; 22.2.2018. 
 			// Servierungen erkennen, erfolgreich getestet; 28.2.2018. 
 			// wzt MinSize aus Scene übernommen, erfolgreich getestet; 1.3.2018. 
-
+			// GUI Klasse 'Wurfzellentabelle' nach 'EscaleroBedienfeld' migriert, erfolgreich getestet; 1.3.2018. 
 		
 			
 			
