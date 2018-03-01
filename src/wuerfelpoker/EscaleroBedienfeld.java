@@ -1,4 +1,4 @@
-package wuerfeln;
+package wuerfelpoker;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

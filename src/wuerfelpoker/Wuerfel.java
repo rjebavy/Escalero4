@@ -1,4 +1,4 @@
-package wuerfeln;
+package wuerfelpoker;
 
 public class Wuerfel {
 	private int wert;

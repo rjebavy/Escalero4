@@ -1,4 +1,4 @@
-package wuerfeln;
+package wuerfelpoker;
 
 public class Wurfergebnis {
 	private Wuerfel[] wuerfelsatz = new Wuerfel[5];

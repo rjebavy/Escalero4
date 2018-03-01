@@ -1,4 +1,4 @@
-package wuerfeln;
+package wuerfelpoker;
 
 public class Wurf {
 	private int wurfzaehler = 0; // zählt von 3 auf 0 runter, je Spieler 3 Würfe pro Runde. 
