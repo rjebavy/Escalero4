@@ -32,7 +32,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.100
+	* @version 0.102
 	* @author Reinhard Jebavy
 	*/
 
@@ -126,7 +126,14 @@ public class EscaleroBedienfeld extends Application {
 
 	
 	
+// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
+	
+	// Das Reihenfeld mit Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3]. 
+	public HBox hinzufuegenReihenfeld() {
+		HBox rfeld = new HBox(); 
+	return rfeld; 
 
+	}
 	
 
 	
