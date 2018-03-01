@@ -31,7 +31,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.98
+	* @version 0.99
 	* @author Reinhard Jebavy
 	*/
 
@@ -50,7 +50,7 @@ public class EscaleroBedienfeld extends Application {
 			// Würfeln erfolgreich getestet; 18.2.2018. 
 			// Auswerten erfolgreich getestet; 22.2.2018. 
 			// Servierungen erkennen, erfolgreich getestet; 28.2.2018. 
-			// wzt MinSize aus Scene übernommen, erfolgreich getestet; 1.3.2018. 
+			// wuerfeltableau MinSize aus Scene übernommen, erfolgreich getestet; 1.3.2018. 
 			// GUI Klasse 'Wurfzellentabelle' nach 'EscaleroBedienfeld' migriert, erfolgreich getestet; 1.3.2018. 
 		
 			
@@ -75,21 +75,21 @@ public class EscaleroBedienfeld extends Application {
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
 		wuerfeln.setOnAction(event->this.wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
 
-		GridPane wzt = new GridPane();
-		wzt.setMinSize(500, 125);
-		wzt.setPadding(new Insets(2, 2, 2, 2));
-		wzt.setHgap(5);
-		wzt.setVgap(5);
-		wzt.add(wurfzaehler, 0, 0, 3, 3);
-		wzt.add(serviert, 0, 3, 3, 1);
-		wzt.add(wuerfelfeld, 3, 0, 15, 3);
-		wzt.add(haltefeld, 3, 3, 15, 1);
-		wzt.add(wuerfeln, 20, 0, 4, 4);
-		wzt.setAlignment(Pos.CENTER);
+		GridPane wuerfeltableau = new GridPane();
+		wuerfeltableau.setMinSize(500, 125);
+		wuerfeltableau.setPadding(new Insets(2, 2, 2, 2));
+		wuerfeltableau.setHgap(5);
+		wuerfeltableau.setVgap(5);
+		wuerfeltableau.add(wurfzaehler, 0, 0, 3, 3);
+		wuerfeltableau.add(serviert, 0, 3, 3, 1);
+		wuerfeltableau.add(wuerfelfeld, 3, 0, 15, 3);
+		wuerfeltableau.add(haltefeld, 3, 3, 15, 1);
+		wuerfeltableau.add(wuerfeln, 20, 0, 4, 4);
+		wuerfeltableau.setAlignment(Pos.CENTER);
 	// WÜRFELTABLEAU, Ende. 
 		
 		
-		primaryStage.setScene(new Scene(wzt, 500, 125));
+		primaryStage.setScene(new Scene(wuerfeltableau, 500, 125));
 		primaryStage.setTitle("Escalero4 - Bedienfeld");
 		primaryStage.setResizable(true);
 		primaryStage.show();
