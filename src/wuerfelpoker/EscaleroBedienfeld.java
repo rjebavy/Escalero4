@@ -32,7 +32,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.105
+	* @version 0.106
 	* @author Reinhard Jebavy
 	*/
 
@@ -217,7 +217,7 @@ public class EscaleroBedienfeld extends Application {
 			sfeld.setTextFill(Color.LIGHTGRAY);
 			System.out.println("aktualisiereServierfeld, Servierung möglich, gelb");
 		}
-		if(w.isMoeglicheServierung() == true && e.validesMuster() == true){
+		if(w.getGehalten() == 0 && e.validesMuster() == true){
 		// TODO: Audiosignal; Tada.wav? 
 			sfeld.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 			sfeld.setTextFill(Color.WHITE);
