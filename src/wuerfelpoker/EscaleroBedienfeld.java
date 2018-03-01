@@ -21,6 +21,20 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class EscaleroBedienfeld extends Application {
+	
+	// Escalero4 Würfelpoker
+	// Wifi Wien, Software Developer Java Projektarbeit, Q1/2018. 
+	// 
+	// ## Creator
+	//
+	//	**Reinhard Jebavy**
+	//	* <https://github.com/rjebavy> 
+	//
+	/** 
+	* @version 0.98
+	* @author Reinhard Jebavy
+	*/
+
 
 	@Override
 	public void start(Stage primaryStage) {
