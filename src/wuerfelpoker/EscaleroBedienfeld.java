@@ -32,7 +32,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.102
+	* @version 0.103
 	* @author Reinhard Jebavy
 	*/
 
@@ -134,6 +134,14 @@ public class EscaleroBedienfeld extends Application {
 	return rfeld; 
 
 	}
+
+	// Das Eintrageknopffeld mit zwei Knopffeldern oben und unten. 
+	public VBox hinzufuegenEintrageknopffelder() {
+		VBox etknfeld = new VBox(); 
+		HBox etrgknoepfeoben = hinzufuegenKnoepfeOben(); 
+		HBox etrgknoepfeunten = hinzufuegenKnoepfeUnten(); 
+		return etknfeld; 
+	}	
 	
 
 	
