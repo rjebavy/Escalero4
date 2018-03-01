@@ -143,7 +143,12 @@ public class EscaleroBedienfeld extends Application {
 		return etknfeld; 
 	}
 
+	// Das Knopffeld oben mit sechs Knöpfen [9][10][B][D][K][A]. 
+	public HBox hinzufuegenKnoepfeOben() {
+		HBox knoben = new HBox(); 
+		return knoben; 
 
+	}	
 	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
