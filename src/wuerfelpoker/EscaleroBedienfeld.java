@@ -142,12 +142,7 @@ public class EscaleroBedienfeld extends Application {
 	public GridPane erzeugeWuerfeltableau() {
 		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
 		GridPane wtableau = new GridPane();
-		aktualisiereWuerfeltableau(wtableau);
-		return wtableau; 
-	}
-	
-	public void aktualisiereWuerfeltableau(GridPane wtableau) {
-		// Alle FX Nodes erzeugen und initialisieren	
+		// Alle FX Nodes erzeugen	
 		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
 		Label serviert = hinzufuegenServierfeld();
 		Label wz1 = new Label();
@@ -158,12 +153,9 @@ public class EscaleroBedienfeld extends Application {
 		
 		HBox wuerfelfeld = new HBox(); 
 		wuerfelfeld.getChildren().addAll(wz1, wz2, wz3, wz4, wz5);
-		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
-		aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
-			
+		
 		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
-		wurf.initialisiereHaltemaske();
-		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
+		
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
 		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
 
@@ -172,19 +164,36 @@ public class EscaleroBedienfeld extends Application {
 		wtableau.setHgap(5);
 		wtableau.setVgap(5);
 		wtableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
-		wtableau.add(wurfzaehler, 0, 0, 3, 3);
-		wtableau.add(serviert, 0, 3, 3, 1);
-		wtableau.add(wuerfelfeld, 3, 0, 15, 3);
-		wtableau.add(haltefeld, 3, 3, 15, 1);
-		wtableau.add(wuerfeln, 20, 0, 4, 4);
-		wtableau.setAlignment(Pos.CENTER);		
+		wtableau.add(wurfzaehler, 0, 0, 3, 3); // index 0 in der GridPane
+		wtableau.add(serviert, 0, 3, 3, 1); // index 1 in der GridPane
+		wtableau.add(wuerfelfeld, 3, 0, 15, 3); // index 2 in der GridPane
+		wtableau.add(haltefeld, 3, 3, 15, 1); // index 3 in der GridPane
+		wtableau.add(wuerfeln, 20, 0, 4, 4); // index 4 in der GridPane
+		wtableau.setAlignment(Pos.CENTER);	
+		
+		aktualisiereWuerfeltableau(wtableau, wuerfelfeld, wz1, wz2, wz3, wz4, wz5, haltefeld); 
+		System.out.println("erzeugeWuerfeltableau; wtableau, child-node at index 0 = " + wtableau.getChildrenUnmodifiable().get(0));
+		System.out.println("erzeugeWuerfeltableau; wtableau, child-node at index 1 = " + wtableau.getChildrenUnmodifiable().get(1)); 
+		System.out.println("erzeugeWuerfeltableau; wtableau, child-node at index 2 = " + wtableau.getChildrenUnmodifiable().get(2));
+		System.out.println("erzeugeWuerfeltableau; wtableau, child-node at index 3 = " + wtableau.getChildrenUnmodifiable().get(3));
+		System.out.println("erzeugeWuerfeltableau; wtableau, child-node at index 4 = " + wtableau.getChildrenUnmodifiable().get(4));
+		return wtableau; 
+	}
+	
+	public void aktualisiereWuerfeltableau(GridPane wtableau, HBox wfeld, Label wz1, Label wz2, Label wz3, Label wz4, Label wz5, HBox hfeld) {
+		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
+		// aktualisiereWuerfelfeld(wsatz, wfeld, wz1, wz2, wz3, wz4, wz5);
+		aktualisiereWuerfelfeld(wsatz, (HBox) wtableau.getChildrenUnmodifiable().get(2), wz1, wz2, wz3, wz4, wz5);
+		// Haltemaske wird initialisiert alle nicht gehalten. 
+		wurf.initialisiereHaltemaske();
+		if(wurf.getWurfzaehler() == 3) hfeld.setDisable(true); 
+	
 	}	
 	
 	
 	public void neustartWuerfeltableau(GridPane wtableau) {
-		GridPane wt = wtableau; 
 		wurf.setWurfzaehler(3);
-		aktualisiereWuerfeltableau(wtableau);
+		// aktualisiereWuerfeltableau(wtableau, wuerfelfeld, wz1, wz2, wz3, wz4, wz5, haltefeld);
 	}
 	
 // WÜRFELTABLEAU, Ende. 
