@@ -39,7 +39,10 @@ public class EscaleroBedienfeld extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		
+		// Wurf & Würfelsatz initialisieren
+		Wurf wurf = new Wurf(3);
+		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
+		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);	
 
 		//TESTS: 
 			// Würfeln erfolgreich getestet; 18.2.2018. 
@@ -72,7 +75,7 @@ public class EscaleroBedienfeld extends Application {
 		VBox spielstandtableau = new VBox();
 		spielstandtableau.setMinSize(340, 340); 
 		// Würfeltableau ist kein Dummy NODE! 
-		GridPane wuerfeltableau = anzeigenWuerfeltableau();
+		GridPane wuerfeltableau = anzeigenWuerfeltableau(wurf, wsatz, ergebnis);
 		VBox bedientableau = new VBox();
 		bedientableau.setMinSize(340, 139);
 		bedientableau.setAlignment(Pos.CENTER);
@@ -80,7 +83,7 @@ public class EscaleroBedienfeld extends Application {
 			Button nochmal = new Button("Nochmal!"); 
 			nochmal.setFont(Font.font("Tahoma", 10));
 			nochmal.setMinSize(50, 16); 
-			nochmal.setOnAction(event->anzeigenWuerfeltableau());
+			nochmal.setOnAction(event->anzeigenWuerfeltableau(wurf, wsatz, ergebnis));
 			bedientableau.getChildren().addAll(nochmal);
 	
 
@@ -133,12 +136,8 @@ public class EscaleroBedienfeld extends Application {
 	
 
 // GUI Komponente Würfeltableau. 
-	public GridPane anzeigenWuerfeltableau() {
+	public GridPane anzeigenWuerfeltableau(Wurf wurf, Wuerfel[] wsatz, Wurfergebnis ergebnis) {
 		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
-		// Wurf & Würfelsatz initialisieren
-		Wurf wurf = new Wurf(3);
-		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
-		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
 		GridPane wtableau = new GridPane();
 		// Alle FX Nodes erzeugen und initialisieren	
 		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
