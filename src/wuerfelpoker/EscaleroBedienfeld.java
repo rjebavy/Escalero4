@@ -32,7 +32,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.107
+	* @version 0.108
 	* @author Reinhard Jebavy
 	*/
 
@@ -70,10 +70,20 @@ public class EscaleroBedienfeld extends Application {
 	// Top Level FX Node item: ESCALEROBEDIENFELD
 		// Temporäre Dummy-Tableaus
 		VBox spielstandtableau = new VBox();
-		spielstandtableau.setMinSize(340, 340);
+		spielstandtableau.setMinSize(340, 340); 
+		// Würfeltableau ist kein Dummy NODE! 
 		GridPane wuerfeltableau = anzeigenWuerfeltableau();
 		VBox bedientableau = new VBox();
 		bedientableau.setMinSize(340, 139);
+		bedientableau.setAlignment(Pos.CENTER);
+			// Temporär um nicht immer schließen und starten zu müssen. 
+			Button nochmal = new Button("Nochmal!"); 
+			nochmal.setFont(Font.font("Tahoma", 10));
+			nochmal.setMinSize(50, 16); 
+			nochmal.setOnAction(event->anzeigenWuerfeltableau());
+			bedientableau.getChildren().addAll(nochmal);
+	
+
 	// Top-top-level Container Escalero Bedienfeld
 	VBox escalerobedienfeld = new VBox();
 	escalerobedienfeld.setMinSize(340, 666);
