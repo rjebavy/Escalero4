@@ -32,7 +32,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.106
+	* @version 0.107
 	* @author Reinhard Jebavy
 	*/
 
@@ -40,12 +40,6 @@ public class EscaleroBedienfeld extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
-	// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
-		// Wurf & Würfelsatz initialisieren
-		Wurf wurf = new Wurf(3);
-		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
-		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
-
 
 		//TESTS: 
 			// Würfeln erfolgreich getestet; 18.2.2018. 
@@ -56,39 +50,7 @@ public class EscaleroBedienfeld extends Application {
 		
 			
 			
-		// Alle FX Nodes erzeugen und initialisieren	
-		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
-		Label serviert = hinzufuegenServierfeld();
-		Label wz1 = new Label();
-		Label wz2 = new Label();
-		Label wz3 = new Label();
-		Label wz4 = new Label();
-		Label wz5 = new Label();
-		
-		HBox wuerfelfeld = new HBox(); 
-		wuerfelfeld.getChildren().addAll(wz1, wz2, wz3, wz4, wz5);
-		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
-		this.aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
-			
-		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
-		wurf.initialisiereHaltemaske();
-		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
-		Button wuerfeln = hinzufuegenWuerfelnKnopf();
-		wuerfeln.setOnAction(event->this.wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
 
-		GridPane wuerfeltableau = new GridPane();
-		wuerfeltableau.setMinSize(340, 84);
-		wuerfeltableau.setPadding(new Insets(2, 2, 2, 2));
-		wuerfeltableau.setHgap(5);
-		wuerfeltableau.setVgap(5);
-		wuerfeltableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
-		wuerfeltableau.add(wurfzaehler, 0, 0, 3, 3);
-		wuerfeltableau.add(serviert, 0, 3, 3, 1);
-		wuerfeltableau.add(wuerfelfeld, 3, 0, 15, 3);
-		wuerfeltableau.add(haltefeld, 3, 3, 15, 1);
-		wuerfeltableau.add(wuerfeln, 20, 0, 4, 4);
-		wuerfeltableau.setAlignment(Pos.CENTER);
-	// WÜRFELTABLEAU, Ende. 
 		
 
 	// ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 		
@@ -109,6 +71,7 @@ public class EscaleroBedienfeld extends Application {
 		// Temporäre Dummy-Tableaus
 		VBox spielstandtableau = new VBox();
 		spielstandtableau.setMinSize(340, 340);
+		GridPane wuerfeltableau = anzeigenWuerfeltableau();
 		VBox bedientableau = new VBox();
 		bedientableau.setMinSize(340, 139);
 	// Top-top-level Container Escalero Bedienfeld
@@ -121,7 +84,6 @@ public class EscaleroBedienfeld extends Application {
 	primaryStage.setTitle("Escalero4 - Bedienfeld");
 	primaryStage.setResizable(true);
 	primaryStage.show();
-							
 	}
 
 	
@@ -158,6 +120,50 @@ public class EscaleroBedienfeld extends Application {
 	}
 
 // Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
+	
+
+// GUI Komponente Würfeltableau. 
+	public GridPane anzeigenWuerfeltableau() {
+		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
+		// Wurf & Würfelsatz initialisieren
+		Wurf wurf = new Wurf(3);
+		Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
+		Wurfergebnis ergebnis = new Wurfergebnis(wsatz);
+		GridPane wtableau = new GridPane();
+		// Alle FX Nodes erzeugen und initialisieren	
+		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
+		Label serviert = hinzufuegenServierfeld();
+		Label wz1 = new Label();
+		Label wz2 = new Label();
+		Label wz3 = new Label();
+		Label wz4 = new Label();
+		Label wz5 = new Label();
+		
+		HBox wuerfelfeld = new HBox(); 
+		wuerfelfeld.getChildren().addAll(wz1, wz2, wz3, wz4, wz5);
+		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
+		this.aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
+			
+		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
+		wurf.initialisiereHaltemaske();
+		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
+		Button wuerfeln = hinzufuegenWuerfelnKnopf();
+		wuerfeln.setOnAction(event->this.wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
+
+		wtableau.setMinSize(340, 84);
+		wtableau.setPadding(new Insets(2, 2, 2, 2));
+		wtableau.setHgap(5);
+		wtableau.setVgap(5);
+		wtableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+		wtableau.add(wurfzaehler, 0, 0, 3, 3);
+		wtableau.add(serviert, 0, 3, 3, 1);
+		wtableau.add(wuerfelfeld, 3, 0, 15, 3);
+		wtableau.add(haltefeld, 3, 3, 15, 1);
+		wtableau.add(wuerfeln, 20, 0, 4, 4);
+		wtableau.setAlignment(Pos.CENTER);
+	// WÜRFELTABLEAU, Ende. 
+		return wtableau; 
+	}	
 	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
