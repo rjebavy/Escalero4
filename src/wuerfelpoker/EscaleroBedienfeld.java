@@ -32,7 +32,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.109
+	* @version 0.110
 	* @author Reinhard Jebavy
 	*/
 
@@ -86,7 +86,7 @@ public class EscaleroBedienfeld extends Application {
 			Button nochmal = new Button("Nochmal!"); 
 			nochmal.setFont(Font.font("Tahoma", 10));
 			nochmal.setMinSize(50, 16); 
-		//	nochmal.setOnAction(event->anzeigenWuerfeltableau());
+			// nochmal.setOnAction(event->neustartWuerfeltableau(wuerfeltableau));
 			bedientableau.getChildren().addAll(nochmal);
 	
 
@@ -142,6 +142,11 @@ public class EscaleroBedienfeld extends Application {
 	public GridPane erzeugeWuerfeltableau() {
 		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
 		GridPane wtableau = new GridPane();
+		aktualisiereWuerfeltableau(wtableau);
+		return wtableau; 
+	}
+	
+	public void aktualisiereWuerfeltableau(GridPane wtableau) {
 		// Alle FX Nodes erzeugen und initialisieren	
 		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
 		Label serviert = hinzufuegenServierfeld();
@@ -172,10 +177,10 @@ public class EscaleroBedienfeld extends Application {
 		wtableau.add(wuerfelfeld, 3, 0, 15, 3);
 		wtableau.add(haltefeld, 3, 3, 15, 1);
 		wtableau.add(wuerfeln, 20, 0, 4, 4);
-		wtableau.setAlignment(Pos.CENTER);
-	// WÜRFELTABLEAU, Ende. 
-		return wtableau; 
+		wtableau.setAlignment(Pos.CENTER);		
 	}	
+// WÜRFELTABLEAU, Ende. 
+	
 	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
