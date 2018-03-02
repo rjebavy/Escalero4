@@ -72,7 +72,7 @@ public class EscaleroBedienfeld extends Application {
 		VBox spielstandtableau = new VBox();
 		spielstandtableau.setMinSize(340, 340); 
 		// Würfeltableau ist kein Dummy NODE! 
-		GridPane wuerfeltableau = anzeigenWuerfeltableau();
+		GridPane wuerfeltableau = erzeugeWuerfeltableau();
 		VBox bedientableau = new VBox();
 		bedientableau.setMinSize(340, 139);
 		bedientableau.setAlignment(Pos.CENTER);
@@ -80,7 +80,7 @@ public class EscaleroBedienfeld extends Application {
 			Button nochmal = new Button("Nochmal!"); 
 			nochmal.setFont(Font.font("Tahoma", 10));
 			nochmal.setMinSize(50, 16); 
-			nochmal.setOnAction(event->anzeigenWuerfeltableau());
+		//	nochmal.setOnAction(event->anzeigenWuerfeltableau());
 			bedientableau.getChildren().addAll(nochmal);
 	
 
@@ -133,7 +133,7 @@ public class EscaleroBedienfeld extends Application {
 	
 
 // GUI Komponente Würfeltableau. 
-	public GridPane anzeigenWuerfeltableau() {
+	public GridPane erzeugeWuerfeltableau() {
 		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
 		// Wurf & Würfelsatz initialisieren
 		Wurf wurf = new Wurf(3);
