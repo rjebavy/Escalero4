@@ -179,6 +179,12 @@ public class EscaleroBedienfeld extends Application {
 		wtableau.add(wuerfeln, 20, 0, 4, 4);
 		wtableau.setAlignment(Pos.CENTER);		
 	}	
+	
+	
+	public void neustartWuerfeltableau(GridPane wtableau) {
+		
+	}
+	
 // WÜRFELTABLEAU, Ende. 
 	
 	
