@@ -86,7 +86,7 @@ public class EscaleroBedienfeld extends Application {
 			Button nochmal = new Button("Nochmal!"); 
 			nochmal.setFont(Font.font("Tahoma", 10));
 			nochmal.setMinSize(50, 16); 
-			// nochmal.setOnAction(event->neustartWuerfeltableau(wuerfeltableau));
+			nochmal.setOnAction(event->neustartWuerfeltableau(wuerfeltableau));
 			bedientableau.getChildren().addAll(nochmal);
 	
 
@@ -182,7 +182,9 @@ public class EscaleroBedienfeld extends Application {
 	
 	
 	public void neustartWuerfeltableau(GridPane wtableau) {
-		
+		GridPane wt = wtableau; 
+		wurf.setWurfzaehler(3);
+		aktualisiereWuerfeltableau(wtableau);
 	}
 	
 // WÜRFELTABLEAU, Ende. 
