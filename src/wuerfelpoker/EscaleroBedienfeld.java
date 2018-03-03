@@ -172,27 +172,15 @@ public class EscaleroBedienfeld extends Application {
 	
 	
 	public void neustartWuerfeltableau(GridPane wuerfeltableau) {
-		// System.out.println("Anfang von 'neustartWuerfeltableau'; werd ich überhaupt aufgerufen?");
 		GridPane wt = wuerfeltableau; 
-		/* System.out.println("GridPane Würfeltableau; Kind-Node an der Stelle 0 = " + wt.getChildrenUnmodifiable().get(0)); 
-		System.out.println("GridPane Würfeltableau; Kind-Node an der Stelle 1 = " + wt.getChildrenUnmodifiable().get(1)); 
-		System.out.println("GridPane Würfeltableau; Kind-Node an der Stelle 2 = " + wt.getChildrenUnmodifiable().get(2)); 
-		System.out.println("GridPane Würfeltableau; Kind-Node an der Stelle 3 = " + wt.getChildrenUnmodifiable().get(3)); 
-		System.out.println("GridPane Würfeltableau; Kind-Node an der Stelle 4 = " + wt.getChildrenUnmodifiable().get(4)); 
-		*/ 
-		HBox wf = (HBox) wt.getChildrenUnmodifiable().get(3);
-		initialisiereAlleHaltezellen(wf);
 		wurf.setWurfzaehler(3);
 		// FX Nodes initialisieren	
 		aktualisiereWurfzaehler(wurf, (Label) wt.getChildrenUnmodifiable().get(0), (Button) wt.getChildrenUnmodifiable().get(4));
-		/*
 		wurf.initialisiereWuerfelsatz(); 
 		wurf.initialisiereHaltemaske();
 		aktualisiereWuerfelfeld(wsatz, (HBox) wt.getChildrenUnmodifiable().get(2)); 
-		System.out.println("Bin am Ende von 'neustartWuerfeltableau' angelangt");
-		*/
+		
 		}
-
 	
 // WÜRFELTABLEAU, Ende. 
 	
@@ -268,30 +256,6 @@ public class EscaleroBedienfeld extends Application {
 		return wfeld; 
 	}
 	
-	// Vor der nächsten Würfelrunde (temporär getriggert durch Knopf [Nochmal!]) alle Haltecheckboxen von Häkchen befreien! 
-	public void initialisiereAlleHaltezellen(HBox hfeld) {
-		HBox hb = hfeld; 
-		/* System.out.println("Hbox Haltefeld; Kind-Node an der Stelle 0 = " + hb.getChildrenUnmodifiable().get(0)); 
-		System.out.println("Hbox Haltefeld; Kind-Node an der Stelle 1 = " + hb.getChildrenUnmodifiable().get(1)); 
-		System.out.println("Hbox Haltefeld; Kind-Node an der Stelle 2 = " + hb.getChildrenUnmodifiable().get(2)); 
-		System.out.println("Hbox Haltefeld; Kind-Node an der Stelle 3 = " + hb.getChildrenUnmodifiable().get(3)); 
-		System.out.println("Hbox Haltefeld; Kind-Node an der Stelle 4 = " + hb.getChildrenUnmodifiable().get(4)); 
-		*/
-		HBox hf = (HBox) hb.getChildrenUnmodifiable().get(3);
-		System.out.println("Hbox Haltezelle; Kind-Node an der Stelle 0 = " + hf.getChildrenUnmodifiable().get(0)); 
-		System.out.println("Hbox Haltezelle; Kind-Node an der Stelle 1 = " + hf.getChildrenUnmodifiable().get(1)); 
-		/* for(int h = 0; h < 5; h++) {
-			HBox hf = (HBox) hb.getChildrenUnmodifiable().get(3);
-			CheckBox cb = (CheckBox) hf.getChildrenUnmodifiable().get(h); 
-			cb.setSelected(false);
-			boolean status = true; 
-			if(!cb.isSelected()) {
-				status = false;
-			}
-			System.out.println("initialisiereAlleHaltezellen; Checkbox " + hfeld.getChildrenUnmodifiable().get(h) + " wurde auf " + status + " gesetzt!");
-		}
-		*/
-	}
 	
 	public void aktualisiereHaltezelle(Wurf w, CheckBox cb, int i, Wurfergebnis ergebnis, Label serviert) {
 		cb.setOnAction(e->{
