@@ -55,8 +55,8 @@ public class EscaleroBedienfeld extends Application {
 			// Servierungen erkennen, erfolgreich getestet; 28.2.2018. 
 			// wuerfeltableau MinSize aus Scene übernommen, erfolgreich getestet; 1.3.2018. 
 			// GUI Klasse 'Wurfzellentabelle' nach 'EscaleroBedienfeld' migriert, erfolgreich getestet; 1.3.2018. 
-		
-			
+			// 1.3.5.3.1) BUG: Sevierung erkannt obwohl 4 gehalten!! behoben 1.3.18-00:41.  
+			// 5.4.1) BUG:  Bei Wiederholung mit [Nochmal] werden die Haltefelder nicht initialisiert!!! behoben ?. 
 			
 
 		
