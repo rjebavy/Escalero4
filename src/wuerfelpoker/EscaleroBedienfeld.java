@@ -177,7 +177,8 @@ public class EscaleroBedienfeld extends Application {
 	public void neustartWuerfeltableau(GridPane wtableau) {
 		GridPane wt = wtableau; 
 		wurf.setWurfzaehler(3);
-		aktualisiereWuerfeltableau(wtableau);
+		wurf.initialisiereWuerfelsatz(); 
+		aktualisiereWuerfeltableau(wt);
 	}
 	
 // WÜRFELTABLEAU, Ende. 
