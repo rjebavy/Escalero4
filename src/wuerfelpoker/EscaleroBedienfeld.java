@@ -34,7 +34,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.112
+	* @version 0.113
 	* @author Reinhard Jebavy
 	*/
 
@@ -425,8 +425,8 @@ public class EscaleroBedienfeld extends Application {
 		wurf.wuerfleUngehaltene(wsatz);
 		aktualisiereWuerfelfeld(wsatz, wuerfelfeld);
 		ergebnis.initialisiereAuswerten();
-		System.out.println(ergebnis.toString());
 		ergebnis.auswertenAlle(wsatz);
+		System.out.println(ergebnis.toString());
 		aktualisiereServierfeld(wurf, serviert, ergebnis); 
 	}
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 
