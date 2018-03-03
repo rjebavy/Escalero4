@@ -174,10 +174,12 @@ public class EscaleroBedienfeld extends Application {
 	public void neustartWuerfeltableau(GridPane wuerfeltableau) {
 		GridPane wt = wuerfeltableau; 
 		wurf.setWurfzaehler(3);
+		wurf.initialisiereHaltemaske();
+		HBox hf = (HBox) wt.getChildrenUnmodifiable().get(3); 
+		if(wurf.getWurfzaehler() == 3) hf.setDisable(true); 
 		// FX Nodes initialisieren	
 		aktualisiereWurfzaehler(wurf, (Label) wt.getChildrenUnmodifiable().get(0), (Button) wt.getChildrenUnmodifiable().get(4));
 		wurf.initialisiereWuerfelsatz(); 
-		wurf.initialisiereHaltemaske();
 		aktualisiereWuerfelfeld(wsatz, (HBox) wt.getChildrenUnmodifiable().get(2)); 
 		
 		}
