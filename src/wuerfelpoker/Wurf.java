@@ -75,6 +75,13 @@ public class Wurf {
 		return false;
 	}
 	
+	// Gibt alle 5 Würfel des Würfelsatzes frei, alle nicht gehalten. 
+	public void freigebenAlle() {
+		for(int w = 0; w < 5; w++) {
+			nichtgehalten[w] = true;;
+		}
+	}
+	
 	// Zufallszahl im Wertebereich 1-6 berechnen. 
 	public int berechneZufallszahl() {
 		int zahl = (int)(Math.random() * 6 + 1);
