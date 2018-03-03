@@ -78,7 +78,8 @@ public class Wurf {
 	// Gibt alle 5 Würfel des Würfelsatzes frei, alle nicht gehalten. 
 	public void freigebenAlle() {
 		for(int w = 0; w < 5; w++) {
-			nichtgehalten[w] = true;;
+			nichtgehalten[w] = true;
+			System.out.println("Haltemaske, Würfel " + w + " = " + nichtgehalten[w]);
 		}
 	}
 	
