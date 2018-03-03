@@ -1,7 +1,5 @@
 package wuerfelpoker;
 
-import javafx.scene.control.Label;
-
 public class Wurf {
 	private int wurfzaehler = 0; // zählt von 3 auf 0 runter, je Spieler 3 Würfe pro Runde. 
 	private Wuerfel[] wuerfelsatz = new Wuerfel[5]; // Würfelsatz für Würfelfeld mit fünf Würfeln. 
@@ -76,13 +74,6 @@ public class Wurf {
 		System.out.println("\nWürfelnummer außerhalb erlaubten Bereichs (0-4)!");
 		return false;
 	}
-	
-	// Gibt alle 5 Würfel des Würfelsatzes frei, alle nicht gehalten. 
-	public void freigebenAlle() {
-		for(int w = 0; w < 5; w++) {
-			nichtgehalten[w] = true;;
-		}
-	}	
 	
 	// Zufallszahl im Wertebereich 1-6 berechnen. 
 	public int berechneZufallszahl() {
