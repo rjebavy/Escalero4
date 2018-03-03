@@ -21,6 +21,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+
+
 public class EscaleroBedienfeld extends Application {
 	
 	// Escalero4 Würfelpoker
@@ -32,7 +34,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.110
+	* @version 0.111
 	* @author Reinhard Jebavy
 	*/
 
@@ -150,22 +152,13 @@ public class EscaleroBedienfeld extends Application {
 		// Alle FX Nodes erzeugen und initialisieren	
 		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
 		Label serviert = hinzufuegenServierfeld();
-		Label wz1 = new Label();
-		Label wz2 = new Label();
-		Label wz3 = new Label();
-		Label wz4 = new Label();
-		Label wz5 = new Label();
-		
-		HBox wuerfelfeld = new HBox(); 
-		wuerfelfeld.getChildren().addAll(wz1, wz2, wz3, wz4, wz5);
-		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
-		aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
-			
+		Label[] wz = new Label[5];
+		HBox wuerfelfeld = hinzufuegenWuerfelfeld(wz); 
 		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
 		wurf.initialisiereHaltemaske();
 		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
-		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis, wz1, wz2, wz3, wz4, wz5));
+		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
 
 		wtableau.setMinSize(340, 84);
 		wtableau.setPadding(new Insets(2, 2, 2, 2));
@@ -192,17 +185,6 @@ public class EscaleroBedienfeld extends Application {
 	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
-	public Button hinzufuegenWuerfelnKnopf() {
-		Button btw = new Button("W"); 
-		btw.setFont(Font.font("Cambria", 24));
-		btw.setMinSize(30, 30); 
-		return btw;
-	}
-
-	public void deaktiviereWuerfelnKnopf(Button bt) {
-		bt.setDisable(true);
-	}
-	
 	public Label hinzufuegenWurfzaehler(Wurf w) {
 		Label wurfz = new Label(); 
 		wurfz.setMinSize(20, 20);
@@ -255,6 +237,18 @@ public class EscaleroBedienfeld extends Application {
 			System.out.println("aktualisiereServierfeld, Servierung erkannt, grün");
 		}
 	}
+	
+	public HBox hinzufuegenWuerfelfeld(Label[] wz) {
+		HBox wfeld = new HBox(); 
+		for(int i = 0; i < 5; i++) {
+			wz[i] = new Label();
+		}
+		wfeld.getChildren().addAll(wz[0], wz[1], wz[2], wz[3], wz[4]);
+		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
+		aktualisiereWuerfelfeld(wsatz, wfeld); 
+		return wfeld; 
+	}
+	
 	
 	public void aktualisiereHaltezelle(Wurf w, CheckBox cb, int i, Wurfergebnis ergebnis, Label serviert) {
 		cb.setOnAction(e->{
@@ -320,58 +314,73 @@ public class EscaleroBedienfeld extends Application {
 		return hfeld;
 	}
 
-	public void aktualisiereWuerfelfeld(Wuerfel[] ws, HBox wfeld, Label wz1, Label wz2, Label wz3, Label wz4, Label wz5) {
+	public void aktualisiereWuerfelfeld(Wuerfel[] ws, HBox wfeld) {
 		wfeld.setPadding(new Insets(5, 5, 5, 5));
 		wfeld.setSpacing(10);
 		wfeld.setAlignment(Pos.CENTER);
 		// Würfel 1
 		int wuerfel = 0; 
-		wz1.setMinSize(34, 34);
-		wz1.setAlignment(Pos.CENTER);
-		wz1.setFont(Font.font("Cambria", 22));
-		setzeTextfarbe(ws[0], wz1);
-		wz1.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
-		wz1.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));
-		wz1.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
+		Label wuze1 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
+		wuze1.setMinSize(34, 34); 
+		wuze1.setAlignment(Pos.CENTER);
+		wuze1.setFont(Font.font("Cambria", 22));
+		setzeTextfarbe(ws[0], wuze1);
+		wuze1.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
+		wuze1.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));
+		wuze1.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
 		// Würfel 2	
 		wuerfel++; 
-		wz2.setMinSize(34, 34);
-		wz2.setAlignment(Pos.CENTER);
-		wz2.setFont(Font.font("Cambria", 22));
-		setzeTextfarbe(ws[1], wz2);
-		wz2.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
-		wz2.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
-		wz2.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
+		Label wuze2 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
+		wuze2.setMinSize(34, 34);
+		wuze2.setAlignment(Pos.CENTER);
+		wuze2.setFont(Font.font("Cambria", 22));
+		setzeTextfarbe(ws[1], wuze2);
+		wuze2.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
+		wuze2.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
+		wuze2.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
 		// Würfel 3		
 		wuerfel++;  
-		wz3.setMinSize(34, 34);
-		wz3.setAlignment(Pos.CENTER);
-		wz3.setFont(Font.font("Cambria", 22));
-		setzeTextfarbe(ws[2], wz3);
-		wz3.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
-		wz3.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
-		wz3.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
+		Label wuze3 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
+		wuze3.setMinSize(34, 34);
+		wuze3.setAlignment(Pos.CENTER);
+		wuze3.setFont(Font.font("Cambria", 22));
+		setzeTextfarbe(ws[2], wuze3);
+		wuze3.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
+		wuze3.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
+		wuze3.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
 		// Würfel 4	
 		wuerfel++;  
-		wz4.setMinSize(34, 34);
-		wz4.setAlignment(Pos.CENTER);
-		wz4.setFont(Font.font("Cambria", 22));
-		setzeTextfarbe(ws[3], wz4);
-		wz4.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
-		wz4.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
-		wz4.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
+		Label wuze4 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
+		wuze4.setMinSize(34, 34);
+		wuze4.setAlignment(Pos.CENTER);
+		wuze4.setFont(Font.font("Cambria", 22));
+		setzeTextfarbe(ws[3], wuze4);
+		wuze4.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
+		wuze4.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
+		wuze4.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
 		// Würfel 5	
 		wuerfel++;  
-		wz5.setMinSize(34, 34);
-		wz5.setAlignment(Pos.CENTER);
-		wz5.setFont(Font.font("Cambria", 22));
-		setzeTextfarbe(ws[4], wz5);
-		wz5.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
-		wz5.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
-		wz5.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
-		
+		Label wuze5 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
+		wuze5.setMinSize(34, 34);
+		wuze5.setAlignment(Pos.CENTER);
+		wuze5.setFont(Font.font("Cambria", 22));
+		setzeTextfarbe(ws[4], wuze5);
+		wuze5.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(4), null)));
+		wuze5.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
+		wuze5.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
 	}
 
+	public Button hinzufuegenWuerfelnKnopf() {
+		Button btw = new Button("W"); 
+		btw.setFont(Font.font("Cambria", 24));
+		btw.setMinSize(30, 30); 
+		return btw;
+	}
+
+	public void deaktiviereWuerfelnKnopf(Button bt) {
+		bt.setDisable(true);
+	}
+	
 	public void setzeTextfarbe(Wuerfel ws, Label wz) {
 		switch (ws.getWert()) {
 		case 1:
@@ -397,13 +406,13 @@ public class EscaleroBedienfeld extends Application {
 		}
 	}
 	
-	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Wurfergebnis ergebnis, Label wz1, Label wz2, Label wz3, Label wz4, Label wz5) {
+	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Wurfergebnis ergebnis) {
 		wurf.wurfRunterzaehlen();
 		aktualisiereWurfzaehler(wurf, wurfzaehler, wuerfeln);
 		if(wurf.getWurfzaehler() == 2 || wurf.getWurfzaehler() == 1) hf.setDisable(false);
 		if(wurf.getWurfzaehler() == 0) hf.setDisable(true);
 		wurf.wuerfleUngehaltene(wsatz);
-		aktualisiereWuerfelfeld(wsatz, wuerfelfeld, wz1, wz2, wz3, wz4, wz5);
+		aktualisiereWuerfelfeld(wsatz, wuerfelfeld);
 		ergebnis.initialisiereAuswerten();
 		System.out.println(ergebnis.toString());
 		ergebnis.auswertenAlle(wsatz);
