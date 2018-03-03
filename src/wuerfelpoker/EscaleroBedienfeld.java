@@ -34,7 +34,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.111
+	* @version 0.112
 	* @author Reinhard Jebavy
 	*/
 
@@ -143,13 +143,8 @@ public class EscaleroBedienfeld extends Application {
 // GUI Komponente Würfeltableau. 
 	public GridPane erzeugeWuerfeltableau() {
 		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
+		// Alle FX Nodes erzeugen
 		GridPane wtableau = new GridPane();
-		aktualisiereWuerfeltableau(wtableau);
-		return wtableau; 
-	}
-	
-	public void aktualisiereWuerfeltableau(GridPane wtableau) {
-		// Alle FX Nodes erzeugen und initialisieren	
 		Label wurfzaehler = hinzufuegenWurfzaehler(wurf);
 		Label serviert = hinzufuegenServierfeld();
 		Label[] wz = new Label[5];
@@ -170,16 +165,22 @@ public class EscaleroBedienfeld extends Application {
 		wtableau.add(wuerfelfeld, 3, 0, 15, 3);
 		wtableau.add(haltefeld, 3, 3, 15, 1);
 		wtableau.add(wuerfeln, 20, 0, 4, 4);
-		wtableau.setAlignment(Pos.CENTER);		
-	}	
-	
-	
-	public void neustartWuerfeltableau(GridPane wtableau) {
-		GridPane wt = wtableau; 
-		wurf.setWurfzaehler(3);
-		wurf.initialisiereWuerfelsatz(); 
-		aktualisiereWuerfeltableau(wt);
+		wtableau.setAlignment(Pos.CENTER);	
+		
+		return wtableau; 
 	}
+	
+	
+	public void neustartWuerfeltableau(GridPane wuerfeltableau) {
+		GridPane wt = wuerfeltableau; 
+		wurf.setWurfzaehler(3);
+		// FX Nodes initialisieren	
+		aktualisiereWurfzaehler(wurf, (Label) wt.getChildrenUnmodifiable().get(0), (Button) wt.getChildrenUnmodifiable().get(4));
+		wurf.initialisiereWuerfelsatz(); 
+		wurf.initialisiereHaltemaske();
+		aktualisiereWuerfelfeld(wsatz, (HBox) wt.getChildrenUnmodifiable().get(2)); 
+		
+		}
 	
 // WÜRFELTABLEAU, Ende. 
 	
@@ -200,8 +201,13 @@ public class EscaleroBedienfeld extends Application {
 
 	public void aktualisiereWurfzaehler(Wurf w, Label wurfz, Button bt) {
 		Integer wz = w.getWurfzaehler();
-		if(wz == 0) 
+		System.out.println("aktualisiereWurfzaehler; getWurfzahler = " + wz); 
+		if(wz == 0) {
 			deaktiviereWuerfelnKnopf(bt);
+		}
+		if(wz == 3) {
+			aktiviereWuerfelnKnopf(bt);
+		}
 		String wzz = wz.toString() + ".";
 		wurfz.setText(wzz);
 	}
@@ -380,6 +386,10 @@ public class EscaleroBedienfeld extends Application {
 
 	public void deaktiviereWuerfelnKnopf(Button bt) {
 		bt.setDisable(true);
+	}
+
+	public void aktiviereWuerfelnKnopf(Button bt) {
+		bt.setDisable(false);
 	}
 	
 	public void setzeTextfarbe(Wuerfel ws, Label wz) {
