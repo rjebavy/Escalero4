@@ -1,4 +1,4 @@
-package wuerfelpoker;
+package at.rejeb.escalero4.bedienfeld;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import at.rejeb.escalero4.wuerfeltableau.*;
 
 
 
