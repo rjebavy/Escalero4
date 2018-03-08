@@ -34,7 +34,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.114
+	* @version 0.115
 	* @author Reinhard Jebavy
 	*/
 
