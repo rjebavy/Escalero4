@@ -57,7 +57,7 @@ public class EscaleroBedienfeld extends Application {
 			// GUI Klasse 'Wurfzellentabelle' nach 'EscaleroBedienfeld' migriert, erfolgreich getestet; 1.3.2018. 
 			// 1.3.5.3.1) BUG: Sevierung erkannt obwohl 4 gehalten!! behoben 1.3.18-00:41.  
 			// 5.4.1) BUG:  Bei Wiederholung mit [Nochmal] werden die Haltefelder nicht initialisiert!!! behoben ?. 
-			
+			// Git Ghost Commit, Branch test "declarative-Gui ..", HEAD on master; 8.3.2018. 
 
 		
 
