@@ -1,0 +1,206 @@
+/*
+ * Copyright (c) 2011, 2014, Oracle and/or its affiliates.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * This file is available and licensed under the following license:
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  - Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the distribution.
+ *  - Neither the name of Oracle nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
+/* 
+    Document   : escaleroStyle1
+*/
+
+ 
+.root{
+    -fx-font-size: 16pt;
+    -fx-font-family: "Courier New";
+    
+    -fx-base: #ececec;
+    -fx-background: derive(-fx-base,26.4%);
+    
+    -fx-default-button: #ABD8ED;
+    
+        /* The color that is used in styling controls. The default value is based
+     * on -fx-base, but is changed by pseudoclasses to change the base color.
+     * For example, the "hover" pseudoclass will typically set -fx-color to
+     * -fx-hover-base (see below) and the "armed" pseudoclass will typically
+     * set -fx-color to -fx-pressed-base.
+     */
+    -fx-color: -fx-base;
+
+    /* Chart Color Palette */
+    CHART_COLOR_1: #f3622d;
+    CHART_COLOR_2: #fba71b;
+    CHART_COLOR_3: #57b757;
+    CHART_COLOR_4: #41a9c9;
+    CHART_COLOR_5: #4258c9;
+    CHART_COLOR_6: #9a42c8;
+    CHART_COLOR_7: #c84164;
+    CHART_COLOR_8: #888888;
+    /* Chart Color Palette Semi-Transparent
+     * These are used by charts that need semi transparent versions of the above colors, such as BubbleChart. They
+     * are exactly the same colors as above just with alpha
+     *
+     * 20% opacity
+     */
+    CHART_COLOR_1_TRANS_20: #f3622d33;
+    CHART_COLOR_2_TRANS_20: #fba71b33;
+    CHART_COLOR_3_TRANS_20: #57b75733;
+    CHART_COLOR_4_TRANS_20: #41a9c933;
+    CHART_COLOR_5_TRANS_20: #4258c933;
+    CHART_COLOR_6_TRANS_20: #9a42c833;
+    CHART_COLOR_7_TRANS_20: #c8416433;
+    CHART_COLOR_8_TRANS_20: #88888833;
+    /* 70% opacity */
+    CHART_COLOR_1_TRANS_70: #f3622db3;
+    CHART_COLOR_2_TRANS_70: #fba71bb3;
+    CHART_COLOR_3_TRANS_70: #57b757b3;
+    CHART_COLOR_4_TRANS_70: #41a9c9b3;
+    CHART_COLOR_5_TRANS_70: #4258c9b3;
+    CHART_COLOR_6_TRANS_70: #9a42c8b3;
+    CHART_COLOR_7_TRANS_70: #c84164b3;
+    CHART_COLOR_8_TRANS_70: #888888b3;
+    
+    -fx-shadow-highlight-color: ladder(
+        -fx-background,
+        rgba(255,255,255,0.07) 0%,
+        rgba(255,255,255,0.07) 20%,
+        rgba(255,255,255,0.07) 70%,
+        rgba(255,255,255,0.7) 90%,
+        rgba(255,255,255,0.75) 100%
+      );
+      
+    /* -fx-outer-border: derive(-fx-color,-23%); +/
+
+   /*  -fx-inner-border: linear-gradient(to bottom,
+                ladder(
+                    -fx-color,
+                    derive(-fx-color,30%) 0%,
+                    derive(-fx-color,20%) 40%,
+                    derive(-fx-color,25%) 60%,
+                    derive(-fx-color,55%) 80%,
+                    derive(-fx-color,55%) 90%,
+                    derive(-fx-color,75%) 100%
+                ),
+                ladder(
+                    -fx-color,
+                    derive(-fx-color,20%) 0%,
+                    derive(-fx-color,10%) 20%,
+                    derive(-fx-color,5%) 40%,
+                    derive(-fx-color,-2%) 60%,
+                    derive(-fx-color,-5%) 100%
+                )); */
+                
+    -fx-body-color: linear-gradient(to bottom,
+            ladder(
+                -fx-color,
+                derive(-fx-color,8%) 75%,
+                derive(-fx-color,10%) 80%
+            ),
+            derive(-fx-color,-8%));
+
+    -fx-text-base-color: ladder(
+        -fx-color,
+        -fx-light-text-color 45%,
+        -fx-dark-text-color  46%,
+        -fx-dark-text-color  59%,
+        -fx-mid-text-color   60%
+    );
+    
+}
+ 
+
+/* ====   BUTTON LIKE THINGS   ============================================== */
+
+.button,
+.toggle-button,
+.radio-button > .radio,
+.check-box > .box,
+.menu-button,
+.choice-box,
+.color-picker.split-button > .color-picker-label,
+.combo-box-base,
+.combo-box-base:editable > .arrow-button {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+}
+
+
+/* .button{
+    -fx-border-color: rgb(49, 89, 23);
+    -fx-border-radius: 5;
+    -fx-padding: 3 6 6 6;
+}
+
+ 
+.borders{
+    -fx-border-color: rgb(103, 100, 78);
+    -fx-border-style: dotted;
+    -fx-border-width: 1.5;
+    -fx-border-insets: -5;
+}
+*/
+
+/*******************************************************************************
+ *                                                                             *
+ * Label                                                                       *
+ *                                                                             *
+ ******************************************************************************/
+
+.label {
+    -fx-background: beige;
+    -fx-background-radius: 4;
+    -fx-border-color: olive;
+    -fx-border-style: solid;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-content-display: CENTER;
+}
+.wurfZaehlerBox {
+    /* -fx-border-color: derive(-fx-base,26.4%); */
+    -fx-border-width: 0;
+    -fx-content-display: CENTER;
+}
+
+.wurfZaehler {
+    -fx-text-fill: olive;
+    -fx-border-color: derive(-fx-base,26.4%);
+    -fx-border-width: 0;
+    -fx-content-display: CENTER;
+}
+
+.grid-pane {
+	-fx-border-color: olive;
+    -fx-border-style: solid;
+    -fx-border-width: 1;
+    -fx-border-radius: 2;
+}
