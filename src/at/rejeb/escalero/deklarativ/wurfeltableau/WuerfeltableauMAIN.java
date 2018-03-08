@@ -51,6 +51,7 @@ public class WuerfeltableauMAIN extends Application {
     public WuerfeltableauMAIN() {
     	// Add some sample data
     		wuerfelData.addAll(wsatz);
+    		// TODO zaehlerData
     }
     
     /**
@@ -65,7 +66,7 @@ public class WuerfeltableauMAIN extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage; 
-		this.primaryStage.setTitle("Test Würfeltableau deklarativ");
+		this.primaryStage.setTitle("Escalero deklarativ: Würfeltableau. ");
 		
 		initWuerfelTableau();
 		

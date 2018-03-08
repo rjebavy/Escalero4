@@ -35,9 +35,14 @@ public class WurfZaehlerController {
      */
     @FXML
     private void initialize() {
-        // Initialize the Wurfzähler with the Wurfzählerwert. 
+        // Initialize the Wurfzähler with the Wurfzählerwert 3. 
     	this.initialisiereWurfZaehler();
-    	// wurfZaehler.setText();
+		Integer wzw = wz.getZaehlerWert();
+		String wzz = wzw.toString() + ".";
+		System.out.println("initialize(); wzw: " + wzz);
+		// gleich mittesten ob heruntergezählt wird? 2. 
+		this.wurfRunterzaehlen();
+		wurfZaehler.setText(wzz);
 
     }
 
@@ -67,15 +72,19 @@ public class WurfZaehlerController {
   
 	// Wurfzähler von 3 auf 0 runterzählen. 
 	public void wurfRunterzaehlen() {
-		if(wz.getWurfZaehlerWert() > 0 && wz.getWurfZaehlerWert() <= 3) 
-			wz.setWurfZaehlerWert(wz.getWurfZaehlerWert()-1);
-		else
+		System.out.println("Hallo hier wurfRunterzaehlen");
+		if(wz.getZaehlerWert() > 0 && wz.getZaehlerWert() <= 3) { 
+			wz.setZaehlerWert(wz.getZaehlerWert()-1);
+			System.out.println("wurfRunterzaehlen; Wurfzähler: " + wz.getZaehlerWert());	
+			}
+		else {
 			System.out.println("\nWurfzähler außerhalb erlaubten Bereichs (1-3)!");	
+		}
 	}
 
 
 	public static int getZaehlerWert() {
-		return wz.getWurfZaehlerWert();
+		return wz.getZaehlerWert();
 	}
     
 	

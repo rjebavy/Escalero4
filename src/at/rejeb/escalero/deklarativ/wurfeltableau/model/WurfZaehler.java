@@ -33,15 +33,15 @@ public class WurfZaehler {
 
 	
 	// Standard Getter & Setter
-	public int getWurfZaehlerWert() {
+	public int getZaehlerWert() {
 		return zaehlerWert.get();
 	}
 
-	public void setWurfZaehlerWert(int wurfZaehlerWert) {
-		this.zaehlerWert.set(wurfZaehlerWert);;
+	public void setZaehlerWert(int zaehlerWert) {
+		this.zaehlerWert.set(zaehlerWert);;
 	}
 	
-    public IntegerProperty wurfZaehlerWertProperty() {
+    public IntegerProperty zaehlerWertProperty() {
         return zaehlerWert;
     }
 	
