@@ -175,9 +175,15 @@ public class EscaleroBedienfeld extends Application {
 		wurf.setWurfzaehler(3);
 		// FX Nodes initialisieren	
 		aktualisiereWurfzaehler(wurf, (Label) wt.getChildrenUnmodifiable().get(0), (Button) wt.getChildrenUnmodifiable().get(4));
+			System.out.println("aktualisiereWurfzaehler, wt.getChildren 0? " + (Label) wt.getChildrenUnmodifiable().get(0));
+			System.out.println("aktualisiereWurfzaehler, wt.getChildren 4? " + (Button) wt.getChildrenUnmodifiable().get(4));
 		wurf.initialisiereWuerfelsatz(); 
 		wurf.initialisiereHaltemaske();
 		aktualisiereWuerfelfeld(wsatz, (HBox) wt.getChildrenUnmodifiable().get(2)); 
+		HBox haltefeld = (HBox) wt.getChildrenUnmodifiable().get(3); 
+		Label serviert = (Label) wt.getChildrenUnmodifiable().get(1); 
+		loescheHaltefeld(wurf, haltefeld, ergebnis, serviert);
+		
 		
 		}
 	
@@ -267,6 +273,17 @@ public class EscaleroBedienfeld extends Application {
 				aktualisiereServierfeld(w, serviert, ergebnis);
 			}
 		});
+	}
+	
+	public void loescheHaltefeld(Wurf w, HBox hfeld, Wurfergebnis ergebnis, Label serviert) {
+		for(int h = 0; h < 5; h++) {
+			HBox hb = (HBox) hfeld.getChildrenUnmodifiable().get(h);
+			CheckBox cb = (CheckBox) hb.getChildrenUnmodifiable().get(1); 
+			// aktualisiereHaltezelle( w,  cb, h,  ergebnis, serviert);
+			cb.setSelected(false);
+			System.out.println("Hier bei aktualisiereHaltefeld");
+		}
+		
 	}
 	
 	public HBox hinzufuegenHaltefeld(Wurf w, Wurfergebnis ergebnis, Label serviert) {
