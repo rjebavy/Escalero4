@@ -173,6 +173,7 @@ public class EscaleroBedienfeld extends Application {
 	public void neustartWuerfeltableau(GridPane wuerfeltableau) {
 		GridPane wt = wuerfeltableau; 
 		wurf.setWurfzaehler(3);
+		ergebnis.initialisiereAuswerten();
 		// FX Nodes initialisieren	
 		aktualisiereWurfzaehler(wurf, (Label) wt.getChildrenUnmodifiable().get(0), (Button) wt.getChildrenUnmodifiable().get(4));
 			System.out.println("aktualisiereWurfzaehler, wt.getChildren 0? " + (Label) wt.getChildrenUnmodifiable().get(0));
@@ -182,8 +183,9 @@ public class EscaleroBedienfeld extends Application {
 		aktualisiereWuerfelfeld(wsatz, (HBox) wt.getChildrenUnmodifiable().get(2)); 
 		HBox haltefeld = (HBox) wt.getChildrenUnmodifiable().get(3); 
 		Label serviert = (Label) wt.getChildrenUnmodifiable().get(1); 
-		loescheHaltefeld(wurf, haltefeld, ergebnis, serviert);
-		
+		// neu ab 9.3.18-11:15. 
+			loescheHaltefeld(wurf, haltefeld, ergebnis, serviert);
+		aktualisiereServierfeld(wurf, serviert, ergebnis);
 		
 		}
 	
@@ -235,18 +237,18 @@ public class EscaleroBedienfeld extends Application {
 		if(w.isMoeglicheServierung() == false || w.getGehalten() > 0){
 			sfeld.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 			sfeld.setTextFill(Color.LIGHTGRAY);
-			System.out.println("aktualisiereServierfeld, Servierung unmöglich, rot");
+			System.out.println("aktualisiereServierfeld, Servierung unmöglich, rot; w.getGehalten(): " + w.getGehalten());
 		}
 		if(w.getGehalten() == 0 && e.validesMuster() == false){
 			sfeld.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
 			sfeld.setTextFill(Color.LIGHTGRAY);
-			System.out.println("aktualisiereServierfeld, Servierung möglich, gelb");
+			System.out.println("aktualisiereServierfeld, Servierung möglich, gelb; w.getGehalten(): " + w.getGehalten());
 		}
 		if(w.getGehalten() == 0 && e.validesMuster() == true){
 		// TODO: Audiosignal; Tada.wav? 
 			sfeld.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 			sfeld.setTextFill(Color.WHITE);
-			System.out.println("aktualisiereServierfeld, Servierung erkannt, grün");
+			System.out.println("aktualisiereServierfeld, Servierung erkannt, grün; w.getGehalten(): " + w.getGehalten());
 		}
 	}
 	

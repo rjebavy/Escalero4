@@ -127,6 +127,7 @@ public class Wurf {
 		return gehalten;
 	}
 
+	
 	public void setWurfzaehler(int wurfzaehler) {
 		this.wurfzaehler = wurfzaehler;
 	}
