@@ -71,7 +71,7 @@ public class EscaleroBedienfeld extends Application {
 			// 0.4.5.1) GIT-BRANCH einrichten!! Deklarative Oberfläche ab Version 0.115. 
 		
 
-	// Top Level FX Node item: ESCALEROBEDIENFELD
+// Top Level FX Node item: ESCALEROBEDIENFELD
 		// Temporäre Dummy-Tableaus
 		VBox spielstandtableau = new VBox();
 		spielstandtableau.setMinSize(340, 340); 
@@ -79,6 +79,7 @@ public class EscaleroBedienfeld extends Application {
 		GridPane wuerfeltableau = erzeugeWuerfeltableau();
 		// Ergebnistableau ist kein Dummy Tableau! 
 		GridPane ergebnistableau = erzeugeErgebnistableau();
+		neustartErgebnistableau(ergebnistableau);
 		
 		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
 		VBox bedientableau = new VBox();
@@ -107,7 +108,8 @@ public class EscaleroBedienfeld extends Application {
 	// Top Level FX Node item: ESCALEROBEDIENFELD, Ende. 
 
 
-	// ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 	
+// ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 
+	// Erzeugermethode. 
 	public GridPane erzeugeErgebnistableau() {
 			// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
 			// Alle FX Nodes erzeugen
@@ -147,11 +149,6 @@ public class EscaleroBedienfeld extends Application {
 			musterfeld.getChildren().addAll(Muster[0], Muster[1], Muster[2], Muster[3], Muster[4], Muster[5]);
 		eintrageknopffelder.getChildren().addAll(bilderfeld, musterfeld);			
 		// GridPane.add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan). 
-		ergebnisfeld.initialisereErgebnisknoepfe(reihenKnopf, bilderKnopf, musterKnopf); 
-		
-		
-		
-		// ergebnisfeld.aktiviereBilderknoepfe(ergebnis, bilderKnopf);
 		
 		etableau.add(reihenfeld, 0, 0, 1, 1);
 		etableau.add(eintrageknopffelder, 0, 1, 1, 1);
@@ -160,9 +157,17 @@ public class EscaleroBedienfeld extends Application {
 		return etableau; 
 	}
 	
+	// Aktualisierungsmethode. 	
+	public void neustartErgebnistableau(GridPane ergebnistableau) {
+		// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
+
+		// ergebnisfeld.aktiviereBilderknoepfe(ergebnis, bilderKnopf);
+	}
+	
+	
 	// ERGEBNISTABLEAU, Ende. 		
 	
-// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
+	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	
 	// Für das Reihenfeld mit Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3]. 
 	public HBox hinzufuegenReihenfeld() {
@@ -314,10 +319,11 @@ public class EscaleroBedienfeld extends Application {
 		}
 	}
 
-// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
+	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	
 
 // GUI Komponente Würfeltableau. 
+	// Erzeugermethode. 
 	public GridPane erzeugeWuerfeltableau() {
 		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
 		// Alle FX Nodes erzeugen
@@ -349,7 +355,7 @@ public class EscaleroBedienfeld extends Application {
 		return wtableau; 
 	}
 	
-	
+	// Aktualisierungsmethode. 	
 	public void neustartWuerfeltableau(GridPane wuerfeltableau) {
 		GridPane wt = wuerfeltableau; 
 		wurf.setWurfzaehler(3);
@@ -370,9 +376,9 @@ public class EscaleroBedienfeld extends Application {
 		
 		}
 	
-// WÜRFELTABLEAU, Ende. 
+	// WÜRFELTABLEAU, Ende. 
 	
-// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
+	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
 	public Label hinzufuegenWurfzaehler(Wurf w) {
 		Label wurfz = new Label(); 
 		wurfz.setMinSize(20, 20);
