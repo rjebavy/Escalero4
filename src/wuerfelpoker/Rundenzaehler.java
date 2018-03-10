@@ -5,6 +5,7 @@ public class Rundenzaehler {
 	
 	// Konstruktor 
 	public Rundenzaehler(int runden) {
+		super();
 		this.runden = runden;
 		}
 
