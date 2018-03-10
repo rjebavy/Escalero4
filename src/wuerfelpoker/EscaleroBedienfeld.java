@@ -213,7 +213,8 @@ public class EscaleroBedienfeld extends Application {
 			Reihe[b] = new Button(btext);
 			Reihe[b].setMinSize(25, 18);
 			Reihe[b].setFont(Font.font("Tahoma", 10));
-			Reihe[b].setDisable(true);
+			Reihe[b].setTextFill(Color.BLACK);
+			// Reihe[b].setDisable(true);
 
 		}	
 		return Reihe; 
