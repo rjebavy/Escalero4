@@ -30,7 +30,7 @@ public class Wuerfel {
 				bild = "Dame";
 				break;
 			case 5:
-				bild = "Koenig";
+				bild = "König";
 				break;
 			case 6:
 				bild = "Ass";

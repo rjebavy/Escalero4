@@ -256,7 +256,8 @@ public class EscaleroBedienfeld extends Application {
 			Bilder[b] = new Button(btext+suffix);
 			Bilder[b].setMinSize(30, 18);
 			Bilder[b].setFont(Font.font("Tahoma", 10));
-			Bilder[b].setDisable(true);
+			Bilder[b].setTextFill(Color.ROYALBLUE);
+			// Bilder[b].setDisable(true);
 		}	
 		return Bilder; 
 	}
@@ -269,24 +270,20 @@ public class EscaleroBedienfeld extends Application {
 	
 	// Musterknöpfe
 	public Button[] hinzufuegenMusterknoepfe() {
-		// TODO nicht Würfelbilder sondern Musternamen!! 
+		// TODO nicht Würfelbilder sondern Muster bzw. Aktionsnamen!! 
+		String btext = "";
 		for(int b = 0; b < 6; b++) {
-			int offset = 1; 
-			String btext = wsatz[0].waehleBild(b+offset);
-			String suffix = " "; 
-			if(b == 0 || b == 1) {
-				suffix = "er";
-			}
-			if(b == 2 || b == 3) {
-				suffix = "n";
-			}
-			if(b == 4 || b == 5) {
-				suffix = "e";
-			}
-			Muster[b] = new Button(btext+suffix);
+			if(b == 0) {btext = "Straße";}
+			if(b == 1) {btext = "FullHouse";}
+			if(b == 2) {btext = "Poker";}
+			if(b == 3) {btext = "Grande";}
+			if(b == 4) {btext = "streiche";}
+			if(b == 5) {btext = "lösche";}
+			Muster[b] = new Button(btext);
 			Muster[b].setMinSize(30, 18);
 			Muster[b].setFont(Font.font("Tahoma", 10));
-			Muster[b].setDisable(true);
+			Muster[b].setTextFill(Color.ROYALBLUE);
+			// Muster[b].setDisable(true);
 		}	
 		return Muster; 
 	}
