@@ -1,6 +1,8 @@
 package wuerfelpoker;
 
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class Ergebnisfeld {
 	private int eintrageWert;
@@ -139,6 +141,19 @@ public class Ergebnisfeld {
 	// Knopf [x]
 	public void letztenEintragLoeschen() {
 		// TODO
+	}
+	
+	// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
+	public void initialisereErgebnisknoepfe(Button[] reihenKnopf, Button[] bilderKnopf, Button[] musterKnopf) {
+		for(int rb = 0; rb < 3; rb++) {
+			reihenKnopf[rb].setDisable(true);
+		}	
+		for(int bb = 0; bb < 6; bb++) {
+			bilderKnopf[bb].setDisable(true);
+		}	
+		for(int mb = 0; mb < 6; mb++) {
+			musterKnopf[mb].setDisable(true);
+		}	
 	}
 	
 	// Aktiviere Bilderknöpfe nach Wurfergebnis. 

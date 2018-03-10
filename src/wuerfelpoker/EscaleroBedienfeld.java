@@ -102,7 +102,11 @@ public class EscaleroBedienfeld extends Application {
 			musterfeld.getChildren().addAll(Muster[0], Muster[1], Muster[2], Muster[3], Muster[4], Muster[5]);
 		eintrageknopffelder.getChildren().addAll(bilderfeld, musterfeld);			
 		// GridPane.add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan). 
-		ergebnisfeld.aktiviereBilderknoepfe(ergebnis, bilderKnopf);
+		ergebnisfeld.initialisereErgebnisknoepfe(reihenKnopf, bilderKnopf, musterKnopf); 
+		
+		
+		
+		// ergebnisfeld.aktiviereBilderknoepfe(ergebnis, bilderKnopf);
 		
 		ergebnistableau.add(reihenfeld, 0, 0, 1, 1);
 		ergebnistableau.add(eintrageknopffelder, 0, 1, 1, 1);
