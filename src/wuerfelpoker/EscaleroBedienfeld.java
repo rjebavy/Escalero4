@@ -718,6 +718,7 @@ public class EscaleroBedienfeld extends Application {
 		bt = (Button) wtableau.getChildrenUnmodifiable().get(4);
 		deaktiviereWuerfelnKnopf(bt);
 		aktiviereBilderknoepfe(ergebnis); 
+		// TODO aktiviereMusterknoepfe();
 
 	}
 	
