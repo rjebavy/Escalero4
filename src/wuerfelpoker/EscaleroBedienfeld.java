@@ -192,7 +192,9 @@ public class EscaleroBedienfeld extends Application {
 	}
 	
 	public Label hinzufuegenEintragenWas() {
-		Label efeld = new Label("FullHouse serviert. "); // 5 Smileys; Unicode [Alt]+[1]; leider nicht!  
+		ergebnisfeld.initialisiereErgebnisfeld();
+		String ltext = ergebnisfeld.getEintragenText();
+		Label efeld = new Label(ltext); // für Ergebnistableau-Test stand da "FullHouse serviert." drin.   
 		efeld.setPadding(new Insets(2, 2, 2, 2));
 		efeld.setMinSize(120, 20);
 		efeld.setFont(Font.font("Tahoma", 12));

@@ -13,7 +13,7 @@ public class Ergebnisfeld {
 	// Ergebnisfeld leeren. 
 	public void initialisiereErgebnisfeld() {
 		eintrageWert = 0;
-		eintragenText = " ";
+		eintragenText = "noch kein Ergebnis. ";
 	}
 	
 	// Text und Werte für Würfelbilder. 
