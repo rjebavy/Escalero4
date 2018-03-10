@@ -83,11 +83,10 @@ public class EscaleroBedienfeld extends Application {
 		GridPane wuerfeltableau = erzeugeWuerfeltableau();
 		// Ergebnistableau ist kein Dummy Tableau! 
 		GridPane ergebnistableau = erzeugeErgebnistableau();
-		neustartErgebnistableau(ergebnistableau);
+		// neustartErgebnistableau(ergebnistableau);
 // >>>>		// Test initialisiereErgebnisknoepfe()
-		initialisiereErgebnisknoepfe(); 
-		
-		aktiviereBilderknoepfe(ergebnis);
+		// initialisiereErgebnisknoepfe(); 
+				
 		
 		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
 		VBox bedientableau = new VBox();
@@ -156,7 +155,7 @@ public class EscaleroBedienfeld extends Application {
 				// TODO bilderKnopf[5].setOnAction(event->ergebnisfeld.eintragenAsse(ergebnis));
 			musterfeld.getChildren().addAll(Muster[0], Muster[1], Muster[2], Muster[3], Muster[4], Muster[5]);
 		eintrageknopffelder.getChildren().addAll(bilderfeld, musterfeld);			
-		// GridPane.add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan). 
+		initialisiereErgebnisknoepfe(); 
 		
 		etableau.add(reihenfeld, 0, 0, 1, 1);
 		etableau.add(eintrageknopffelder, 0, 1, 1, 1);
@@ -168,8 +167,8 @@ public class EscaleroBedienfeld extends Application {
 	// Aktualisierungsmethode. 	
 	public void neustartErgebnistableau(GridPane ergebnistableau) {
 		// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
+		initialisiereErgebnisknoepfe(); 
 
-		// ergebnisfeld.aktiviereBilderknoepfe(ergebnis, bilderKnopf);
 	}
 	
 	
