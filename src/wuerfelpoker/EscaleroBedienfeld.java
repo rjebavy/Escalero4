@@ -42,7 +42,12 @@ public class EscaleroBedienfeld extends Application {
 	// Wurf, Würfelsatz & Ergebnis initialisieren
 	Wurf wurf = new Wurf(3);
 	Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
-	Wurfergebnis ergebnis = new Wurfergebnis(wsatz);	
+	Wurfergebnis ergebnis = new Wurfergebnis(wsatz); 
+	Rundenzaehler rundenzaehler = new Rundenzaehler(10); 
+	Ergebnisfeld ergebnisfeld = new Ergebnisfeld();
+	Button[] Reihe = new Button[3];
+	Button[] Bilder = new Button[6];
+	Button[] Muster = new Button[6];
 	
 
 	@Override
@@ -64,9 +69,41 @@ public class EscaleroBedienfeld extends Application {
 		GridPane ergebnistableau = new GridPane();
 		ergebnistableau.setMinSize(340, 112);
 		ergebnistableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+		ergebnistableau.setHgap(2);
+		ergebnistableau.setVgap(10);
+		// Das Reihenfeld mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
 		HBox reihenfeld = hinzufuegenReihenfeld(); 
+			Label rundenZaehler = hinzufuegenRundenzaehler(rundenzaehler);
+			Label eintragenWas = hinzufuegenEintragenWas(); 
+			Button[] reihenKnopf = hinzufuegenReihenknoepfe();
+			// TODO reihenKnopf[0].setOnAction(event->eintragenReihe1(ergebnisfeld.getEintrageWert()));
+			// TODO reihenKnopf[1].setOnAction(event->eintragenReihe2(ergebnisfeld.getEintrageWert()));
+			// TODO reihenKnopf[2].setOnAction(event->eintragenReihe3(ergebnisfeld.getEintrageWert()));
+			reihenfeld.getChildren().addAll(rundenZaehler, eintragenWas, reihenKnopf[0], reihenKnopf[1], reihenKnopf[2]);
 		VBox eintrageknopffelder = hinzufuegenEintrageknopffelder(); 
-		// GridPane.add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan).
+			eintrageknopffelder.setSpacing(5);
+			HBox bilderfeld = hinzufuegenKnoepfeOben(); 
+				Button[] bilderKnopf = hinzufuegenBilderknoepfe();
+				// TODO bilderKnopf[0].setOnAction(event->ergebnisfeld.eintragenNeuner(ergebnis));
+				// TODO bilderKnopf[1].setOnAction(event->ergebnisfeld.eintragenZehner(ergebnis));
+				// TODO bilderKnopf[2].setOnAction(event->ergebnisfeld.eintragenBuben(ergebnis));
+				// TODO bilderKnopf[3].setOnAction(event->ergebnisfeld.eintragenDamen(ergebnis));
+				// TODO bilderKnopf[4].setOnAction(event->ergebnisfeld.eintragenKoenige(ergebnis));
+				// TODO bilderKnopf[5].setOnAction(event->ergebnisfeld.eintragenAsse(ergebnis));
+			bilderfeld.getChildren().addAll(Bilder[0], Bilder[1], Bilder[2], Bilder[3], Bilder[4], Bilder[5]);
+			HBox musterfeld = hinzufuegenKnoepfeUnten(); 
+				Button[] musterKnopf = hinzufuegenMusterknoepfe();
+				// TODO musterKnopf[0].setOnAction(event->ergebnisfeld.eintragenStrasse(ergebnis, serviert)));
+				// TODO bilderKnopf[1].setOnAction(event->ergebnisfeld.eintragenZehner(ergebnis));
+				// TODO bilderKnopf[2].setOnAction(event->ergebnisfeld.eintragenBuben(ergebnis));
+				// TODO bilderKnopf[3].setOnAction(event->ergebnisfeld.eintragenDamen(ergebnis));
+				// TODO bilderKnopf[4].setOnAction(event->ergebnisfeld.eintragenKoenige(ergebnis));
+				// TODO bilderKnopf[5].setOnAction(event->ergebnisfeld.eintragenAsse(ergebnis));
+			musterfeld.getChildren().addAll(Muster[0], Muster[1], Muster[2], Muster[3], Muster[4], Muster[5]);
+		eintrageknopffelder.getChildren().addAll(bilderfeld, musterfeld);			
+		// GridPane.add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan). 
+		ergebnisfeld.aktiviereBilderknoepfe(ergebnis, bilderKnopf);
+		
 		ergebnistableau.add(reihenfeld, 0, 0, 1, 1);
 		ergebnistableau.add(eintrageknopffelder, 0, 1, 1, 1);
 		ergebnistableau.setAlignment(Pos.CENTER);
@@ -80,6 +117,8 @@ public class EscaleroBedienfeld extends Application {
 		spielstandtableau.setMinSize(340, 340); 
 		// Würfeltableau ist kein Dummy NODE! 
 		GridPane wuerfeltableau = erzeugeWuerfeltableau();
+		
+		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
 		VBox bedientableau = new VBox();
 		bedientableau.setMinSize(340, 139);
 		bedientableau.setAlignment(Pos.CENTER);
@@ -107,33 +146,154 @@ public class EscaleroBedienfeld extends Application {
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	
-	// Das Reihenfeld mit Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3]. 
+	// Für das Reihenfeld mit Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3]. 
 	public HBox hinzufuegenReihenfeld() {
 		HBox rfeld = new HBox(); 
+		rfeld.setSpacing(5);
 	return rfeld; 
 
 	}
 	
 	// Das Eintrageknopffeld mit zwei Knopffeldern oben und unten. 
 	public VBox hinzufuegenEintrageknopffelder() {
-		VBox etknfeld = new VBox(); 
-		HBox etrgknoepfeoben = hinzufuegenKnoepfeOben(); 
-		HBox etrgknoepfeunten = hinzufuegenKnoepfeUnten(); 
+		VBox etknfeld = new VBox();
+		// etknfeld.setSpacing(10);		
+		etknfeld.setAlignment(Pos.CENTER);
 		return etknfeld; 
 	}
 
 	// Das Knopffeld oben mit sechs Knöpfen [9][10][B][D][K][A]. 
 	public HBox hinzufuegenKnoepfeOben() {
 		HBox knoben = new HBox(); 
+		knoben.setSpacing(10);
+		knoben.setAlignment(Pos.CENTER);
 		return knoben; 
-
 	}	
 	
 	// Das Knopffeld oben mit fünf Knöpfen [St][Fu][Po][Gr][-]. 
 	public HBox hinzufuegenKnoepfeUnten() {
 		HBox knunten = new HBox(); 
+		knunten.setSpacing(10);
+		knunten.setAlignment(Pos.CENTER);
 		return knunten; 
 
+	}
+	
+	public Label hinzufuegenRundenzaehler(Rundenzaehler ruze) {
+		Label rundz = new Label(); 
+		rundz.setMinSize(20, 20);
+		rundz.setAlignment(Pos.CENTER);
+		rundz.setTextFill(Color.OLIVE);
+		rundz.setFont(Font.font("Tahoma", 18));
+		Integer rz = ruze.getRunden();
+		String rzz = rz.toString() + ".";
+		rundz.setText(rzz);
+		return rundz;
+	}
+	
+	public Label hinzufuegenEintragenWas() {
+		Label efeld = new Label("FullHouse serviert. "); // 5 Smileys; Unicode [Alt]+[1]; leider nicht!  
+		efeld.setPadding(new Insets(2, 2, 2, 2));
+		efeld.setMinSize(120, 20);
+		efeld.setFont(Font.font("Tahoma", 12));
+		efeld.setAlignment(Pos.CENTER);
+		efeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
+		efeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID,null, new BorderWidths(1))));
+		efeld.setTextFill(Color.BLACK);
+		// weiterer Kode für Bedingungen und Hintergrundfarbe
+		return efeld;
+	}
+	
+	// Reihenknöpfe
+	public Button[] hinzufuegenReihenknoepfe() {
+		String text = " Reihe ";
+		for(int b = 0; b < 3; b++) {
+			int nbr = b + 1;
+			String btext = text + " " + nbr;
+			Reihe[b] = new Button(btext);
+			Reihe[b].setMinSize(25, 18);
+			Reihe[b].setFont(Font.font("Tahoma", 10));
+			Reihe[b].setDisable(true);
+
+		}	
+		return Reihe; 
+	}
+
+	public void deaktiviereReihenknoepfe() {
+		for(int b = 0; b < 3; b++) {
+			Reihe[b].setDisable(true);
+		}
+	}
+	
+	public void eintragenReihe1(int wert) {
+		// TODO
+	}
+	
+	public void eintragenReihe2(int wert) {
+		// TODO
+	}
+	
+	public void eintragenReihe3(int wert) {
+		// TODO
+	}
+	
+	// Bilderknöpfe
+	public Button[] hinzufuegenBilderknoepfe() {
+		for(int b = 0; b < 6; b++) {
+			int offset = 1; 
+			String btext = wsatz[0].waehleBild(b+offset);
+			String suffix = " "; 
+			if(b == 0 || b == 1) {
+				suffix = "er";
+			}
+			if(b == 2 || b == 3) {
+				suffix = "n";
+			}
+			if(b == 4 || b == 5) {
+				suffix = "e";
+			}
+			Bilder[b] = new Button(btext+suffix);
+			Bilder[b].setMinSize(30, 18);
+			Bilder[b].setFont(Font.font("Tahoma", 10));
+			Bilder[b].setDisable(true);
+		}	
+		return Bilder; 
+	}
+
+	public void deaktiviereBilderknoepfe() {
+		for(int b = 0; b < 6; b++) {
+			Bilder[b].setDisable(true);
+		}
+	}
+	
+	// Musterknöpfe
+	public Button[] hinzufuegenMusterknoepfe() {
+		// TODO nicht Würfelbilder sondern Musternamen!! 
+		for(int b = 0; b < 6; b++) {
+			int offset = 1; 
+			String btext = wsatz[0].waehleBild(b+offset);
+			String suffix = " "; 
+			if(b == 0 || b == 1) {
+				suffix = "er";
+			}
+			if(b == 2 || b == 3) {
+				suffix = "n";
+			}
+			if(b == 4 || b == 5) {
+				suffix = "e";
+			}
+			Muster[b] = new Button(btext+suffix);
+			Muster[b].setMinSize(30, 18);
+			Muster[b].setFont(Font.font("Tahoma", 10));
+			Muster[b].setDisable(true);
+		}	
+		return Muster; 
+	}
+
+	public void deaktivierMusterknoepfe() {
+		for(int b = 0; b < 6; b++) {
+			Muster[b].setDisable(true);
+		}
 	}
 
 // Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
@@ -151,8 +311,12 @@ public class EscaleroBedienfeld extends Application {
 		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
 		wurf.initialisiereHaltemaske();
 		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
-		Button wuerfeln = hinzufuegenWuerfelnKnopf();
-		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
+		VBox WnS = new VBox();
+			Button wuerfeln = hinzufuegenWuerfelnKnopf();
+			wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
+			Button schrift = new Button("Schrift");
+		WnS.getChildren().addAll(wuerfeln, schrift);
+		WnS.setSpacing(10);
 
 		wtableau.setMinSize(340, 84);
 		wtableau.setPadding(new Insets(2, 2, 2, 2));
@@ -164,6 +328,7 @@ public class EscaleroBedienfeld extends Application {
 		wtableau.add(wuerfelfeld, 3, 0, 15, 3);
 		wtableau.add(haltefeld, 3, 3, 15, 1);
 		wtableau.add(wuerfeln, 20, 0, 4, 4);
+		wtableau.add(WnS, 20, 0, 2, 5);
 		wtableau.setAlignment(Pos.CENTER);	
 		
 		return wtableau; 
@@ -398,8 +563,8 @@ public class EscaleroBedienfeld extends Application {
 
 	public Button hinzufuegenWuerfelnKnopf() {
 		Button btw = new Button("W"); 
-		btw.setFont(Font.font("Cambria", 24));
-		btw.setMinSize(30, 30); 
+		btw.setFont(Font.font("Cambria", 18));
+		btw.setMinSize(30, 24); 
 		return btw;
 	}
 
