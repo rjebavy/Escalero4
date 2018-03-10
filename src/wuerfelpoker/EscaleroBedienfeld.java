@@ -38,6 +38,12 @@ public class EscaleroBedienfeld extends Application {
 	* @author Reinhard Jebavy
 	*/
 
+	// Schema MVC - Model, View, Controller: 
+	// Der FX Scene Graph und die GUI Node Komponenten hier im EscaleroBedienfeld bilden die View(s). 
+	// Java Klassen formen das Model, und be- bzw. verarbeiten Hintergrunddaten. Sind dabei zwangsweise jedoch auch 
+	// gemischt mit themenbezogenen Controller-Methoden. 
+	// Dies hier, das EscaleroBedienfeld, fungiert zusätzlich als Main-Controller, enthält aber auch GUI unterstützende Methoden. 
+	
 	// INSTANZVARIABLEN
 	// Wurf, Würfelsatz & Ergebnis initialisieren
 	Wurf wurf = new Wurf(3);
@@ -65,12 +71,51 @@ public class EscaleroBedienfeld extends Application {
 			// 0.4.5.1) GIT-BRANCH einrichten!! Deklarative Oberfläche ab Version 0.115. 
 		
 
-	// ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 		
-		GridPane ergebnistableau = new GridPane();
-		ergebnistableau.setMinSize(340, 112);
-		ergebnistableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
-		ergebnistableau.setHgap(2);
-		ergebnistableau.setVgap(10);
+	// Top Level FX Node item: ESCALEROBEDIENFELD
+		// Temporäre Dummy-Tableaus
+		VBox spielstandtableau = new VBox();
+		spielstandtableau.setMinSize(340, 340); 
+		// Würfeltableau ist kein Dummy NODE! 
+		GridPane wuerfeltableau = erzeugeWuerfeltableau();
+		// Ergebnistableau ist kein Dummy Tableau! 
+		GridPane ergebnistableau = erzeugeErgebnistableau();
+		
+		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
+		VBox bedientableau = new VBox();
+		bedientableau.setMinSize(340, 139);
+		bedientableau.setAlignment(Pos.CENTER);
+			// Temporär um nicht immer schließen und starten zu müssen. 
+			Button nochmal = new Button("Nochmal!"); 
+			nochmal.setFont(Font.font("Tahoma", 10));
+			nochmal.setMinSize(50, 16); 
+			nochmal.setOnAction(event->neustartWuerfeltableau(wuerfeltableau));
+			bedientableau.getChildren().addAll(nochmal);
+	
+
+	// Top-top-level Container Escalero Bedienfeld
+	VBox escalerobedienfeld = new VBox();
+	escalerobedienfeld.setMinSize(340, 666);
+	escalerobedienfeld.setAlignment(Pos.CENTER);
+	escalerobedienfeld.getChildren().addAll(spielstandtableau, wuerfeltableau, ergebnistableau, bedientableau);
+
+	primaryStage.setScene(new Scene(escalerobedienfeld, 340, 666));
+	primaryStage.setTitle("Escalero4 - Bedienfeld");
+	primaryStage.setResizable(true);
+	primaryStage.show();
+	}
+
+	// Top Level FX Node item: ESCALEROBEDIENFELD, Ende. 
+
+
+	// ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 	
+	public GridPane erzeugeErgebnistableau() {
+			// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
+			// Alle FX Nodes erzeugen
+		GridPane etableau = new GridPane();
+		etableau.setMinSize(340, 112);
+		etableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+		etableau.setHgap(2);
+		etableau.setVgap(10);
 		// Das Reihenfeld mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
 		HBox reihenfeld = hinzufuegenReihenfeld(); 
 			Label rundenZaehler = hinzufuegenRundenzaehler(rundenzaehler);
@@ -108,45 +153,14 @@ public class EscaleroBedienfeld extends Application {
 		
 		// ergebnisfeld.aktiviereBilderknoepfe(ergebnis, bilderKnopf);
 		
-		ergebnistableau.add(reihenfeld, 0, 0, 1, 1);
-		ergebnistableau.add(eintrageknopffelder, 0, 1, 1, 1);
-		ergebnistableau.setAlignment(Pos.CENTER);
+		etableau.add(reihenfeld, 0, 0, 1, 1);
+		etableau.add(eintrageknopffelder, 0, 1, 1, 1);
+		etableau.setAlignment(Pos.CENTER);
+		
+		return etableau; 
+	}
 	
 	// ERGEBNISTABLEAU, Ende. 		
-		
-		
-	// Top Level FX Node item: ESCALEROBEDIENFELD
-		// Temporäre Dummy-Tableaus
-		VBox spielstandtableau = new VBox();
-		spielstandtableau.setMinSize(340, 340); 
-		// Würfeltableau ist kein Dummy NODE! 
-		GridPane wuerfeltableau = erzeugeWuerfeltableau();
-		
-		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
-		VBox bedientableau = new VBox();
-		bedientableau.setMinSize(340, 139);
-		bedientableau.setAlignment(Pos.CENTER);
-			// Temporär um nicht immer schließen und starten zu müssen. 
-			Button nochmal = new Button("Nochmal!"); 
-			nochmal.setFont(Font.font("Tahoma", 10));
-			nochmal.setMinSize(50, 16); 
-			nochmal.setOnAction(event->neustartWuerfeltableau(wuerfeltableau));
-			bedientableau.getChildren().addAll(nochmal);
-	
-
-	// Top-top-level Container Escalero Bedienfeld
-	VBox escalerobedienfeld = new VBox();
-	escalerobedienfeld.setMinSize(340, 666);
-	escalerobedienfeld.setAlignment(Pos.CENTER);
-	escalerobedienfeld.getChildren().addAll(spielstandtableau, wuerfeltableau, ergebnistableau, bedientableau);
-
-	primaryStage.setScene(new Scene(escalerobedienfeld, 340, 666));
-	primaryStage.setTitle("Escalero4 - Bedienfeld");
-	primaryStage.setResizable(true);
-	primaryStage.show();
-	}
-
-	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	
@@ -357,8 +371,6 @@ public class EscaleroBedienfeld extends Application {
 		}
 	
 // WÜRFELTABLEAU, Ende. 
-	
-	
 	
 // Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
 	public Label hinzufuegenWurfzaehler(Wurf w) {
