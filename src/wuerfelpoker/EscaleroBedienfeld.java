@@ -84,8 +84,10 @@ public class EscaleroBedienfeld extends Application {
 		// Ergebnistableau ist kein Dummy Tableau! 
 		GridPane ergebnistableau = erzeugeErgebnistableau();
 		neustartErgebnistableau(ergebnistableau);
-		// Test initialisiereErgebnisknoepfe()
-		initialisiereErgebnisknoepfe();
+// >>>>		// Test initialisiereErgebnisknoepfe()
+		initialisiereErgebnisknoepfe(); 
+		
+		aktiviereBilderknoepfe(ergebnis);
 		
 		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
 		VBox bedientableau = new VBox();
@@ -338,7 +340,32 @@ public class EscaleroBedienfeld extends Application {
 		}	
 	}
 	
-
+	// Aktiviere Bilderknöpfe nach Wurfergebnis. 
+	public void aktiviereBilderknoepfe(Wurfergebnis ergebnis) {
+		if(ergebnis.getNeun() > 0) {
+			Bilder[0].setDisable(false);
+			}
+		if(ergebnis.getZehn() > 0) {
+			Bilder[1].setDisable(false);
+			}
+		if(ergebnis.getBube() > 0) {
+			Bilder[2].setDisable(false);
+			}
+		if(ergebnis.getDame() > 0) {
+			Bilder[3].setDisable(false);
+			}
+		if(ergebnis.getKoenig() > 0) {
+			Bilder[4].setDisable(false);
+			}
+		if(ergebnis.getAss() > 0) {
+			Bilder[5].setDisable(false);
+			}
+	}
+	
+	// TODO Aktiviere Musterknöpfe nach Wurfergebnis. 
+	
+	
+	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	
 
@@ -358,6 +385,7 @@ public class EscaleroBedienfeld extends Application {
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
 		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
 		Button schrift = hinzufuegenSchriftKnopf();
+		schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis));
 
 		wtableau.setMinSize(340, 84);
 		wtableau.setPadding(new Insets(2, 2, 2, 2));
