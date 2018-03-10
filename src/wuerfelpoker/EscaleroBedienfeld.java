@@ -85,7 +85,7 @@ public class EscaleroBedienfeld extends Application {
 		GridPane ergebnistableau = erzeugeErgebnistableau();
 		neustartErgebnistableau(ergebnistableau);
 		// Test initialisiereErgebnisknoepfe()
-		initialisiereErgebnisknoepfe(reihenKnopf, bilderKnopf, musterKnopf)
+		initialisiereErgebnisknoepfe();
 		
 		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
 		VBox bedientableau = new VBox();
@@ -326,15 +326,15 @@ public class EscaleroBedienfeld extends Application {
 	}
 
 	// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
-	public void initialisiereErgebnisknoepfe(Button[] reihenKnopf, Button[] bilderKnopf, Button[] musterKnopf) {
+	public void initialisiereErgebnisknoepfe() {
 		for(int rb = 0; rb < 3; rb++) {
-			reihenKnopf[rb].setDisable(true);
+			Reihe[rb].setDisable(true);
 		}	
 		for(int bb = 0; bb < 6; bb++) {
-			bilderKnopf[bb].setDisable(true);
+			Bilder[bb].setDisable(true);
 		}	
 		for(int mb = 0; mb < 6; mb++) {
-			musterKnopf[mb].setDisable(true);
+			Muster[mb].setDisable(true);
 		}	
 	}
 	
