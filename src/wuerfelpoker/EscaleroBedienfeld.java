@@ -43,6 +43,10 @@ public class EscaleroBedienfeld extends Application {
 	// Java Klassen formen das Model, und be- bzw. verarbeiten Hintergrunddaten. Sind dabei zwangsweise jedoch auch 
 	// gemischt mit themenbezogenen Controller-Methoden. 
 	// Dies hier, das EscaleroBedienfeld, fungiert zusätzlich als Main-Controller, enthält aber auch GUI unterstützende Methoden. 
+
+	
+	// KONSTANTEN
+	
 	
 	// INSTANZVARIABLEN
 	// Wurf, Würfelsatz & Ergebnis initialisieren
@@ -80,6 +84,8 @@ public class EscaleroBedienfeld extends Application {
 		// Ergebnistableau ist kein Dummy Tableau! 
 		GridPane ergebnistableau = erzeugeErgebnistableau();
 		neustartErgebnistableau(ergebnistableau);
+		// Test initialisiereErgebnisknoepfe()
+		initialisiereErgebnisknoepfe(reihenKnopf, bilderKnopf, musterKnopf)
 		
 		// schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis, bilderKnopf));
 		VBox bedientableau = new VBox();
@@ -318,6 +324,20 @@ public class EscaleroBedienfeld extends Application {
 			Muster[b].setDisable(true);
 		}
 	}
+
+	// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
+	public void initialisiereErgebnisknoepfe(Button[] reihenKnopf, Button[] bilderKnopf, Button[] musterKnopf) {
+		for(int rb = 0; rb < 3; rb++) {
+			reihenKnopf[rb].setDisable(true);
+		}	
+		for(int bb = 0; bb < 6; bb++) {
+			bilderKnopf[bb].setDisable(true);
+		}	
+		for(int mb = 0; mb < 6; mb++) {
+			musterKnopf[mb].setDisable(true);
+		}	
+	}
+	
 
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	

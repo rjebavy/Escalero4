@@ -143,19 +143,6 @@ public class Ergebnisfeld {
 		// TODO
 	}
 	
-	// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
-	public void initialisereErgebnisknoepfe(Button[] reihenKnopf, Button[] bilderKnopf, Button[] musterKnopf) {
-		for(int rb = 0; rb < 3; rb++) {
-			reihenKnopf[rb].setDisable(true);
-		}	
-		for(int bb = 0; bb < 6; bb++) {
-			bilderKnopf[bb].setDisable(true);
-		}	
-		for(int mb = 0; mb < 6; mb++) {
-			musterKnopf[mb].setDisable(true);
-		}	
-	}
-	
 	// Aktiviere Bilderknöpfe nach Wurfergebnis. 
 	public void aktiviereBilderknoepfe(Wurfergebnis ergebnis, Button[] bilderKnopf) {
 		if(ergebnis.getNeun() > 0) {
@@ -177,8 +164,6 @@ public class Ergebnisfeld {
 			bilderKnopf[5].setDisable(false);
 			}
 	}
-
-	
 	
 	
 	// Standard Getter & Setter
