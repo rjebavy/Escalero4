@@ -386,7 +386,7 @@ public class EscaleroBedienfeld extends Application {
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
 		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
 		Button schrift = hinzufuegenSchriftKnopf();
-		schrift.setOnAction(event->aktiviereBilderknoepfe(ergebnis));
+		schrift.setOnAction(event->aktionSchrift(wtableau));
 
 		wtableau.setMinSize(340, 84);
 		wtableau.setPadding(new Insets(2, 2, 2, 2));
@@ -712,8 +712,13 @@ public class EscaleroBedienfeld extends Application {
 	}
 	
 	// Aktionskode für Schrift; Würfeln deaktivieren, Ergebnisknöpfe aktivieren. 
-	public void aktionSchrift() {
+	public void aktionSchrift(GridPane wtableau) {
 		//TODO Aktionskode
+		Button bt = new Button();
+		bt = (Button) wtableau.getChildrenUnmodifiable().get(4);
+		deaktiviereWuerfelnKnopf(bt);
+		aktiviereBilderknoepfe(ergebnis); 
+
 	}
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 
