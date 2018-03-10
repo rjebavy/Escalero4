@@ -116,6 +116,11 @@ public class Wurf {
 		return wurfzaehler;
 	}
 
+	// Gehalten Zähler auf 0 setzen. 
+	public void initialisiereGehalten() {
+		this.setGehalten(0);
+	}
+	
 	
 	
 	// Standard Getter & Setter
@@ -126,8 +131,11 @@ public class Wurf {
 	public int getGehalten() {
 		return gehalten;
 	}
-
 	
+	public void setGehalten(int gehalten) {
+		this.gehalten = gehalten;
+	}
+
 	public void setWurfzaehler(int wurfzaehler) {
 		this.wurfzaehler = wurfzaehler;
 	}

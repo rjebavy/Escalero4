@@ -34,7 +34,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.116
+	* @version 0.117
 	* @author Reinhard Jebavy
 	*/
 
@@ -173,7 +173,8 @@ public class EscaleroBedienfeld extends Application {
 	public void neustartWuerfeltableau(GridPane wuerfeltableau) {
 		GridPane wt = wuerfeltableau; 
 		wurf.setWurfzaehler(3);
-		ergebnis.initialisiereAuswerten();
+		ergebnis.initialisiereAuswerten(); // Alle Würfelbildzähler auf 0. 
+		wurf.initialisiereGehalten(); // Gehaltenzähler auf 0. 
 		// FX Nodes initialisieren	
 		aktualisiereWurfzaehler(wurf, (Label) wt.getChildrenUnmodifiable().get(0), (Button) wt.getChildrenUnmodifiable().get(4));
 			System.out.println("aktualisiereWurfzaehler, wt.getChildren 0? " + (Label) wt.getChildrenUnmodifiable().get(0));
