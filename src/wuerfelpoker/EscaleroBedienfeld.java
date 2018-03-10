@@ -170,6 +170,7 @@ public class EscaleroBedienfeld extends Application {
 		initialisiereErgebnisknoepfe(); 
 
 	}
+
 	
 	
 	// ERGEBNISTABLEAU, Ende. 		
@@ -366,9 +367,10 @@ public class EscaleroBedienfeld extends Application {
 	
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
+
 	
 
-// GUI Komponente Würfeltableau. 
+// GUI Komponente WÜRFELTABLEAU. 
 	// Erzeugermethode. 
 	public GridPane erzeugeWuerfeltableau() {
 		// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
@@ -424,8 +426,11 @@ public class EscaleroBedienfeld extends Application {
 		}
 	
 	// WÜRFELTABLEAU, Ende. 
+
 	
 	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 	
+	// D e r  W u r f z ä h l e r:
+	// Da kommt er ans Licht. 
 	public Label hinzufuegenWurfzaehler(Wurf w) {
 		Label wurfz = new Label(); 
 		wurfz.setMinSize(20, 20);
@@ -438,6 +443,7 @@ public class EscaleroBedienfeld extends Application {
 		return wurfz;
 	}
 
+	// Hier wird er manipuliert; spätestens nach dreimal Würfeln ist die Runde vorbei. 
 	public void aktualisiereWurfzaehler(Wurf w, Label wurfz, Button bt) {
 		Integer wz = w.getWurfzaehler();
 		System.out.println("aktualisiereWurfzaehler; getWurfzahler = " + wz); 
@@ -451,6 +457,8 @@ public class EscaleroBedienfeld extends Application {
 		wurfz.setText(wzz);
 	}
 	
+	// D a s  S e r v i e r f e l d:
+	// Hier wird's angelegt. 
 	public Label hinzufuegenServierfeld() {
 		Label sfeld = new Label("serviert"); // 5 Smileys; Unicode [Alt]+[1]; leider nicht!  
 		// sfeld.setPadding(new Insets(5, 5, 5, 5));
@@ -483,43 +491,10 @@ public class EscaleroBedienfeld extends Application {
 			System.out.println("aktualisiereServierfeld, Servierung erkannt, grün; w.getGehalten(): " + w.getGehalten());
 		}
 	}
+
 	
-	public HBox hinzufuegenWuerfelfeld(Label[] wz) {
-		HBox wfeld = new HBox(); 
-		for(int i = 0; i < 5; i++) {
-			wz[i] = new Label();
-		}
-		wfeld.getChildren().addAll(wz[0], wz[1], wz[2], wz[3], wz[4]);
-		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
-		aktualisiereWuerfelfeld(wsatz, wfeld); 
-		return wfeld; 
-	}
-	
-	
-	public void aktualisiereHaltezelle(Wurf w, CheckBox cb, int i, Wurfergebnis ergebnis, Label serviert) {
-		cb.setOnAction(e->{
-			if(cb.isSelected()) {
-				w.halten(i);
-				aktualisiereServierfeld(w, serviert, ergebnis);
-			}
-			if(!cb.isSelected()) {
-				w.freigeben(i);
-				aktualisiereServierfeld(w, serviert, ergebnis);
-			}
-		});
-	}
-	
-	public void loescheHaltefeld(Wurf w, HBox hfeld, Wurfergebnis ergebnis, Label serviert) {
-		for(int h = 0; h < 5; h++) {
-			HBox hb = (HBox) hfeld.getChildrenUnmodifiable().get(h);
-			CheckBox cb = (CheckBox) hb.getChildrenUnmodifiable().get(1); 
-			// aktualisiereHaltezelle( w,  cb, h,  ergebnis, serviert);
-			cb.setSelected(false);
-			System.out.println("Hier bei aktualisiereHaltefeld");
-		}
-		
-	}
-	
+	// D a s  H a l t e f e l d:
+	// Haltefeld mit den fünf Check-Boxen anlegen. 
 	public HBox hinzufuegenHaltefeld(Wurf w, Wurfergebnis ergebnis, Label serviert) {
 		HBox hfeld = new HBox();
 		hfeld.setPadding(new Insets(5, 5, 5, 5));
@@ -570,7 +545,46 @@ public class EscaleroBedienfeld extends Application {
 		
 		return hfeld;
 	}
+	
+	// Aktionskode für eine Haltecheckbox. 
+	public void aktualisiereHaltezelle(Wurf w, CheckBox cb, int i, Wurfergebnis ergebnis, Label serviert) {
+		cb.setOnAction(e->{
+			if(cb.isSelected()) {
+				w.halten(i);
+				aktualisiereServierfeld(w, serviert, ergebnis);
+			}
+			if(!cb.isSelected()) {
+				w.freigeben(i);
+				aktualisiereServierfeld(w, serviert, ergebnis);
+			}
+		});
+	}
+	
+	// Alle Check-Boxen des Haltefeld werden deselektiert.  
+	public void loescheHaltefeld(Wurf w, HBox hfeld, Wurfergebnis ergebnis, Label serviert) {
+		for(int h = 0; h < 5; h++) {
+			HBox hb = (HBox) hfeld.getChildrenUnmodifiable().get(h);
+			CheckBox cb = (CheckBox) hb.getChildrenUnmodifiable().get(1); 
+			// aktualisiereHaltezelle( w,  cb, h,  ergebnis, serviert);
+			cb.setSelected(false);
+			System.out.println("Hier bei aktualisiereHaltefeld");
+		}
+	}
 
+	// D a s  W ü r f e l f e l d:
+	// Hier wird es angelegt. 
+	public HBox hinzufuegenWuerfelfeld(Label[] wz) {
+		HBox wfeld = new HBox(); 
+		for(int i = 0; i < 5; i++) {
+			wz[i] = new Label();
+		}
+		wfeld.getChildren().addAll(wz[0], wz[1], wz[2], wz[3], wz[4]);
+		// Hier wird Würfelfeld erstmalig für Startansicht initialisiert (3. X X X X X)
+		aktualisiereWuerfelfeld(wsatz, wfeld); 
+		return wfeld; 
+	}
+	
+	// Alle fünf Würfel werden manipuliert. 
 	public void aktualisiereWuerfelfeld(Wuerfel[] ws, HBox wfeld) {
 		wfeld.setPadding(new Insets(5, 5, 5, 5));
 		wfeld.setSpacing(7);
@@ -626,33 +640,8 @@ public class EscaleroBedienfeld extends Application {
 		wuze5.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));		
 		wuze5.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
 	}
-
-	// Knopf Würfeln, [W]
-	public Button hinzufuegenWuerfelnKnopf() {
-		Button btw = new Button("W"); 
-		btw.setFont(Font.font("Cambria", 18));
-		btw.setTextFill(Color.CRIMSON);
-		btw.setMinSize(30, 24); 
-		return btw;
-	}
-
-	public void deaktiviereWuerfelnKnopf(Button bt) {
-		bt.setDisable(true);
-	}
-
-	public void aktiviereWuerfelnKnopf(Button bt) {
-		bt.setDisable(false);
-	}
 	
-	// Knopf Schrift, [Schrift], Etwas eintragen, auch vor drittem Wurf! 
-	public Button hinzufuegenSchriftKnopf() {
-		Button sch = new Button("Schrift");
-		sch.setFont(Font.font("Tahoma", 10));
-		sch.setTextFill(Color.ROYALBLUE);
-		sch.setMinSize(30, 20); 
-		return sch;
-	}
-	
+	// Je nach Bild ändert sich die Bildfarbe der Würfel, wie im wirklichen Leben. 
 	public void setzeTextfarbe(Wuerfel ws, Label wz) {
 		switch (ws.getWert()) {
 		case 1:
@@ -677,7 +666,27 @@ public class EscaleroBedienfeld extends Application {
 			wz.setTextFill(Color.BLACK);
 		}
 	}
+
 	
+	// D e r  W ü r f e l n k n o p f:	
+	// Knopf Würfeln, [W]
+	public Button hinzufuegenWuerfelnKnopf() {
+		Button btw = new Button("W"); 
+		btw.setFont(Font.font("Cambria", 18));
+		btw.setTextFill(Color.CRIMSON);
+		btw.setMinSize(30, 24); 
+		return btw;
+	}
+
+	public void deaktiviereWuerfelnKnopf(Button bt) {
+		bt.setDisable(true);
+	}
+
+	public void aktiviereWuerfelnKnopf(Button bt) {
+		bt.setDisable(false);
+	}
+
+	// Aktionskode für Würfelnknopf; na endlich wird hier mal gewürfelt ;) 
 	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Wurfergebnis ergebnis) {
 		wurf.wurfRunterzaehlen();
 		aktualisiereWurfzaehler(wurf, wurfzaehler, wuerfeln);
@@ -690,6 +699,23 @@ public class EscaleroBedienfeld extends Application {
 		System.out.println(ergebnis.toString());
 		aktualisiereServierfeld(wurf, serviert, ergebnis); 
 	}
+
+	
+	// D e r  S c h r i f t k n o p f:	
+	// Knopf [Schrift], Etwas eintragen, auch vor drittem Wurf! 
+	public Button hinzufuegenSchriftKnopf() {
+		Button sch = new Button("Schrift");
+		sch.setFont(Font.font("Tahoma", 10));
+		sch.setTextFill(Color.ROYALBLUE);
+		sch.setMinSize(30, 20); 
+		return sch;
+	}
+	
+	// Aktionskode für Schrift; Würfeln deaktivieren, Ergebnisknöpfe aktivieren. 
+	public void aktionSchrift() {
+		//TODO Aktionskode
+	}
+	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 
 
 	
