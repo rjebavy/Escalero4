@@ -311,24 +311,21 @@ public class EscaleroBedienfeld extends Application {
 		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
 		wurf.initialisiereHaltemaske();
 		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
-		VBox WnS = new VBox();
-			Button wuerfeln = hinzufuegenWuerfelnKnopf();
-			wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
-			Button schrift = new Button("Schrift");
-		WnS.getChildren().addAll(wuerfeln, schrift);
-		WnS.setSpacing(10);
+		Button wuerfeln = hinzufuegenWuerfelnKnopf();
+		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
+		Button schrift = hinzufuegenSchriftKnopf();
 
 		wtableau.setMinSize(340, 84);
 		wtableau.setPadding(new Insets(2, 2, 2, 2));
 		wtableau.setHgap(5);
-		wtableau.setVgap(5);
+		// wtableau.setVgap(2);
 		wtableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		wtableau.add(wurfzaehler, 0, 0, 3, 3);
 		wtableau.add(serviert, 0, 3, 3, 1);
 		wtableau.add(wuerfelfeld, 3, 0, 15, 3);
 		wtableau.add(haltefeld, 3, 3, 15, 1);
-		wtableau.add(wuerfeln, 20, 0, 4, 4);
-		wtableau.add(WnS, 20, 0, 2, 5);
+		wtableau.add(wuerfeln, 20, 0, 4, 3);
+		wtableau.add(schrift, 20, 3, 4, 1);
 		wtableau.setAlignment(Pos.CENTER);	
 		
 		return wtableau; 
@@ -507,12 +504,12 @@ public class EscaleroBedienfeld extends Application {
 
 	public void aktualisiereWuerfelfeld(Wuerfel[] ws, HBox wfeld) {
 		wfeld.setPadding(new Insets(5, 5, 5, 5));
-		wfeld.setSpacing(10);
+		wfeld.setSpacing(7);
 		wfeld.setAlignment(Pos.CENTER);
 		// Würfel 1
 		int wuerfel = 0; 
 		Label wuze1 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
-		wuze1.setMinSize(34, 34); 
+		wuze1.setMinSize(38, 38); 
 		wuze1.setAlignment(Pos.CENTER);
 		wuze1.setFont(Font.font("Cambria", 22));
 		setzeTextfarbe(ws[0], wuze1);
@@ -522,7 +519,7 @@ public class EscaleroBedienfeld extends Application {
 		// Würfel 2	
 		wuerfel++; 
 		Label wuze2 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
-		wuze2.setMinSize(34, 34);
+		wuze2.setMinSize(38, 38);
 		wuze2.setAlignment(Pos.CENTER);
 		wuze2.setFont(Font.font("Cambria", 22));
 		setzeTextfarbe(ws[1], wuze2);
@@ -532,7 +529,7 @@ public class EscaleroBedienfeld extends Application {
 		// Würfel 3		
 		wuerfel++;  
 		Label wuze3 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
-		wuze3.setMinSize(34, 34);
+		wuze3.setMinSize(38, 38);
 		wuze3.setAlignment(Pos.CENTER);
 		wuze3.setFont(Font.font("Cambria", 22));
 		setzeTextfarbe(ws[2], wuze3);
@@ -542,7 +539,7 @@ public class EscaleroBedienfeld extends Application {
 		// Würfel 4	
 		wuerfel++;  
 		Label wuze4 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
-		wuze4.setMinSize(34, 34);
+		wuze4.setMinSize(38, 38);
 		wuze4.setAlignment(Pos.CENTER);
 		wuze4.setFont(Font.font("Cambria", 22));
 		setzeTextfarbe(ws[3], wuze4);
@@ -552,7 +549,7 @@ public class EscaleroBedienfeld extends Application {
 		// Würfel 5	
 		wuerfel++;  
 		Label wuze5 = (Label) wfeld.getChildrenUnmodifiable().get(wuerfel);
-		wuze5.setMinSize(34, 34);
+		wuze5.setMinSize(38, 38);
 		wuze5.setAlignment(Pos.CENTER);
 		wuze5.setFont(Font.font("Cambria", 22));
 		setzeTextfarbe(ws[4], wuze5);
@@ -561,9 +558,11 @@ public class EscaleroBedienfeld extends Application {
 		wuze5.setText(ws[wuerfel].waehleKuerzel(ws[wuerfel].getWert()));
 	}
 
+	// Knopf Würfeln, [W]
 	public Button hinzufuegenWuerfelnKnopf() {
 		Button btw = new Button("W"); 
 		btw.setFont(Font.font("Cambria", 18));
+		btw.setTextFill(Color.CRIMSON);
 		btw.setMinSize(30, 24); 
 		return btw;
 	}
@@ -576,22 +575,31 @@ public class EscaleroBedienfeld extends Application {
 		bt.setDisable(false);
 	}
 	
+	// Knopf Schrift, [Schrift], Etwas eintragen, auch vor drittem Wurf! 
+	public Button hinzufuegenSchriftKnopf() {
+		Button sch = new Button("Schrift");
+		sch.setFont(Font.font("Tahoma", 10));
+		sch.setTextFill(Color.ROYALBLUE);
+		sch.setMinSize(30, 20); 
+		return sch;
+	}
+	
 	public void setzeTextfarbe(Wuerfel ws, Label wz) {
 		switch (ws.getWert()) {
 		case 1:
 			wz.setTextFill(Color.BLACK);
 			break;
 		case 2:
-			wz.setTextFill(Color.RED);
+			wz.setTextFill(Color.CRIMSON);
 			break;
 		case 3:
 			wz.setTextFill(Color.BLACK);
 			break;
 		case 4:
-			wz.setTextFill(Color.BLUE);
+			wz.setTextFill(Color.ROYALBLUE);
 			break;
 		case 5:
-			wz.setTextFill(Color.RED);
+			wz.setTextFill(Color.CRIMSON);
 			break;
 		case 6:
 			wz.setTextFill(Color.BLACK);
