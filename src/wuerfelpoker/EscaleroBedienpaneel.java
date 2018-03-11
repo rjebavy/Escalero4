@@ -426,7 +426,8 @@ public class EscaleroBedienpaneel extends Application {
 		HBox wuerfelfeld = hinzufuegenWuerfelfeld(wz); 
 		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
 		wurf.initialisiereHaltemaske();
-		if(wurf.getWurfzaehler() == 3) haltefeld.setDisable(true); 
+		System.out.println("erzeugeWuerfeltableau;wurf.getWurfzaehler() =  " + wurf.getWurfzaehler());
+		if(wurf.getWurfzaehler() == 3) {deaktiviereHaltefeld(haltefeld);} 
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
 		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
 		Button schrift = hinzufuegenSchriftKnopf();
@@ -614,6 +615,16 @@ public class EscaleroBedienpaneel extends Application {
 			System.out.println("Hier bei aktualisiereHaltefeld");
 		}
 	}
+	
+	// Das Haltefeld und damit alle Check-Boxen werden deaktiviert. 
+	public void deaktiviereHaltefeld(HBox haltefeld) {
+		haltefeld.setDisable(true);
+	}
+	
+	// Das Haltefeld und damit alle Check-Boxen werden deaktiviert. 
+	public void aktiviereHaltefeld(HBox haltefeld) {
+		haltefeld.setDisable(false);
+	}
 
 	// D a s  W ü r f e l f e l d:
 	// Hier wird es angelegt. 
@@ -734,8 +745,9 @@ public class EscaleroBedienpaneel extends Application {
 	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Wurfergebnis ergebnis) {
 		wurf.wurfRunterzaehlen();
 		aktualisiereWurfzaehler(wurf, wurfzaehler, wuerfeln);
-		if(wurf.getWurfzaehler() == 2 || wurf.getWurfzaehler() == 1) hf.setDisable(false);
-		if(wurf.getWurfzaehler() == 0) hf.setDisable(true);
+		// Haltefeld nach Bedarf aktivieren bzw. deaktivieren! 
+		if(wurf.getWurfzaehler() == 2 || wurf.getWurfzaehler() == 1) {aktiviereHaltefeld(hf);}
+		if(wurf.getWurfzaehler() == 0) {deaktiviereHaltefeld(hf);}
 		wurf.wuerfleUngehaltene(wsatz);
 		aktualisiereWuerfelfeld(wsatz, wuerfelfeld);
 		ergebnis.initialisiereAuswerten();
@@ -762,9 +774,9 @@ public class EscaleroBedienpaneel extends Application {
 		bt = (Button) wtableau.getChildrenUnmodifiable().get(4);
 		deaktiviereWuerfelnKnopf(bt);
 		// TODO deaktiviere auch Haltefeld! 
-			HBox hf = new HBox();
+			HBox hf = new HBox(); 
 			hf = (HBox) wtableau.getChildrenUnmodifiable().get(3);
-			hf.setDisable(true);
+			deaktiviereHaltefeld(hf);
 		aktiviereBilderknoepfe(ergebnis); 
 		aktiviereMusterknoepfe(ergebnis);
 
