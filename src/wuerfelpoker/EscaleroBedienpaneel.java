@@ -426,13 +426,14 @@ public class EscaleroBedienpaneel extends Application {
 		HBox wuerfelfeld = hinzufuegenWuerfelfeld(wz); 
 		HBox haltefeld = hinzufuegenHaltefeld(wurf, ergebnis, serviert); 
 		wurf.initialisiereHaltemaske();
-		System.out.println("erzeugeWuerfeltableau;wurf.getWurfzaehler() =  " + wurf.getWurfzaehler());
+		// Haltemaske erst verfügbar nach mind. 1 Wurf, da von 3 runter sprich ab Wurfzählerstand = 2.
 		if(wurf.getWurfzaehler() == 3) {deaktiviereHaltefeld(haltefeld);} 
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
-		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, haltefeld, wsatz, wuerfelfeld, ergebnis));
 		Button schrift = hinzufuegenSchriftKnopf();
+		// [Schrift] erst verfügbar nach mind. 1 Wurf, da von 3 runter sprich ab Wurfzählerstand = 2. 
+		if(wurf.getWurfzaehler() == 3) { deaktiviereSchriftKnopf(schrift); } 
 		schrift.setOnAction(event->aktionSchrift(wtableau));
-
+		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, schrift, haltefeld, wsatz, wuerfelfeld, ergebnis));
 		wtableau.setMinSize(340, 84);
 		wtableau.setPadding(new Insets(2, 2, 2, 2));
 		wtableau.setHgap(5);
@@ -461,6 +462,10 @@ public class EscaleroBedienpaneel extends Application {
 			System.out.println("aktualisiereWurfzaehler, wt.getChildren 4? " + (Button) wt.getChildrenUnmodifiable().get(4));
 		wurf.initialisiereWuerfelsatz(); 
 		wurf.initialisiereHaltemaske();
+		// TODO Knopf [Schrift] bei Wurfzählerstand 3 deaktivieren. 
+		Button sch = new Button(); 
+		sch = (Button) wt.getChildrenUnmodifiable().get(5); 
+		if(wurf.getWurfzaehler() == 3) {deaktiviereSchriftKnopf(sch);}
 		aktualisiereWuerfelfeld(wsatz, (HBox) wt.getChildrenUnmodifiable().get(2)); 
 		HBox haltefeld = (HBox) wt.getChildrenUnmodifiable().get(3); 
 		Label serviert = (Label) wt.getChildrenUnmodifiable().get(1); 
@@ -742,12 +747,15 @@ public class EscaleroBedienpaneel extends Application {
 	}
 
 	// Aktionskode für Würfelnknopf; na endlich wird hier mal gewürfelt ;) 
-	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Wurfergebnis ergebnis) {
+	public void wuerfleWurf(Wurf wurf, Label wurfzaehler, Label serviert, Button wuerfeln, Button schrift, HBox hf, Wuerfel[] wsatz, HBox wuerfelfeld, Wurfergebnis ergebnis) {
 		wurf.wurfRunterzaehlen();
 		aktualisiereWurfzaehler(wurf, wurfzaehler, wuerfeln);
 		// Haltefeld nach Bedarf aktivieren bzw. deaktivieren! 
 		if(wurf.getWurfzaehler() == 2 || wurf.getWurfzaehler() == 1) {aktiviereHaltefeld(hf);}
 		if(wurf.getWurfzaehler() == 0) {deaktiviereHaltefeld(hf);}
+		// Schriftknopf nach Bedarf aktivieren bzw. deaktivieren! 		
+		if(wurf.getWurfzaehler() == 2 || wurf.getWurfzaehler() == 1 || wurf.getWurfzaehler() == 0) {aktiviereSchriftKnopf(schrift);}
+		if(wurf.getWurfzaehler() == 3) {deaktiviereSchriftKnopf(schrift);}		
 		wurf.wuerfleUngehaltene(wsatz);
 		aktualisiereWuerfelfeld(wsatz, wuerfelfeld);
 		ergebnis.initialisiereAuswerten();
@@ -781,6 +789,15 @@ public class EscaleroBedienpaneel extends Application {
 		aktiviereMusterknoepfe(ergebnis);
 
 	}
+
+	public void deaktiviereSchriftKnopf(Button sch) {
+		sch.setDisable(true);
+	}
+	
+	public void aktiviereSchriftKnopf(Button sch) {
+		sch.setDisable(false);
+	}
+	
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 
 
