@@ -34,7 +34,7 @@ public class EscaleroBedienfeld extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.140
+	* @version 0.141
 	* @author Reinhard Jebavy
 	*/
 
@@ -73,7 +73,7 @@ public class EscaleroBedienfeld extends Application {
 			// 1.3.5.3.1) BUG: Sevierung erkannt obwohl 4 gehalten!! behoben 1.3.18-00:41.  
 			// 5.4.1) BUG:  Bei Wiederholung mit [Nochmal] werden die Haltefelder nicht initialisiert!!! behoben ?. 
 			// 0.4.5.1) GIT-BRANCH einrichten!! Deklarative Oberfläche ab Version 0.115. 
-
+			// Kodierschluss 11.3.18-02:45. Würfel- & Ergebnistableau können Neustarten. Dort fehlt noch Eintragewerte berechnen. 
 		
 
 // Top Level FX Node item: ESCALEROBEDIENFELD
