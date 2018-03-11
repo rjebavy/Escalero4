@@ -168,7 +168,7 @@ public class EscaleroBedienfeld extends Application {
 	public void neustartErgebnistableau(GridPane ergebnistableau) {
 		// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
 		initialisiereErgebnisknoepfe(); 
-
+		
 	}
 
 	
@@ -176,40 +176,16 @@ public class EscaleroBedienfeld extends Application {
 	// ERGEBNISTABLEAU, Ende. 		
 	
 	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
-	
-	// Für das Reihenfeld mit Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3]. 
+	// D a s  R e i h e n f e l d: 
+	// Für das Reihenfeld mit Label (Rundenzähler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3]. 
 	public HBox hinzufuegenReihenfeld() {
 		HBox rfeld = new HBox(); 
 		rfeld.setSpacing(5);
 	return rfeld; 
-
-	}
-	
-	// Das Eintrageknopffeld mit zwei Knopffeldern oben und unten. 
-	public VBox hinzufuegenEintrageknopffelder() {
-		VBox etknfeld = new VBox();
-		// etknfeld.setSpacing(10);		
-		etknfeld.setAlignment(Pos.CENTER);
-		return etknfeld; 
 	}
 
-	// Das Knopffeld oben mit sechs Knöpfen [9][10][B][D][K][A]. 
-	public HBox hinzufuegenKnoepfeOben() {
-		HBox knoben = new HBox(); 
-		knoben.setSpacing(10);
-		knoben.setAlignment(Pos.CENTER);
-		return knoben; 
-	}	
-	
-	// Das Knopffeld oben mit fünf Knöpfen [St][Fu][Po][Gr][-]. 
-	public HBox hinzufuegenKnoepfeUnten() {
-		HBox knunten = new HBox(); 
-		knunten.setSpacing(10);
-		knunten.setAlignment(Pos.CENTER);
-		return knunten; 
-
-	}
-	
+	// D e r  R u n d e n z ä h l e r:
+	// Da kommt er ans Licht. 	
 	public Label hinzufuegenRundenzaehler(Rundenzaehler ruze) {
 		Label rundz = new Label(); 
 		rundz.setMinSize(20, 20);
@@ -221,7 +197,9 @@ public class EscaleroBedienfeld extends Application {
 		rundz.setText(rzz);
 		return rundz;
 	}
-	
+
+	// D a s  E i n t r a g e n W a s f e l d: 
+	// Hier wird angezeigt was mit den Reihenknöpfen eingetragen werden kann. 
 	public Label hinzufuegenEintragenWas() {
 		ergebnisfeld.initialisiereErgebnisfeld();
 		String ltext = ergebnisfeld.getEintragenText();
@@ -233,11 +211,11 @@ public class EscaleroBedienfeld extends Application {
 		efeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
 		efeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID,null, new BorderWidths(1))));
 		efeld.setTextFill(Color.BLACK);
-		// weiterer Kode für Bedingungen und Hintergrundfarbe
 		return efeld;
 	}
 	
-	// Reihenknöpfe
+	// D i e  R e i h e n k n ö p f e: 
+	// [Reihe1], [Reihe2] & [Reihe3].
 	public Button[] hinzufuegenReihenknoepfe() {
 		String text = " Reihe ";
 		for(int b = 0; b < 3; b++) {
@@ -270,8 +248,34 @@ public class EscaleroBedienfeld extends Application {
 	public void eintragenReihe3(int wert) {
 		// TODO
 	}
+
+	// D a s  E i n t r a g e k n o p f f e l d: 
+	// Das Eintrageknopffeld mit zwei Knopffeldern oben und unten. 
+	public VBox hinzufuegenEintrageknopffelder() {
+		VBox etknfeld = new VBox();
+		// etknfeld.setSpacing(10);		
+		etknfeld.setAlignment(Pos.CENTER);
+		return etknfeld; 
+	}
+
+	// Das Knopffeld oben mit sechs Knöpfen [9][10][B][D][K][A]. 
+	public HBox hinzufuegenKnoepfeOben() {
+		HBox knoben = new HBox(); 
+		knoben.setSpacing(10);
+		knoben.setAlignment(Pos.CENTER);
+		return knoben; 
+	}	
 	
-	// Bilderknöpfe
+	// Das Knopffeld unten mit sechs Knöpfen [St][Fu][Po][Gr][-][x]. 
+	public HBox hinzufuegenKnoepfeUnten() {
+		HBox knunten = new HBox(); 
+		knunten.setSpacing(10);
+		knunten.setAlignment(Pos.CENTER);
+		return knunten; 
+	}
+
+	// D i e  B i l d e r k n ö p f e: 	
+	// Obere Reihe, Bilderknöpfe. 
 	public Button[] hinzufuegenBilderknoepfe() {
 		for(int b = 0; b < 6; b++) {
 			int offset = 1; 
@@ -301,17 +305,19 @@ public class EscaleroBedienfeld extends Application {
 		}
 	}
 	
-	// Musterknöpfe
+	// D i e  M u s t e r k n ö p f e: 	
+	// Untere Reihe, Musterknöpfe
 	public Button[] hinzufuegenMusterknoepfe() {
-		// TODO nicht Würfelbilder sondern Muster bzw. Aktionsnamen!! 
 		String btext = "";
 		for(int b = 0; b < 6; b++) {
 			if(b == 0) {btext = "Straße";}
 			if(b == 1) {btext = "FullHouse";}
 			if(b == 2) {btext = "Poker";}
 			if(b == 3) {btext = "Grande";}
-			if(b == 4) {btext = "streiche";}
-			if(b == 5) {btext = "lösche";}
+			if(b == 4) {btext = "streiche";} // Streichergebnis eintragen, öffnet Modaldialog. 
+			// Eintrag löschen mit [lösche]; fall's sich wer's kurzfristig anders überlegt. Geht aber nur in der aktuellen Runde. 
+			// Wenn der Eintrag mit Betätigen eines Reihenknopfs abgeschlossen wurde, werden ohnehin alle Ergebnisknöpfe deaktiviert. 
+			if(b == 5) {btext = "lösche";} // Löscht den Inhalt des EintragenWasFeld und initialisiert die Eintragedaten.  
 			Muster[b] = new Button(btext);
 			Muster[b].setMinSize(30, 18);
 			Muster[b].setFont(Font.font("Tahoma", 10));
