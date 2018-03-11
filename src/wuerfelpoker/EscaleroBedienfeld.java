@@ -96,7 +96,7 @@ public class EscaleroBedienfeld extends Application {
 			Button nochmal = new Button("Nochmal!"); 
 			nochmal.setFont(Font.font("Tahoma", 10));
 			nochmal.setMinSize(50, 16); 
-			nochmal.setOnAction(event->neustartWuerfeltableau(wuerfeltableau));
+			nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau));
 			bedientableau.getChildren().addAll(nochmal);
 	
 
@@ -115,6 +115,27 @@ public class EscaleroBedienfeld extends Application {
 	// Top Level FX Node item: ESCALEROBEDIENFELD, Ende. 
 
 
+	
+// BEDIENTABLEAU, FX-Nodes & Eigenschaften: 
+
+	//TODO 
+	
+	// BEDIENTABLEAU, Ende. 
+	
+	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom BEDIENTABLEAU. 
+	
+	// temporärer Aktionskode für Knopf [Nochmal!]
+		// TODO Wenn Endversion wieder entfernen. 
+		public void aktionNochmal(GridPane wtableau, GridPane etableau) {
+			neustartWuerfeltableau(wtableau);
+			neustartErgebnistableau(etableau);
+		}
+	
+	
+	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom BEDIENTABLEAU. 	
+
+	
+	
 // ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 
 	// Erzeugermethode. 
 	public GridPane erzeugeErgebnistableau() {
