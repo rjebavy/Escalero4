@@ -761,8 +761,13 @@ public class EscaleroBedienpaneel extends Application {
 		Button bt = new Button();
 		bt = (Button) wtableau.getChildrenUnmodifiable().get(4);
 		deaktiviereWuerfelnKnopf(bt);
+		// TODO deaktiviere auch Haltefeld! 
+			HBox hf = new HBox();
+			hf = (HBox) wtableau.getChildrenUnmodifiable().get(3);
+			hf.setDisable(true);
 		aktiviereBilderknoepfe(ergebnis); 
 		aktiviereMusterknoepfe(ergebnis);
+
 	}
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom WÜRFELTABLEAU. 
