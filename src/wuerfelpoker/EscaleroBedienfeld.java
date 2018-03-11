@@ -365,22 +365,22 @@ public class EscaleroBedienfeld extends Application {
 	// Aktiviere Musterknöpfe nach Wurfergebnis. 
 	public void aktiviereMusterknoepfe(Wurfergebnis ergebnis) {
 		if(ergebnis.istKleineStrasse()) {
-			Bilder[0].setDisable(false);
+			Muster[0].setDisable(false);
 			}
 		if(ergebnis.istGrosseStrasse()) {
-			Bilder[0].setDisable(false);
+			Muster[0].setDisable(false);
 			}
 		if(ergebnis.istFullHouse()) {
-			Bilder[1].setDisable(false);
+			Muster[1].setDisable(false);
 			}
 		if(ergebnis.istPoker()) {
-			Bilder[2].setDisable(false);
+			Muster[2].setDisable(false);
 			}
 		if(ergebnis.istGrande()) {
-			Bilder[3].setDisable(false);
+			Muster[3].setDisable(false);
 			}
-		Bilder[4].setDisable(false); // Knopf [streiche] hat kein Muster. 
-		Bilder[5].setDisable(false); // Knopf [lösche] hat kein Muster.
+		Muster[4].setDisable(false); // Knopf [streiche] hat kein Muster. 
+		Muster[5].setDisable(false); // Knopf [lösche] hat kein Muster.
 	}
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
