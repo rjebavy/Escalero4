@@ -39,10 +39,10 @@ public class EscaleroBedienpaneel extends Application {
 	*/
 
 	// Schema MVC - Model, View, Controller: 
-	// Der FX Scene Graph und die GUI Node Komponenten hier im EscaleroBedienfeld bilden die View(s). 
+	// Der FX Scene Graph und die GUI Node Komponenten hier im EscaleroBedienpaneel bilden die View(s). 
 	// Java Klassen formen das Model, und be- bzw. verarbeiten Hintergrunddaten. Sind dabei zwangsweise jedoch auch 
 	// gemischt mit themenbezogenen Controller-Methoden. 
-	// Dies hier, das EscaleroBedienfeld, fungiert zusätzlich als Main-Controller, enthält aber auch GUI unterstützende Methoden. 
+	// Dies hier, das EscaleroBedienpaneel, fungiert zusätzlich als Main-Controller, enthält aber auch GUI unterstützende Methoden. 
 
 	
 	// KONSTANTEN
@@ -69,14 +69,14 @@ public class EscaleroBedienpaneel extends Application {
 			// Auswerten erfolgreich getestet; 22.2.2018. 
 			// Servierungen erkennen, erfolgreich getestet; 28.2.2018. 
 			// wuerfeltableau MinSize aus Scene übernommen, erfolgreich getestet; 1.3.2018. 
-			// GUI Klasse 'Wurfzellentabelle' nach 'EscaleroBedienfeld' migriert, erfolgreich getestet; 1.3.2018. 
+			// GUI Klasse 'Wurfzellentabelle' nach 'EscaleroBedienpaneel' migriert, erfolgreich getestet; 1.3.2018. 
 			// 1.3.5.3.1) BUG: Sevierung erkannt obwohl 4 gehalten!! behoben 1.3.18-00:41.  
 			// 5.4.1) BUG:  Bei Wiederholung mit [Nochmal] werden die Haltefelder nicht initialisiert!!! behoben ?. 
 			// 0.4.5.1) GIT-BRANCH einrichten!! Deklarative Oberfläche ab Version 0.115. 
 			// Kodierschluss 11.3.18-02:45. Würfel- & Ergebnistableau können Neustarten. Dort fehlt noch Eintragewerte berechnen. 
 		
 
-// Top Level FX Node item: ESCALEROBEDIENFELD
+// Top Level FX Node item: ESCALEROBEDIENPANEEL
 		// Temporäre Dummy-Tableaus
 		VBox spielstandtableau = new VBox();
 		spielstandtableau.setMinSize(340, 340); 
@@ -101,18 +101,18 @@ public class EscaleroBedienpaneel extends Application {
 	
 
 	// Top-top-level Container Escalero Bedienfeld
-	VBox escalerobedienfeld = new VBox();
-	escalerobedienfeld.setMinSize(340, 666);
-	escalerobedienfeld.setAlignment(Pos.CENTER);
-	escalerobedienfeld.getChildren().addAll(spielstandtableau, wuerfeltableau, ergebnistableau, bedientableau);
+	VBox escalerobedienpaneel = new VBox();
+	escalerobedienpaneel.setMinSize(340, 666);
+	escalerobedienpaneel.setAlignment(Pos.CENTER);
+	escalerobedienpaneel.getChildren().addAll(spielstandtableau, wuerfeltableau, ergebnistableau, bedientableau);
 
-	primaryStage.setScene(new Scene(escalerobedienfeld, 340, 666));
-	primaryStage.setTitle("Escalero4 - Bedienfeld");
+	primaryStage.setScene(new Scene(escalerobedienpaneel, 340, 666));
+	primaryStage.setTitle("Escalero4 - Bedienpaneel");
 	primaryStage.setResizable(true);
 	primaryStage.show();
 	}
 
-	// Top Level FX Node item: ESCALEROBEDIENFELD, Ende. 
+	// Top Level FX Node item: ESCALEROBEDIENPANEEL, Ende. 
 
 
 	
