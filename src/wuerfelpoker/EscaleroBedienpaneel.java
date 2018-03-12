@@ -124,7 +124,7 @@ public class EscaleroBedienpaneel extends Application {
 
 	primaryStage.setScene(new Scene(escalerobedienpaneel, 340, 666));
 	// Stylesheet Verbindugn funktioniert, aber mit dem aus dem JDK kopierten schaut es trotzdem anders aus. (nth)
-	escalerobedienpaneel.getStylesheets().add(EscaleroBedienpaneel.class.getResource("/styles/modena.css").toExternalForm());
+	escalerobedienpaneel.getStylesheets().add(EscaleroBedienpaneel.class.getResource("/styles/escaleroStyle2.css").toExternalForm());
 	primaryStage.setTitle("Escalero4 - Bedienpaneel");
 	primaryStage.setResizable(true);
 	primaryStage.show();
@@ -226,7 +226,6 @@ public class EscaleroBedienpaneel extends Application {
 
 	public Label hinzufuegenSpieleDesTages() {
 		Label spdt = new Label("#1"); 
-		spdt.getStyleClass().add("spieledestages");
 		//TODO
 		spdt.setPadding(new Insets(2, 2, 2, 2));
 		spdt.setMinSize(60, 24);
@@ -479,7 +478,6 @@ public class EscaleroBedienpaneel extends Application {
 	// Da kommt er ans Licht. 	
 	public Label hinzufuegenRundenzaehler(Rundenzaehler ruze) {
 		Label rundz = new Label(); 
-		rundz.getStyleClass().add("rundenzaehler");
 		rundz.setMinSize(20, 20);
 		rundz.setAlignment(Pos.CENTER);
 		rundz.setTextFill(Color.OLIVE);
@@ -495,8 +493,7 @@ public class EscaleroBedienpaneel extends Application {
 	public Label hinzufuegenEintragenWas() {
 		ergebnisfeld.initialisiereErgebnisfeld();
 		String ltext = ergebnisfeld.getEintragenText();
-		Label efeld = new Label(ltext); // für Ergebnistableau-Test stand da "FullHouse serviert." drin. 
-		efeld.getStyleClass().add("eintragenwasfeld");
+		Label efeld = new Label(ltext); // für Ergebnistableau-Test stand da "FullHouse serviert." drin.   
 		efeld.setPadding(new Insets(2, 2, 2, 2));
 		efeld.setMinSize(120, 20);
 		efeld.setFont(Font.font("Tahoma", 12));
@@ -515,7 +512,6 @@ public class EscaleroBedienpaneel extends Application {
 			int nbr = b + 1;
 			String btext = text + " " + nbr;
 			Reihe[b] = new Button(btext);
-			Reihe[b].getStyleClass().add("reihenknopf");
 			Reihe[b].setMinSize(25, 18);
 			Reihe[b].setFont(Font.font("Tahoma", 10));
 			Reihe[b].setTextFill(Color.BLACK);
@@ -585,7 +581,6 @@ public class EscaleroBedienpaneel extends Application {
 				suffix = "e";
 			}
 			Bilder[b] = new Button(btext+suffix);
-			Bilder[b].getStyleClass().add("bildknopf");
 			Bilder[b].setMinSize(30, 18);
 			Bilder[b].setFont(Font.font("Tahoma", 10));
 			Bilder[b].setTextFill(Color.ROYALBLUE);
@@ -614,7 +609,6 @@ public class EscaleroBedienpaneel extends Application {
 			// Wenn der Eintrag mit Betätigen eines Reihenknopfs abgeschlossen wurde, werden ohnehin alle Ergebnisknöpfe deaktiviert. 
 			if(b == 5) {btext = "lösche";} // Löscht den Inhalt des EintragenWasFeld und initialisiert die Eintragedaten.  
 			Muster[b] = new Button(btext);
-			Muster[b].getStyleClass().add("musterknopf");
 			Muster[b].setMinSize(30, 18);
 			Muster[b].setFont(Font.font("Tahoma", 10));
 			Muster[b].setTextFill(Color.ROYALBLUE);
@@ -758,7 +752,6 @@ public class EscaleroBedienpaneel extends Application {
 	// Da kommt er ans Licht. 
 	public Label hinzufuegenWurfzaehler(Wurf w) {
 		Label wurfz = new Label(); 
-		wurfz.getStyleClass().add( "wurfzaehler");
 		wurfz.setMinSize(20, 20);
 		wurfz.setAlignment(Pos.CENTER);
 		wurfz.setTextFill(Color.OLIVE);
@@ -787,14 +780,13 @@ public class EscaleroBedienpaneel extends Application {
 	// Hier wird's angelegt. 
 	public Label hinzufuegenServierfeld() {
 		Label sfeld = new Label("serviert"); // 5 Smileys; Unicode [Alt]+[1]; leider nicht!  
-		sfeld.getStyleClass().add("servierfeld");
 		// sfeld.setPadding(new Insets(5, 5, 5, 5));
 		sfeld.setMinSize(20, 10);
 		sfeld.setFont(Font.font("Tahoma", 6));
 		sfeld.setAlignment(Pos.CENTER);
 		sfeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(2), null)));
 		sfeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
-		// sfeld.setTextFill(Color.LIGHTGRAY);
+		sfeld.setTextFill(Color.LIGHTGRAY);
 		// weiterer Kode für Bedingungen und Hintergrundfarbe
 		return sfeld;
 	}
@@ -1009,7 +1001,9 @@ public class EscaleroBedienpaneel extends Application {
 	// Knopf Würfeln, [W]
 	public Button hinzufuegenWuerfelnKnopf() {
 		Button btw = new Button("W"); 
-		btw.getStyleClass().add("wuerfelnknopf");
+		btw.setFont(Font.font("Cambria", 18));
+		btw.setTextFill(Color.CRIMSON);
+		btw.setMinSize(30, 24); 
 		return btw;
 	}
 

@@ -386,62 +386,6 @@ is being used to size a border should also be in pixels.
      
 }
 
-
-
-
-    /***************************************************************************
-     *                                                                         *
-     * Escalero 4 									                           *
-     *                                                                         *
-     **************************************************************************/
-
-.spieledestages {
-	-fx-text-fill: olive;
-	
-	/* 	spdt.getStyleClass().add("spieledestages");
-		spdt.setPadding(new Insets(2, 2, 2, 2));
-		spdt.setMinSize(60, 24);
-		spdt.setTextFill(Color.OLIVE);
-		spdt.setFont(Font.font("Tahoma", 12));
-		spdt.setAlignment(Pos.CENTER); */
-}
- 
-.rundenzaehler {
-	-fx-text-fill: olive;
-}
- 
-.wurfzaehler {
-	-fx-text-fill: olive;
-}
-
-.servierfeld {
-	-fx-text-inner-color: lightgrey; 
-	-fx-text-fill: lightgrey;	
-	
-/*		sfeld.getStyleClass().add("servierfeld");
-		// sfeld.setPadding(new Insets(5, 5, 5, 5));
-		sfeld.setMinSize(20, 10);
-		sfeld.setFont(Font.font("Tahoma", 6));
-		sfeld.setAlignment(Pos.CENTER);
-		sfeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(2), null)));
-		sfeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
-		sfeld.setTextFill(Color.LIGHTGRAY); */
-}
-
-.wuerfelnknopf {
-	-fx-min-width: 2.4999em; /* 30 */  /* 1 = 0.08333em */ 
-    -fx-min-height: 1.9999em; /* 24 */
-    -fx-font-family: 'Cambria'; 
-    -fx-font-size: 1.4999em; /* 18 */ 
-	-fx-text-fill: crimson;
-	
-	/* 	btw.getStyleClass().add("wuerfelnknopf");
-		btw.setFont(Font.font("Cambria", 18));
-		btw.setTextFill(Color.CRIMSON);
-		btw.setMinSize(30, 24); 
-	 */ 
-}
-
 .bbalken {
     -fx-min-width: 4.9999em; 
     -fx-min-height: 12.4995em;
@@ -469,7 +413,6 @@ is being used to size a border should also be in pixels.
     -fx-font-weight: bold;
     
 }
-
 
 /*******************************************************************************
  *                                                                             *
