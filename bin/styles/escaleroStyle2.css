@@ -676,8 +676,18 @@ is being used to size a border should also be in pixels.
  *                                                                             *
  ******************************************************************************/
 
+.spieledestages {
+	-fx-text-fill: olive;	
+}
+.spitzname, 
+.spielervonspielern {
+	-fx-text-fill: royalblue;
+}
+.modus {
+	/* wird im Kode über IF-clause gesetzt, wahlweise crimson bei aufsteigend eintragen oder black wahlfrei. */
+}
 .label {
-    -fx-text-fill: -fx-text-background-color;
+   /* -fx-text-fill: -fx-text-background-color; */
 }
 
 /*******************************************************************************

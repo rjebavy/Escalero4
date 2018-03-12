@@ -57,7 +57,7 @@ public class EscaleroBedienpaneel extends Application {
 
 	
 	// KONSTANTEN
-	static final boolean WAHLFREIER_EINTRAGEMODUS = true;
+	static final boolean WAHLFREIER_EINTRAGEMODUS = false;
 	static final boolean EXTRA_STREICHUNG = true; 
 	static final String SPITZNAME_SPIELER_1 = "Rinaldo"; 
 	static final String SPITZNAME_SPIELER_2 = "Spieler2"; 
@@ -226,11 +226,11 @@ public class EscaleroBedienpaneel extends Application {
 
 	public Label hinzufuegenSpieleDesTages() {
 		Label spdt = new Label("#1"); 
-		spdt.getStyleClass().add("schriftknopf");
+		spdt.getStyleClass().add("spieledestages");
 		//TODO
 		spdt.setPadding(new Insets(2, 2, 2, 2));
 		spdt.setMinSize(60, 24);
-		spdt.setTextFill(Color.OLIVE);
+		// spdt.setTextFill(Color.OLIVE);
 		spdt.setFont(Font.font("Tahoma", 12));
 		spdt.setAlignment(Pos.CENTER);
 		return spdt;
@@ -238,10 +238,11 @@ public class EscaleroBedienpaneel extends Application {
 	
 	public Label hinzufuegenSpitzname() {
 		Label spitzn = new Label("Rinaldo"); 
+		spitzn.getStyleClass().add("spitzname");
 		//TODO
 		spitzn.setPadding(new Insets(2, 2, 2, 2));
 		spitzn.setMinSize(180, 24);
-		spitzn.setTextFill(Color.ROYALBLUE);
+		// spitzn.setTextFill(Color.ROYALBLUE);
 		spitzn.setFont(Font.font("Tahoma", 12));
 		spitzn.setAlignment(Pos.CENTER);
 		return spitzn;
@@ -249,7 +250,7 @@ public class EscaleroBedienpaneel extends Application {
 	
 	public Label hinzufuegenModus() {
 		Label modus = new Label("W"); 
-		//TODO
+		modus.getStyleClass().add("modus");
 		modus.setPadding(new Insets(2, 2, 2, 2));
 		modus.setMinSize(40, 24);
 		modus.setFont(Font.font("Tahoma", 12));
@@ -267,10 +268,11 @@ public class EscaleroBedienpaneel extends Application {
 	
 	public Label hinzufuegenSpielerVonSpielern() {
 		Label spvspl = new Label("1/1"); 
+		spvspl.getStyleClass().add("spielervonspielern");
 		//TODO
 		spvspl.setPadding(new Insets(2, 2, 2, 2));
 		spvspl.setMinSize(60, 20);
-		spvspl.setTextFill(Color.ROYALBLUE);
+		// spvspl.setTextFill(Color.ROYALBLUE);
 		spvspl.setFont(Font.font("Tahoma", 12));
 		spvspl.setAlignment(Pos.CENTER);
 		return spvspl;	
