@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
@@ -58,7 +59,10 @@ public class EscaleroBedienpaneel extends Application {
 	// KONSTANTEN
 	static final boolean WAHLFREIER_EINTRAGEMODUS = true;
 	static final boolean EXTRA_STREICHUNG = true; 
-	
+	static final String SPITZNAME_SPIELER_1 = "Rinaldo"; 
+	static final String SPITZNAME_SPIELER_2 = "Spieler2"; 
+	static final String SPITZNAME_SPIELER_3 = "Spieler3"; 
+	static final String SPITZNAME_SPIELER_4 = "Spieler4"; 
 	
 	// INSTANZVARIABLEN
 	// Wurf, Würfelsatz & Ergebnis initialisieren
@@ -120,7 +124,7 @@ public class EscaleroBedienpaneel extends Application {
 
 	primaryStage.setScene(new Scene(escalerobedienpaneel, 340, 666));
 	// Stylesheet Verbindugn funktioniert, aber mit dem aus dem JDK kopierten schaut es trotzdem anders aus. (nth)
-	// escalerobedienpaneel.getStylesheets().add(EscaleroBedienpaneel.class.getResource("/styles/escaleroStyle2.css").toExternalForm());
+	escalerobedienpaneel.getStylesheets().add(EscaleroBedienpaneel.class.getResource("/styles/escaleroStyle2.css").toExternalForm());
 	primaryStage.setTitle("Escalero4 - Bedienpaneel");
 	primaryStage.setResizable(true);
 	primaryStage.show();
@@ -161,11 +165,11 @@ public class EscaleroBedienpaneel extends Application {
 		sstableau.setSpacing(10);
 			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
 			HBox spielstandkopf = hinzufuegenSpielstandKopf(); 
-				VBox bilderbalken = hinzufuegenBilderBalken(); 
+				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
 				// TODO Zumindest eine TableView, nämlich meine - als Inhalt unter dem Tab 'Meins'. 
 				TableView[] spielstand = hinzufuegenSpielStand();
 				HBox[] summenbalken = hinzufuegenSummenBalken();
-			GridPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
+			BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
 		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.			
 		TabPane spielstandansichten = hinzufuegenSpielstandAnsichten(); 
 			spielstandansichten.setTabMaxHeight(16);
@@ -274,58 +278,75 @@ public class EscaleroBedienpaneel extends Application {
 	public TabPane hinzufuegenSpielstandAnsichten() {
 		// TODO 
 		Tab meins = new Tab(); 
-			meins.setText("Meins");
+			meins.setText(SPITZNAME_SPIELER_1);
 			meins.setClosable(false);
 		Tab eins = new Tab(); 
-			eins.setText("Eins");
+			eins.setText(SPITZNAME_SPIELER_2);
 			eins.setClosable(false);
 		Tab zwei = new Tab(); 
-			zwei.setText("Zwei");
+			zwei.setText(SPITZNAME_SPIELER_3);
 			zwei.setClosable(false);
 		Tab drei = new Tab(); 
-			drei.setText("Drei");
+			drei.setText(SPITZNAME_SPIELER_4);
 			drei.setClosable(false);
 		TabPane ssansichten = new TabPane();
 		// TODO
-		ssansichten.getTabs().addAll(meins, eins, zwei, drei);
+			ssansichten.getTabs().addAll(meins, eins, zwei, drei);
 		return ssansichten;		
 	} 
 	
-	public GridPane[] hinzufuegenSpielstandTafeln(VBox bilderbalken, TableView[] spielstand, HBox[] summenbalken) {
-		GridPane[] sstafeln = new GridPane[4];
+	public BorderPane[] hinzufuegenSpielstandTafeln(VBox[] bilderbalken, TableView[] spielstand, HBox[] summenbalken) {
+		BorderPane[] sstafeln = new BorderPane[4];
 		for(int s = 0; s < 4; s++) {
-			sstafeln[s] = new GridPane();
-			sstafeln[s].add(bilderbalken, 0, 0, 1, 9);
-			sstafeln[s].add(spielstand[s], 1, 0, 5, 9);
-			sstafeln[s].add(summenbalken[s], 1, 9, 6, 1);
-			// sstafeln[s].add(child, columnIndex, rowIndex, colspan, rowspan);
+			sstafeln[s] = new BorderPane();
+			sstafeln[s].setMinSize(150, 300);
+			sstafeln[s].setLeft(bilderbalken[s]);
+			sstafeln[s].setCenter(spielstand[s]);
+			sstafeln[s].setBottom(summenbalken[s]);
+			// bei GridPane; sstafeln[s].add(child, columnIndex, rowIndex, colspan, rowspan);
 			
 		}
 		// TODO
 		return sstafeln; 
 	}
 	
-	public VBox hinzufuegenBilderBalken() {
-		VBox bbalken = new VBox(); 
-		bbalken.setMinSize(30, 354);
-		bbalken.setSpacing(5);
-		bbalken.setAlignment(Pos.CENTER);
-		// TODO
-		Label neun = new Label("9"); 
-		Label zehn = new Label("10"); 
-		Label bube = new Label("B"); 
-		Label dame = new Label("D"); 
-		Label koenig = new Label("K"); 
-		Label ass = new Label("A"); 
-		Label strasse = new Label("St"); 
-		Label full = new Label("Fu"); 
-		Label poker = new Label("Po"); 
-		Label grande = new Label("Gr"); 
-		if(EXTRA_STREICHUNG) {
-			Label streich = new Label("X"); 
-			bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+	public VBox[] hinzufuegenBilderBalken() {
+		VBox[] bbalken = new VBox[4]; 
+		for(int b = 0; b < 4; b++ ) {
+			bbalken[b] = new VBox();
+			/* bbalken[b].setMinSize(60, 150);
+			bbalken[b].setSpacing(0);
+			bbalken[b].setAlignment(Pos.CENTER); */
+			bbalken[b].getStyleClass().add( "bbalken");
+			// TODO
+			Label neun = new Label("9"); 
+			neun.getStyleClass().add( "lbbalken");
+			Label zehn = new Label("10"); 
+			zehn.getStyleClass().add( "lbbalken");
+			Label bube = new Label("B"); 
+			bube.getStyleClass().add( "lbbalken");
+			Label dame = new Label("D"); 
+			dame.getStyleClass().add( "lbbalken");
+			Label koenig = new Label("K"); 
+			koenig.getStyleClass().add( "lbbalken");
+			Label ass = new Label("A"); 
+			ass.getStyleClass().add( "lbbalken");
+			Label strasse = new Label("St"); 
+			strasse.getStyleClass().add( "lbbalken");
+			Label full = new Label("Fu"); 
+			full.getStyleClass().add( "lbbalken");
+			Label poker = new Label("Po"); 
+			poker.getStyleClass().add( "lbbalken");
+			Label grande = new Label("Gr"); 
+			grande.getStyleClass().add( "lbbalken");
+			if(EXTRA_STREICHUNG) {
+				Label streich = new Label("X"); 
+				streich.getStyleClass().add( "lbbalken");
+				bbalken[b].getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+				}
+			if(!EXTRA_STREICHUNG) {bbalken[b].getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
 			}
-		if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);}
+		}
 		return bbalken;
 	}
 		
@@ -333,7 +354,7 @@ public class EscaleroBedienpaneel extends Application {
 		TableView[] sstand = new TableView[4];
 		for(int s = 0; s < 4; s++) {
 			sstand[s] = new TableView();
-// >>>>			sstand[s].
+			sstand[s].setMinSize(100, 150);
 			// TODO
 		}
 		return sstand;
@@ -349,8 +370,9 @@ public class EscaleroBedienpaneel extends Application {
 			sbalken[b] = new HBox();
 			sbalken[b].setMinSize(50, 20);
 			sbalken[b].setSpacing(10);
-				summen[b] = new Label("Summen"); 
+				summen[b] = new Label("Summen: "); 
 				summen[b].setMinSize(90, 30);
+				// summen[b].setAlignment(Pos.CENTER);
 				summereihe1[b] = new Label("0"); 
 				summereihe1[b].setMinSize(83, 30);
 			summereihe2[b] = new Label("0"); 
