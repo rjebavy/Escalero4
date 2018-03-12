@@ -516,7 +516,7 @@ public class EscaleroBedienpaneel extends Application {
 			Reihe[b].getStyleClass().add("reihenknopf");
 			Reihe[b].setMinSize(25, 18);
 			Reihe[b].setFont(Font.font("Tahoma", 10));
-			Reihe[b].setTextFill(Color.BLACK);
+			// Reihe[b].setTextFill(Color.BLACK);
 			// Reihe[b].setDisable(true);
 
 		}	
@@ -583,10 +583,10 @@ public class EscaleroBedienpaneel extends Application {
 				suffix = "e";
 			}
 			Bilder[b] = new Button(btext+suffix);
-			Bilder[b].getStyleClass().add("bilderknopf");
+			Bilder[b].getStyleClass().add("bildknopf");
 			Bilder[b].setMinSize(30, 18);
 			Bilder[b].setFont(Font.font("Tahoma", 10));
-			Bilder[b].setTextFill(Color.ROYALBLUE);
+			// Bilder[b].setTextFill(Color.ROYALBLUE);
 			// Bilder[b].setDisable(true);
 		}	
 		return Bilder; 
@@ -615,7 +615,7 @@ public class EscaleroBedienpaneel extends Application {
 			Muster[b].getStyleClass().add("musterknopf");
 			Muster[b].setMinSize(30, 18);
 			Muster[b].setFont(Font.font("Tahoma", 10));
-			Muster[b].setTextFill(Color.ROYALBLUE);
+			// Muster[b].setTextFill(Color.ROYALBLUE);
 			// Muster[b].setDisable(true);
 		}	
 		return Muster; 
@@ -1007,7 +1007,7 @@ public class EscaleroBedienpaneel extends Application {
 		Button btw = new Button("W"); 
 		btw.getStyleClass().add("wuerfelnknopf");
 		btw.setFont(Font.font("Cambria", 18));
-		btw.setTextFill(Color.CRIMSON);
+		// btw.setTextFill(Color.CRIMSON);
 		btw.setMinSize(30, 24); 
 		return btw;
 	}

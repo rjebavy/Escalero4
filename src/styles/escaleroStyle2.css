@@ -435,6 +435,15 @@ is being used to size a border should also be in pixels.
 
 /* ====   BUTTON LIKE THINGS   ============================================== */
 
+
+.wuerfelnknopf {
+	-fx-text-fill: crimson;
+}
+.reihenknopf {
+	-fx-text-fill: black;
+}
+.bildknopf, 
+.musterknopf, 
 .schriftknopf {
 	-fx-text-fill: royalblue;
 }
