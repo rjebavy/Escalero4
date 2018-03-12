@@ -341,23 +341,23 @@ public class EscaleroBedienpaneel extends Application {
 	
 	public HBox[] hinzufuegenSummenBalken() {
 		HBox[] sbalken = new HBox[4]; 
-		Label[] total = new Label[4]; 
-		Label[] totalreihe1 = new Label[4]; 
-		Label[] totalreihe2 = new Label[4]; 
-		Label[] totalreihe3 = new Label[4]; 
+		Label[] summen = new Label[4]; 
+		Label[] summereihe1 = new Label[4]; 
+		Label[] summereihe2 = new Label[4]; 
+		Label[] summereihe3 = new Label[4]; 
 		for(int b = 0; b < 4; b++) {
 			sbalken[b] = new HBox();
 			sbalken[b].setMinSize(50, 20);
 			sbalken[b].setSpacing(10);
-			total[b] = new Label("Total"); 
-				total[b].setMinSize(90, 30);
-			totalreihe1[b] = new Label("0"); 
-				totalreihe1[b].setMinSize(83, 30);
-			totalreihe2[b] = new Label("0"); 
-				totalreihe2[b].setMinSize(83, 30);
-			totalreihe3[b] = new Label("0"); 
-				totalreihe3[b].setMinSize(83, 30);
-			sbalken[b].getChildren().addAll(total[b], totalreihe1[b], totalreihe2[b], totalreihe3[b]);
+				summen[b] = new Label("Summen"); 
+				summen[b].setMinSize(90, 30);
+				summereihe1[b] = new Label("0"); 
+				summereihe1[b].setMinSize(83, 30);
+			summereihe2[b] = new Label("0"); 
+				summereihe2[b].setMinSize(83, 30);
+			summereihe3[b] = new Label("0"); 
+				summereihe3[b].setMinSize(83, 30);
+			sbalken[b].getChildren().addAll(summen[b], summereihe1[b], summereihe2[b], summereihe3[b]);
 		}			
 		// TODO 
 		return sbalken;
