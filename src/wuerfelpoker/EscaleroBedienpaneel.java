@@ -1,12 +1,22 @@
 package wuerfelpoker;
 
+import java.net.URI;
+import java.nio.file.Paths;
+
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -46,6 +56,8 @@ public class EscaleroBedienpaneel extends Application {
 
 	
 	// KONSTANTEN
+	static final boolean WAHLFREIER_EINTRAGEMODUS = true;
+	static final boolean EXTRA_STREICHUNG = true; 
 	
 	
 	// INSTANZVARIABLEN
@@ -58,6 +70,7 @@ public class EscaleroBedienpaneel extends Application {
 	Button[] Reihe = new Button[3];
 	Button[] Bilder = new Button[6];
 	Button[] Muster = new Button[6];
+	GridPane[] Spielstandtafel = new GridPane[4];
 	
 
 	@Override
@@ -77,9 +90,8 @@ public class EscaleroBedienpaneel extends Application {
 		
 
 // Top Level FX Node item: ESCALEROBEDIENPANEEL
-		// Temporäre Dummy-Tableaus
-		VBox spielstandtableau = new VBox();
-		spielstandtableau.setMinSize(340, 340); 
+		// Spielstandtableau ist kein Dummy NODE! 
+		VBox spielstandtableau = erzeugeSpielstandtableau();
 		// Würfeltableau ist kein Dummy NODE! 
 		GridPane wuerfeltableau = erzeugeWuerfeltableau();
 		// Ergebnistableau ist kein Dummy Tableau! 
@@ -90,7 +102,7 @@ public class EscaleroBedienpaneel extends Application {
 				
 		
 		VBox bedientableau = new VBox();
-		bedientableau.setMinSize(340, 139);
+		bedientableau.setMinSize(340, 58);
 		bedientableau.setAlignment(Pos.CENTER);
 			// Temporär um nicht immer schließen und starten zu müssen. 
 			Button nochmal = new Button("Nochmal!"); 
@@ -103,10 +115,12 @@ public class EscaleroBedienpaneel extends Application {
 	// Top-top-level Container Escalero Bedienfeld
 	VBox escalerobedienpaneel = new VBox();
 	escalerobedienpaneel.setMinSize(340, 666);
-	escalerobedienpaneel.setAlignment(Pos.CENTER);
+	escalerobedienpaneel.setAlignment(Pos.TOP_CENTER);
 	escalerobedienpaneel.getChildren().addAll(spielstandtableau, wuerfeltableau, ergebnistableau, bedientableau);
 
 	primaryStage.setScene(new Scene(escalerobedienpaneel, 340, 666));
+	// Stylesheet Verbindugn funktioniert, aber mit dem aus dem JDK kopierten schaut es trotzdem anders aus. (nth)
+	// escalerobedienpaneel.getStylesheets().add(EscaleroBedienpaneel.class.getResource("/styles/escaleroStyle2.css").toExternalForm());
 	primaryStage.setTitle("Escalero4 - Bedienpaneel");
 	primaryStage.setResizable(true);
 	primaryStage.show();
@@ -134,13 +148,247 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom BEDIENTABLEAU. 	
 
+		
+		
+// SPIELSTANDTABLEAU, FX-Nodes & Eigenschaften: 
+//TODO 
+	// Erzeugermethode. 
+	public VBox erzeugeSpielstandtableau() {
+	// Alle FX Nodes erzeugen
+		VBox sstableau = new VBox();
+		sstableau.setMinSize(340, 384);
+		sstableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+		sstableau.setSpacing(10);
+			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
+			HBox spielstandkopf = hinzufuegenSpielstandKopf(); 
+				VBox bilderbalken = hinzufuegenBilderBalken(); 
+				// TODO Zumindest eine TableView, nämlich meine - als Inhalt unter dem Tab 'Meins'. 
+				TableView[] spielstand = hinzufuegenSpielStand();
+				HBox[] summenbalken = hinzufuegenSummenBalken();
+			GridPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
+		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.			
+		TabPane spielstandansichten = hinzufuegenSpielstandAnsichten(); 
+			spielstandansichten.setTabMaxHeight(16);
+			spielstandansichten.setSide(Side.BOTTOM);
+			ObservableList<Tab> spielstandansicht = spielstandansichten.getTabs(); 
+			// System.out.println("spielstandansichten; ObservableList = " + spielstandansicht);
+			spielstandansicht.get(0).setContent(spielstandtafel[0]);
+			spielstandansicht.get(1).setContent(spielstandtafel[1]);
+			spielstandansicht.get(2).setContent(spielstandtafel[2]);
+			spielstandansicht.get(3).setContent(spielstandtafel[3]);
+		
+			// Aus unerfindlichen Gründen kann ich bei Tab bzw TabPane nicht wie sonst üblich mit GetCildren() ein Node 
+			// aus einem Container herausholen!! Ich versuch's jetzt hier oberhalb direkt in die TabPane?  
+				// Tab tbmeins = new Tab();
+				// TabPane test = new Tab(); 
+				// test = (Tab) spielstandansichten.getChildrenUnmodifiable().get(0);
+				// System.out.println("spielstandansichten = " + spielstandansichten.getChildren().toArray().toString());
+				// tbmeins = (Tab) spielstandansichtengetChildrenUnmodifiable().get(0);
+
+			// TODO das hier rechts funkt nicht, method not visible!! :  spielstandansichten.getChildren().addAll(spielstandtafelmeins); 
+			// TODO meins.setContent(?); 
+		
+		sstableau.getChildren().addAll(spielstandkopf, spielstandansichten);
+		sstableau.setAlignment(Pos.TOP_LEFT);
+			
+		return sstableau; 
+	}
+		
+	// Aktualisierungsmethode. 	
+	// public void neustartErgebnistableau(GridPane ergebnistableau) {
+		// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
+		// initialisiereErgebnisknoepfe(); 
+	// }		
+		
+	// SPIELSTANDTABLEAU, Ende. 
+
 	
+	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom SPIELSTANDTABLEAU
+
+	public HBox hinzufuegenSpielstandKopf() {
+		HBox sskopf = new HBox(); 
+		//TODO
+		sskopf.setMinSize(340, 30);
+		sskopf.setAlignment(Pos.CENTER);
+		sskopf.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
+		sskopf.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
+		Label spieledestages = hinzufuegenSpieleDesTages();
+		Label spitzname = hinzufuegenSpitzname();
+		Label modus = hinzufuegenModus(); 
+		Label spielervonspielern = hinzufuegenSpielerVonSpielern();
+		sskopf.getChildren().addAll(spieledestages, spitzname, modus, spielervonspielern);
+		return sskopf;
+	} 
+
+	public Label hinzufuegenSpieleDesTages() {
+		Label spdt = new Label("#1"); 
+		//TODO
+		spdt.setPadding(new Insets(2, 2, 2, 2));
+		spdt.setMinSize(60, 24);
+		spdt.setTextFill(Color.OLIVE);
+		spdt.setFont(Font.font("Tahoma", 12));
+		spdt.setAlignment(Pos.CENTER);
+		return spdt;
+	}
 	
+	public Label hinzufuegenSpitzname() {
+		Label spitzn = new Label("Rinaldo"); 
+		//TODO
+		spitzn.setPadding(new Insets(2, 2, 2, 2));
+		spitzn.setMinSize(180, 24);
+		spitzn.setTextFill(Color.ROYALBLUE);
+		spitzn.setFont(Font.font("Tahoma", 12));
+		spitzn.setAlignment(Pos.CENTER);
+		return spitzn;
+	}
+	
+	public Label hinzufuegenModus() {
+		Label modus = new Label("W"); 
+		//TODO
+		modus.setPadding(new Insets(2, 2, 2, 2));
+		modus.setMinSize(40, 24);
+		modus.setFont(Font.font("Tahoma", 12));
+		if(WAHLFREIER_EINTRAGEMODUS) {
+			modus.setText("W"); // wahlfreies Eintragen möglich. 
+			modus.setTextFill(Color.BLACK);
+			}
+		if(!WAHLFREIER_EINTRAGEMODUS) {
+			modus.setText("A"); // Eintragen nur in aufsteigender Reihenfolge möglich. 
+			modus.setTextFill(Color.CRIMSON);
+			}
+		modus.setAlignment(Pos.CENTER);
+		return modus;
+	} 
+	
+	public Label hinzufuegenSpielerVonSpielern() {
+		Label spvspl = new Label("1/1"); 
+		//TODO
+		spvspl.setPadding(new Insets(2, 2, 2, 2));
+		spvspl.setMinSize(60, 20);
+		spvspl.setTextFill(Color.ROYALBLUE);
+		spvspl.setFont(Font.font("Tahoma", 12));
+		spvspl.setAlignment(Pos.CENTER);
+		return spvspl;	
+	}
+	
+	public TabPane hinzufuegenSpielstandAnsichten() {
+		// TODO 
+		Tab meins = new Tab(); 
+			meins.setText("Meins");
+			meins.setClosable(false);
+		Tab eins = new Tab(); 
+			eins.setText("Eins");
+			eins.setClosable(false);
+		Tab zwei = new Tab(); 
+			zwei.setText("Zwei");
+			zwei.setClosable(false);
+		Tab drei = new Tab(); 
+			drei.setText("Drei");
+			drei.setClosable(false);
+		TabPane ssansichten = new TabPane();
+		// TODO
+		ssansichten.getTabs().addAll(meins, eins, zwei, drei);
+		return ssansichten;		
+	} 
+	
+	public GridPane[] hinzufuegenSpielstandTafeln(VBox bilderbalken, TableView[] spielstand, HBox[] summenbalken) {
+		GridPane[] sstafeln = new GridPane[4];
+		for(int s = 0; s < 4; s++) {
+			sstafeln[s] = new GridPane();
+			sstafeln[s].add(bilderbalken, 0, 0, 1, 9);
+			sstafeln[s].add(spielstand[s], 1, 0, 5, 9);
+			sstafeln[s].add(summenbalken[s], 1, 9, 6, 1);
+			// sstafeln[s].add(child, columnIndex, rowIndex, colspan, rowspan);
+			
+		}
+		// TODO
+		return sstafeln; 
+	}
+	
+	public VBox hinzufuegenBilderBalken() {
+		VBox bbalken = new VBox(); 
+		bbalken.setMinSize(30, 354);
+		bbalken.setSpacing(5);
+		bbalken.setAlignment(Pos.CENTER);
+		// TODO
+		Label neun = new Label("9"); 
+		Label zehn = new Label("10"); 
+		Label bube = new Label("B"); 
+		Label dame = new Label("D"); 
+		Label koenig = new Label("K"); 
+		Label ass = new Label("A"); 
+		Label strasse = new Label("St"); 
+		Label full = new Label("Fu"); 
+		Label poker = new Label("Po"); 
+		Label grande = new Label("Gr"); 
+		if(EXTRA_STREICHUNG) {
+			Label streich = new Label("X"); 
+			bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+			}
+		if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);}
+		return bbalken;
+	}
+		
+	public TableView[] hinzufuegenSpielStand() {
+		TableView[] sstand = new TableView[4];
+		for(int s = 0; s < 4; s++) {
+			sstand[s] = new TableView();
+// >>>>			sstand[s].
+			// TODO
+		}
+		return sstand;
+	}
+	
+	public HBox[] hinzufuegenSummenBalken() {
+		HBox[] sbalken = new HBox[4]; 
+		Label[] total = new Label[4]; 
+		Label[] totalreihe1 = new Label[4]; 
+		Label[] totalreihe2 = new Label[4]; 
+		Label[] totalreihe3 = new Label[4]; 
+		for(int b = 0; b < 4; b++) {
+			sbalken[b] = new HBox();
+			sbalken[b].setMinSize(50, 20);
+			sbalken[b].setSpacing(10);
+			total[b] = new Label("Total"); 
+				total[b].setMinSize(90, 30);
+			totalreihe1[b] = new Label("0"); 
+				totalreihe1[b].setMinSize(83, 30);
+			totalreihe2[b] = new Label("0"); 
+				totalreihe2[b].setMinSize(83, 30);
+			totalreihe3[b] = new Label("0"); 
+				totalreihe3[b].setMinSize(83, 30);
+			sbalken[b].getChildren().addAll(total[b], totalreihe1[b], totalreihe2[b], totalreihe3[b]);
+		}			
+		// TODO 
+		return sbalken;
+	}
+	
+	public HBox hinzufuegenTotalEins() {
+		HBox teins = new HBox(); 
+		// TODO 
+		return teins;
+	}
+	
+	public HBox hinzufuegenTotalZwei() {
+		HBox tzwei = new HBox(); 
+		// TODO 
+		return tzwei;
+	}
+	
+	public HBox hinzufuegenTotalDrei() {
+		HBox tdrei = new HBox(); 
+		// TODO 
+		return tdrei;
+	}
+	
+	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom SPIELSTANDTABLEAU. 	
+	
+
+			
 // ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 
 	// Erzeugermethode. 
 	public GridPane erzeugeErgebnistableau() {
-			// WÜRFELTABLEAU, FX-Nodes & Eigenschaften: 
-			// Alle FX Nodes erzeugen
+		// Alle FX Nodes erzeugen
 		GridPane etableau = new GridPane();
 		etableau.setMinSize(340, 112);
 		etableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
@@ -191,10 +439,9 @@ public class EscaleroBedienpaneel extends Application {
 		initialisiereErgebnisknoepfe(); 
 		
 	}
-
-	
 	
 	// ERGEBNISTABLEAU, Ende. 		
+
 	
 	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
 	// D a s  R e i h e n f e l d: 
@@ -229,8 +476,8 @@ public class EscaleroBedienpaneel extends Application {
 		efeld.setMinSize(120, 20);
 		efeld.setFont(Font.font("Tahoma", 12));
 		efeld.setAlignment(Pos.CENTER);
-		efeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
-		efeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID,null, new BorderWidths(1))));
+		efeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(3), null)));
+		efeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(1))));
 		efeld.setTextFill(Color.BLACK);
 		return efeld;
 	}
@@ -515,8 +762,8 @@ public class EscaleroBedienpaneel extends Application {
 		sfeld.setMinSize(20, 10);
 		sfeld.setFont(Font.font("Tahoma", 6));
 		sfeld.setAlignment(Pos.CENTER);
-		sfeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, null, null)));
-		sfeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID,null, new BorderWidths(1))));
+		sfeld.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(2), null)));
+		sfeld.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		sfeld.setTextFill(Color.LIGHTGRAY);
 		// weiterer Kode für Bedingungen und Hintergrundfarbe
 		return sfeld;
