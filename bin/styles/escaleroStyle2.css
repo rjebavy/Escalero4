@@ -435,6 +435,9 @@ is being used to size a border should also be in pixels.
 
 /* ====   BUTTON LIKE THINGS   ============================================== */
 
+.schriftknopf {
+	-fx-text-fill: royalblue;
+}
 .button,
 .toggle-button,
 .radio-button > .radio,
@@ -448,7 +451,7 @@ is being used to size a border should also be in pixels.
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
-    -fx-text-fill: -fx-text-base-color;
+    /* -fx-text-fill: -fx-text-base-color; */
     -fx-alignment: CENTER;
     -fx-content-display: LEFT;
 }

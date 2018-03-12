@@ -226,6 +226,7 @@ public class EscaleroBedienpaneel extends Application {
 
 	public Label hinzufuegenSpieleDesTages() {
 		Label spdt = new Label("#1"); 
+		spdt.getStyleClass().add("schriftknopf");
 		//TODO
 		spdt.setPadding(new Insets(2, 2, 2, 2));
 		spdt.setMinSize(60, 24);
@@ -512,6 +513,7 @@ public class EscaleroBedienpaneel extends Application {
 			int nbr = b + 1;
 			String btext = text + " " + nbr;
 			Reihe[b] = new Button(btext);
+			Reihe[b].getStyleClass().add("reihenknopf");
 			Reihe[b].setMinSize(25, 18);
 			Reihe[b].setFont(Font.font("Tahoma", 10));
 			Reihe[b].setTextFill(Color.BLACK);
@@ -581,6 +583,7 @@ public class EscaleroBedienpaneel extends Application {
 				suffix = "e";
 			}
 			Bilder[b] = new Button(btext+suffix);
+			Bilder[b].getStyleClass().add("bilderknopf");
 			Bilder[b].setMinSize(30, 18);
 			Bilder[b].setFont(Font.font("Tahoma", 10));
 			Bilder[b].setTextFill(Color.ROYALBLUE);
@@ -609,6 +612,7 @@ public class EscaleroBedienpaneel extends Application {
 			// Wenn der Eintrag mit Betätigen eines Reihenknopfs abgeschlossen wurde, werden ohnehin alle Ergebnisknöpfe deaktiviert. 
 			if(b == 5) {btext = "lösche";} // Löscht den Inhalt des EintragenWasFeld und initialisiert die Eintragedaten.  
 			Muster[b] = new Button(btext);
+			Muster[b].getStyleClass().add("musterknopf");
 			Muster[b].setMinSize(30, 18);
 			Muster[b].setFont(Font.font("Tahoma", 10));
 			Muster[b].setTextFill(Color.ROYALBLUE);
@@ -1001,6 +1005,7 @@ public class EscaleroBedienpaneel extends Application {
 	// Knopf Würfeln, [W]
 	public Button hinzufuegenWuerfelnKnopf() {
 		Button btw = new Button("W"); 
+		btw.getStyleClass().add("wuerfelnknopf");
 		btw.setFont(Font.font("Cambria", 18));
 		btw.setTextFill(Color.CRIMSON);
 		btw.setMinSize(30, 24); 
@@ -1038,8 +1043,9 @@ public class EscaleroBedienpaneel extends Application {
 	// Knopf [Schrift], Etwas eintragen, auch vor drittem Wurf! 
 	public Button hinzufuegenSchriftKnopf() {
 		Button sch = new Button("Schrift");
+		sch.getStyleClass().add("schriftknopf");
 		sch.setFont(Font.font("Tahoma", 10));
-		sch.setTextFill(Color.ROYALBLUE);
+		// sch.setTextFill(Color.ROYALBLUE);
 		sch.setMinSize(30, 20); 
 		return sch;
 	}
