@@ -99,22 +99,20 @@ public class EscaleroBedienpaneel extends Application {
 		VBox spielstandtableau = erzeugeSpielstandtableau();
 		// Würfeltableau ist kein Dummy NODE! 
 		GridPane wuerfeltableau = erzeugeWuerfeltableau();
-		// Ergebnistableau ist kein Dummy Tableau! 
+		// Ergebnistableau ist kein Dummy NODE! 
 		GridPane ergebnistableau = erzeugeErgebnistableau();
+		// Bedientableau ist kein Dummy NODE! 
+		BorderPane bedientableau = erzeugeBedientableau(); 
 
 // >>>>		// Test initialisiereErgebnisknoepfe()
 
-				
-		
-		VBox bedientableau = new VBox();
-		bedientableau.setMinSize(340, 58);
-		bedientableau.setAlignment(Pos.CENTER);
-			// Temporär um nicht immer schließen und starten zu müssen. 
-			Button nochmal = new Button("Nochmal!"); 
-			nochmal.setFont(Font.font("Tahoma", 10));
-			nochmal.setMinSize(50, 16); 
-			nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau));
-			bedientableau.getChildren().addAll(nochmal);
+	
+		// Temporär um nicht immer schließen und starten zu müssen. 
+		Button nochmal = new Button("Nochmal!"); 
+		nochmal.setFont(Font.font("Tahoma", 10));
+		nochmal.setMinSize(50, 16); 
+		nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau));
+		bedientableau.setCenter(nochmal);
 	
 
 	// Top-top-level Container Escalero Bedienfeld
@@ -150,7 +148,16 @@ public class EscaleroBedienpaneel extends Application {
 			neustartErgebnistableau(etableau);
 		}
 	
-	
+	public BorderPane erzeugeBedientableau() {
+		BorderPane btableau = new BorderPane();
+		btableau.getStyleClass().add("bedientableau");
+		btableau.setMinSize(340, 58);
+		// TODO
+		return btableau; 	
+	}
+		
+		
+		
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom BEDIENTABLEAU. 	
 
 		
@@ -161,6 +168,8 @@ public class EscaleroBedienpaneel extends Application {
 	public VBox erzeugeSpielstandtableau() {
 	// Alle FX Nodes erzeugen
 		VBox sstableau = new VBox();
+		sstableau.getStyleClass().add("spielstandtableau");
+		//TODO
 		sstableau.setMinSize(340, 384);
 		sstableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		sstableau.setSpacing(10);
