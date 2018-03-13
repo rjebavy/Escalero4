@@ -165,7 +165,7 @@ public class EscaleroBedienpaneel extends Application {
 		sstableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		sstableau.setSpacing(10);
 			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
-			HBox spielstandkopf = hinzufuegenSpielstandKopf(); 
+			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(); 
 				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
 				
 				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? BorderPane mit Textarea Center?  
@@ -195,7 +195,7 @@ public class EscaleroBedienpaneel extends Application {
 			// TODO das hier rechts funkt nicht, method not visible!! :  spielstandansichten.getChildren().addAll(spielstandtafelmeins); 
 			// TODO meins.setContent(?); 
 		
-		sstableau.getChildren().addAll(spielstandkopf, spielstandansichten);
+		sstableau.getChildren().addAll(spielstandtableaukopf, spielstandansichten);
 		sstableau.setAlignment(Pos.TOP_LEFT);
 			
 		return sstableau; 
