@@ -46,7 +46,7 @@ public class EscaleroBedienpaneel extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.141
+	* @version 0.155
 	* @author Reinhard Jebavy
 	*/
 
@@ -151,12 +151,20 @@ public class EscaleroBedienpaneel extends Application {
 	public BorderPane erzeugeBedientableau() {
 		BorderPane btableau = new BorderPane();
 		btableau.getStyleClass().add("bedientableau");
-		btableau.setMinSize(340, 58);
+		// btableau.setMinSize(340, 58);
+		Label mleiste = erzeugeMeldeleiste();
+		btableau.setBottom(mleiste);		
 		// TODO
 		return btableau; 	
 	}
 		
-		
+	public Label erzeugeMeldeleiste() {
+		Label meldeleiste = new Label("keine Meldung. "); 
+		meldeleiste.getStyleClass().add("meldeleiste");
+		// TODO
+		return meldeleiste;
+	}
+	
 		
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom BEDIENTABLEAU. 	
 
