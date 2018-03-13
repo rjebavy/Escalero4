@@ -402,6 +402,7 @@ is being used to size a border should also be in pixels.
 }
 
 .bildbalkenelement {
+	-fx-background-color: beige; 
 	-fx-border-color: olive;
     -fx-border-style: solid;
     -fx-border-radius: 0px;        /* top-left top-right bottom-right bottom-left corner of the element  */ 
@@ -414,6 +415,7 @@ is being used to size a border should also be in pixels.
     
 }
 .summen {
+	-fx-background-color: beige; 
 	-fx-border-color: olive;
     -fx-border-style: solid;
     -fx-border-radius: 0px;        /* top-left top-right bottom-right bottom-left corner of the element  */ 
@@ -427,6 +429,7 @@ is being used to size a border should also be in pixels.
 .summereihe1, 
 .summereihe2, 
 .summereihe3 {
+	-fx-background-color: beige; 
 	-fx-border-color: olive;
     -fx-border-style: solid;
     -fx-border-radius: 0px;        /* top-left top-right bottom-right bottom-left corner of the element  */ 
