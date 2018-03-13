@@ -14,6 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -59,7 +60,7 @@ public class EscaleroBedienpaneel extends Application {
 	// KONSTANTEN
 	static final boolean WAHLFREIER_EINTRAGEMODUS = false;
 	static final boolean EXTRA_STREICHUNG = true; 
-	static final String SPITZNAME_SPIELER_1 = "Rinaldo"; 
+	static final String SPITZNAME_SPIELER_1 = "Spieler1"; 
 	static final String SPITZNAME_SPIELER_2 = "Spieler2"; 
 	static final String SPITZNAME_SPIELER_3 = "Spieler3"; 
 	static final String SPITZNAME_SPIELER_4 = "Spieler4"; 
@@ -166,7 +167,8 @@ public class EscaleroBedienpaneel extends Application {
 			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
 			HBox spielstandkopf = hinzufuegenSpielstandKopf(); 
 				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
-				// TODO Zumindest eine TableView, nämlich meine - als Inhalt unter dem Tab 'Meins'. 
+				
+				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? BorderPane mit Textarea Center?  
 				TableView[] spielstand = hinzufuegenSpielStand();
 				HBox[] summenbalken = hinzufuegenSummenBalken();
 			BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
@@ -177,9 +179,10 @@ public class EscaleroBedienpaneel extends Application {
 			ObservableList<Tab> spielstandansicht = spielstandansichten.getTabs(); 
 			// System.out.println("spielstandansichten; ObservableList = " + spielstandansicht);
 			spielstandansicht.get(0).setContent(spielstandtafel[0]);
-			spielstandansicht.get(1).setContent(spielstandtafel[1]);
-			spielstandansicht.get(2).setContent(spielstandtafel[2]);
-			spielstandansicht.get(3).setContent(spielstandtafel[3]);
+			spielstandansicht.get(1).setContent(spielstandtafel[0]);
+			spielstandansicht.get(2).setContent(spielstandtafel[1]);
+			spielstandansicht.get(3).setContent(spielstandtafel[2]);
+			spielstandansicht.get(4).setContent(spielstandtafel[3]);
 		
 			// Aus unerfindlichen Gründen kann ich bei Tab bzw TabPane nicht wie sonst üblich mit GetCildren() ein Node 
 			// aus einem Container herausholen!! Ich versuch's jetzt hier oberhalb direkt in die TabPane?  
@@ -280,6 +283,9 @@ public class EscaleroBedienpaneel extends Application {
 	
 	public TabPane hinzufuegenSpielstandAnsichten() {
 		// TODO 
+		Tab willkommen = new Tab(); 
+		willkommen.setText("Willkommen!");
+		willkommen.setClosable(false);
 		Tab meins = new Tab(); 
 			meins.setText(SPITZNAME_SPIELER_1);
 			meins.setClosable(false);
@@ -294,7 +300,7 @@ public class EscaleroBedienpaneel extends Application {
 			drei.setClosable(false);
 		TabPane ssansichten = new TabPane();
 		// TODO
-			ssansichten.getTabs().addAll(meins, eins, zwei, drei);
+			ssansichten.getTabs().addAll(willkommen, meins, eins, zwei, drei);
 		return ssansichten;		
 	} 
 	
@@ -320,31 +326,30 @@ public class EscaleroBedienpaneel extends Application {
 			/* bbalken[b].setMinSize(60, 150);
 			bbalken[b].setSpacing(0);
 			bbalken[b].setAlignment(Pos.CENTER); */
-			bbalken[b].getStyleClass().add( "bbalken");
-			// TODO
+			bbalken[b].getStyleClass().add( "bildbalken");
 			Label neun = new Label("9"); 
-			neun.getStyleClass().add( "lbbalken");
+			neun.getStyleClass().add( "bildbalkenelement");
 			Label zehn = new Label("10"); 
-			zehn.getStyleClass().add( "lbbalken");
+			zehn.getStyleClass().add( "bildbalkenelement");
 			Label bube = new Label("B"); 
-			bube.getStyleClass().add( "lbbalken");
+			bube.getStyleClass().add( "bildbalkenelement");
 			Label dame = new Label("D"); 
-			dame.getStyleClass().add( "lbbalken");
+			dame.getStyleClass().add( "bildbalkenelement");
 			Label koenig = new Label("K"); 
-			koenig.getStyleClass().add( "lbbalken");
+			koenig.getStyleClass().add( "bildbalkenelement");
 			Label ass = new Label("A"); 
-			ass.getStyleClass().add( "lbbalken");
+			ass.getStyleClass().add( "bildbalkenelement");
 			Label strasse = new Label("St"); 
-			strasse.getStyleClass().add( "lbbalken");
+			strasse.getStyleClass().add( "bildbalkenelement");
 			Label full = new Label("Fu"); 
-			full.getStyleClass().add( "lbbalken");
+			full.getStyleClass().add( "bildbalkenelement");
 			Label poker = new Label("Po"); 
-			poker.getStyleClass().add( "lbbalken");
+			poker.getStyleClass().add( "bildbalkenelement");
 			Label grande = new Label("Gr"); 
-			grande.getStyleClass().add( "lbbalken");
+			grande.getStyleClass().add( "bildbalkenelement");
 			if(EXTRA_STREICHUNG) {
 				Label streich = new Label("X"); 
-				streich.getStyleClass().add( "lbbalken");
+				streich.getStyleClass().add( "bildbalkenelement");
 				bbalken[b].getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
 				}
 			if(!EXTRA_STREICHUNG) {bbalken[b].getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
@@ -358,7 +363,10 @@ public class EscaleroBedienpaneel extends Application {
 		for(int s = 0; s < 4; s++) {
 			sstand[s] = new TableView();
 			sstand[s].setMinSize(100, 150);
-			// TODO
+			TableColumn reiheEins = new TableColumn("Reihe 1");
+			TableColumn reiheZwei = new TableColumn("Reihe 2");
+			TableColumn reiheDrei = new TableColumn("Reihe 3");
+			sstand[s].getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
 		}
 		return sstand;
 	}
@@ -371,16 +379,21 @@ public class EscaleroBedienpaneel extends Application {
 		Label[] summereihe3 = new Label[4]; 
 		for(int b = 0; b < 4; b++) {
 			sbalken[b] = new HBox();
-			sbalken[b].setMinSize(50, 20);
-			sbalken[b].setSpacing(10);
+			sbalken[b].getStyleClass().add("summenbalken");
+			sbalken[b].setMinSize(80, 20);
+			sbalken[b].setSpacing(0);
 				summen[b] = new Label("Summen: "); 
-				summen[b].setMinSize(90, 30);
+				summen[b].getStyleClass().add("summen");
+ 				summen[b].setMinSize(90, 30);
 				// summen[b].setAlignment(Pos.CENTER);
 				summereihe1[b] = new Label("0"); 
+				summereihe1[b].getStyleClass().add("summereihe1");
 				summereihe1[b].setMinSize(83, 30);
-			summereihe2[b] = new Label("0"); 
+				summereihe2[b] = new Label("0"); 
+				summereihe2[b].getStyleClass().add("summereihe2");
 				summereihe2[b].setMinSize(83, 30);
-			summereihe3[b] = new Label("0"); 
+				summereihe3[b] = new Label("0"); 
+				summereihe3[b].getStyleClass().add("summereihe3");
 				summereihe3[b].setMinSize(83, 30);
 			sbalken[b].getChildren().addAll(summen[b], summereihe1[b], summereihe2[b], summereihe3[b]);
 		}			
