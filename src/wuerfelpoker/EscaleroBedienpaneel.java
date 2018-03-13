@@ -76,6 +76,7 @@ public class EscaleroBedienpaneel extends Application {
 	Button[] Bilder = new Button[6];
 	Button[] Muster = new Button[6];
 	GridPane[] Spielstandtafel = new GridPane[4];
+	Meldung meldung = new Meldung(); 
 	
 
 	@Override
@@ -94,7 +95,7 @@ public class EscaleroBedienpaneel extends Application {
 			// Kodierschluss 11.3.18-02:45. Würfel- & Ergebnistableau können Neustarten. Dort fehlt noch Eintragewerte berechnen. 
 		
 
-// Top Level FX Node item: ESCALEROBEDIENPANEEL
+// Top Level FX Node item: ESCALEROBEDIENPANEEL: 
 		// Spielstandtableau ist kein Dummy NODE! 
 		VBox spielstandtableau = erzeugeSpielstandtableau();
 		// Würfeltableau ist kein Dummy NODE! 
@@ -103,17 +104,20 @@ public class EscaleroBedienpaneel extends Application {
 		GridPane ergebnistableau = erzeugeErgebnistableau();
 		// Bedientableau ist kein Dummy NODE! 
 		BorderPane bedientableau = erzeugeBedientableau(); 
-
-// >>>>		// Test initialisiereErgebnisknoepfe()
-
-	
+		
 		// Temporär um nicht immer schließen und starten zu müssen. 
 		Button nochmal = new Button("Nochmal!"); 
 		nochmal.setFont(Font.font("Tahoma", 10));
 		nochmal.setMinSize(50, 16); 
 		nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau));
 		bedientableau.setCenter(nochmal);
+		
+		// TEST: Meldeleiste aktualisieren. 
+		meldung.setMeldung("das ist eine neue Meldung"); 
+		aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0));
 	
+	
+
 
 	// Top-top-level Container Escalero Bedienfeld
 	VBox escalerobedienpaneel = new VBox();
@@ -159,13 +163,20 @@ public class EscaleroBedienpaneel extends Application {
 	}
 		
 	public Label erzeugeMeldeleiste() {
-		Label meldeleiste = new Label("keine Meldung. "); 
+		Label meldeleiste = new Label("Keine Meldung. "); 
 		meldeleiste.getStyleClass().add("meldeleiste");
 		// TODO
 		return meldeleiste;
 	}
 	
-		
+	public void aktualisiereMeldeleiste(Label meldeleiste) {
+		Label mleiste = meldeleiste; 
+		// mleiste.accessibleTextProperty().bindBidirectional(meldung.meldungProperty());
+		mleiste.textProperty().bindBidirectional(meldung.meldungProperty());
+		System.out.println(mleiste.accessibleTextProperty());
+		System.out.println(meldung.meldungProperty());
+	}
+	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom BEDIENTABLEAU. 	
 
 		
