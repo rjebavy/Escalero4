@@ -1,12 +1,16 @@
 package wuerfelpoker;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Ergebnisfeld {
-	private int eintrageWert;
-	private String eintragenText;
+	private final IntegerProperty eintragewert = new SimpleIntegerProperty();
+	private final StringProperty eintragentext = new SimpleStringProperty();
 
 	// Konstruktor 
 	public Ergebnisfeld() {
@@ -14,23 +18,23 @@ public class Ergebnisfeld {
 
 	// Ergebnisfeld leeren. 
 	public void initialisiereErgebnisfeld() {
-		eintrageWert = 0;
-		eintragenText = "noch kein Ergebnis. ";
+		setEintragewert(0);
+		setEintragentext("noch kein Ergebnis. ");
 	}
 	
 	// Text und Werte für Würfelbilder. 
 	public void eintragenNeuner(Wurfergebnis ergebnis) {
 		initialisiereErgebnisfeld();
 		int anzahl = ergebnis.getNeun(); 
-		eintragenText = anzahl + " Neuner. ";
-		eintrageWert = anzahl * 1;
+		setEintragentext(anzahl + " Neuner. ");
+		setEintragewert(anzahl * 1);
 	}
 
 	public void eintragenZehner(Wurfergebnis ergebnis) {
 		initialisiereErgebnisfeld();
 		int anzahl = ergebnis.getZehn(); 
-		eintragenText = anzahl + " Zehner. ";
-		eintrageWert = anzahl * 2;
+		setEintragentext(anzahl + " Zehner. ");
+		setEintragewert(anzahl * 2);
 	}
 
 	public void eintragenBuben(Wurfergebnis ergebnis) {
@@ -40,8 +44,8 @@ public class Ergebnisfeld {
 		if(anzahl == 1) {
 			text = "Bube. ";
 		}
-		eintragenText = anzahl + " " + text;
-		eintrageWert = anzahl * 3;
+		setEintragentext(anzahl + " " + text);
+		setEintragewert(anzahl * 3);
 	}
 
 	public void eintragenDamen(Wurfergebnis ergebnis) {
@@ -51,8 +55,8 @@ public class Ergebnisfeld {
 		if(anzahl == 1) {
 			text = "Dame. ";
 		}
-		eintragenText = anzahl + " " + text;
-		eintrageWert = anzahl * 4;
+		setEintragentext(anzahl + " " + text);
+		setEintragewert(anzahl * 4);
 	}
 
 	public void eintragenKoenige(Wurfergebnis ergebnis) {
@@ -62,8 +66,8 @@ public class Ergebnisfeld {
 		if(anzahl == 1) {
 			text = "Koenig. ";
 		}
-		eintragenText = anzahl + " " + text;
-		eintrageWert = anzahl * 5;
+		setEintragentext(anzahl + " " + text);
+		setEintragewert(anzahl * 5);
 	}
 
 	public void eintragenAsse(Wurfergebnis ergebnis) {
@@ -72,8 +76,8 @@ public class Ergebnisfeld {
 		if(anzahl== 1) {
 			text = "Ass. ";
 		}
-		eintragenText = anzahl + " " + text;
-		eintrageWert = anzahl * 6;
+		setEintragentext(anzahl + " " + text);
+		setEintragewert(anzahl * 6);
 	}
 
 	// Text und Werte für Würfelmuster. 
@@ -86,8 +90,8 @@ public class Ergebnisfeld {
 			sv = 5; 
 			text = "serviert. ";
 		}
-		eintragenText = "Straße " + text;
-		eintrageWert = 20 + sv;
+		setEintragentext("Straße " + text);
+		setEintragewert(20 + sv);
 	}
 
 	public void eintragenFullhouse(Wurfergebnis ergebnis, boolean serviert) {
@@ -99,8 +103,8 @@ public class Ergebnisfeld {
 			sv = 5; 
 			text = "serviert. ";
 		}
-		eintragenText = "FullHouse " + text;
-		eintrageWert = 30 + sv;
+		setEintragentext("FullHouse " + text);
+		setEintragewert(30 + sv);
 	}
 
 	public void eintragenPoker(Wurfergebnis ergebnis, boolean serviert) {
@@ -113,8 +117,8 @@ public class Ergebnisfeld {
 			sv = 5; 
 			text = "serviert. ";
 		}
-		eintragenText = "Poker " + text;
-		eintrageWert = 40 + sv;
+		setEintragentext("Poker " + text);
+		setEintragewert(40 + sv);
 	}
 
 	public void eintragenGrande(Wurfergebnis ergebnis, boolean serviert) {
@@ -126,16 +130,16 @@ public class Ergebnisfeld {
 			sv = 5; 
 			text = "serviert. ";
 		}
-		eintragenText = "Grande " + text;
-		eintrageWert = 50 + sv;
+		setEintragentext("Grande " + text);
+		setEintragewert(50 + sv);
 	}
 
 	// Knopf [-]
 	public void eintragenStreichung(Wurfergebnis ergebnis) {
 		initialisiereErgebnisfeld();
 		int anzahl = 1; 
-		eintragenText = anzahl + " Streichung";
-		eintrageWert = anzahl * 0;
+		setEintragentext(anzahl + " Streichung");
+		setEintragewert(anzahl * 0);
 	}
 	
 	// Knopf [x]
@@ -167,25 +171,35 @@ public class Ergebnisfeld {
 	
 	
 	// Standard Getter & Setter
-	public int getEintrageWert() {
-		return eintrageWert;
+	public IntegerProperty eintragewertProperty() {
+		return eintragewert;
 	}
 
-	public void setEintrageWert(int eintrageWert) {
-		this.eintrageWert = eintrageWert;
+	public final int getEintragewert() {
+		return eintragewert.get(); 
+		}
+
+	public final void setEintragewert(int eintragewert) {
+		this.eintragewert.set(eintragewert);
+	}
+	
+	
+	public StringProperty eintragentextProperty() {
+		return eintragentext;
 	}
 
-	public String getEintragenText() {
-		return eintragenText;
-	}
+	public final String getEintragentext() {
+		return eintragentext.get(); 
+		}
 
-	public void setEintragenText(String eintragenText) {
-		this.eintragenText = eintragenText;
+	public final void setEintragentext(String eintragentext) {
+		this.eintragentext.set(eintragentext);
 	}
-
+	
+	
 	@Override
 	public String toString() {
-		return "Ergebnisfeld [eintrageWert=" + eintrageWert + ", eintragenText=" + eintragenText + "]";
+		return "Ergebnisfeld [eintragewert=" + eintragewert + ", eintragentext=" + eintragentext + "]";
 	}
 		
 }

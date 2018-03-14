@@ -40,6 +40,11 @@ public class Wurf {
 		this.moeglicheServierung = true; 
 	} 
 	
+	// Setzt Wurfeigenschaft moeglicheServierung auf falsch.
+	public void setzeServierungUnMoeglich() {
+		this.moeglicheServierung = false; 
+	} 
+	
 	// Den angegebenen Würfel halten. 
 	public boolean halten(int wuerfel) {
 		if(wuerfel >= 0 && wuerfel <= 4) {
@@ -49,6 +54,10 @@ public class Wurf {
 			if(gehalten < 5) {
 				gehalten++; 
 				System.out.println("halten, Würfel " + wuerfel + "; gehalten = " + gehalten);
+			}
+			if(gehalten > 0) {
+				this.setzeServierungUnMoeglich();
+				System.out.println("halten, setzeServierungUnMoeglich(); moeglicheServierung = " + moeglicheServierung);
 			}
 			return true;
 				}
@@ -66,8 +75,9 @@ public class Wurf {
 				gehalten--; 
 				System.out.println("freigeben, Würfel " + wuerfel + "; gehalten = " + gehalten);
 			}
-			if(gehalten == 0){
+			if(gehalten == 0) {
 				this.setzeServierungMoeglich();
+				System.out.println("freigeben, setzeServierungMoeglich(); moeglicheServierung = " + moeglicheServierung);
 			}
 			return true;
 				}

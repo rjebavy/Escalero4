@@ -10,7 +10,7 @@ public class Rundenzaehler {
 		}
 
 	
-	// Gehalten Zähler auf 10 setzen; Standardrundenanzahl bei Escalero.  
+	// Zähler auf 10 setzen; Standardrundenanzahl bei Escalero.  
 	public void initialisiereRundenzaehler() {
 		this.setRunden(10);
 	}

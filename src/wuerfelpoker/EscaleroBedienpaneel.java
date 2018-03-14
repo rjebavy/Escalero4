@@ -3,7 +3,12 @@ package wuerfelpoker;
 import java.net.URI;
 import java.nio.file.Paths;
 
+import com.sun.javafx.css.converters.StringConverter;
+
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,6 +37,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 
 
 
@@ -67,16 +73,19 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// INSTANZVARIABLEN
 	// Wurf, Würfelsatz & Ergebnis initialisieren
-	Wurf wurf = new Wurf(3);
-	Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz();
-	Wurfergebnis ergebnis = new Wurfergebnis(wsatz); 
+	Wurf wurf = new Wurf(3); // Wurfzähler, Haltefeld, halten/freigeben, Zufallszahl berechen etc.  
+	Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz(); 
+	Wurfergebnis ergebnis = new Wurfergebnis(wsatz); // Auswertemethoden; Bilderanzahl, Muster. 
 	Rundenzaehler rundenzaehler = new Rundenzaehler(10); 
-	Ergebnisfeld ergebnisfeld = new Ergebnisfeld();
-	Button[] Reihe = new Button[3];
-	Button[] Bilder = new Button[6];
-	Button[] Muster = new Button[6];
-	GridPane[] Spielstandtafel = new GridPane[4];
-	Meldung meldung = new Meldung(); 
+	Ergebnisfeld ergebnisfeld = new Ergebnisfeld(); // Aktionskode der Bild- und Musterknöpfe, Eintragewert berechnen. 
+	Button[] Reihe = new Button[3]; // Knopffelder für's EIntragen. 
+	Button[] Bilder = new Button[6]; // Knopffelder für's EIntragen. 
+	Button[] Muster = new Button[6]; // Knopffelder für's EIntragen. 
+	GridPane[] Spielstandtafel = new GridPane[4]; // Für jeden der 4 Spieler eine Spielstandtafel. 
+	// Sonstiges 
+	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
+	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
+	
 	
 
 	@Override
@@ -96,14 +105,14 @@ public class EscaleroBedienpaneel extends Application {
 		
 
 // Top Level FX Node item: ESCALEROBEDIENPANEEL: 
-		// Spielstandtableau ist kein Dummy NODE! 
-		VBox spielstandtableau = erzeugeSpielstandtableau();
 		// Würfeltableau ist kein Dummy NODE! 
 		GridPane wuerfeltableau = erzeugeWuerfeltableau();
 		// Ergebnistableau ist kein Dummy NODE! 
 		GridPane ergebnistableau = erzeugeErgebnistableau();
 		// Bedientableau ist kein Dummy NODE! 
 		BorderPane bedientableau = erzeugeBedientableau(); 
+		// Spielstandtableau ist kein Dummy NODE! 
+		VBox spielstandtableau = erzeugeSpielstandtableau(bedientableau);
 		
 		// Temporär um nicht immer schließen und starten zu müssen. 
 		Button nochmal = new Button("Nochmal!"); 
@@ -113,8 +122,11 @@ public class EscaleroBedienpaneel extends Application {
 		bedientableau.setCenter(nochmal);
 		
 		// TEST: Meldeleiste aktualisieren. 
-		meldung.setMeldung("das ist eine neue Meldung"); 
-		aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0));
+		// meldung.setMeldung("das ist eine neue Meldung"); 
+		// aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0)); 
+		
+		
+		
 	
 	
 
@@ -150,6 +162,7 @@ public class EscaleroBedienpaneel extends Application {
 		public void aktionNochmal(GridPane wtableau, GridPane etableau) {
 			neustartWuerfeltableau(wtableau);
 			neustartErgebnistableau(etableau);
+			ergebnisfeld.setEintragewert(0);
 		}
 	
 	public BorderPane erzeugeBedientableau() {
@@ -184,7 +197,8 @@ public class EscaleroBedienpaneel extends Application {
 // SPIELSTANDTABLEAU, FX-Nodes & Eigenschaften: 
 //TODO 
 	// Erzeugermethode. 
-	public VBox erzeugeSpielstandtableau() {
+	public VBox erzeugeSpielstandtableau(BorderPane bedientableau) {
+		BorderPane btableau = bedientableau;
 	// Alle FX Nodes erzeugen
 		VBox sstableau = new VBox();
 		sstableau.getStyleClass().add("spielstandtableau");
@@ -193,7 +207,7 @@ public class EscaleroBedienpaneel extends Application {
 		sstableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		sstableau.setSpacing(10);
 			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
-			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(); 
+			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(btableau); 
 				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
 				
 				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? BorderPane mit Textarea Center?  
@@ -240,7 +254,8 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom SPIELSTANDTABLEAU
 
-	public HBox hinzufuegenSpielstandKopf() {
+	public HBox hinzufuegenSpielstandKopf(BorderPane btableau) {
+		BorderPane btab = btableau;
 		HBox sskopf = new HBox(); 
 		//TODO
 		sskopf.setMinSize(340, 30);
@@ -249,9 +264,10 @@ public class EscaleroBedienpaneel extends Application {
 		sskopf.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		Label spieledestages = hinzufuegenSpieleDesTages();
 		Label spitzname = hinzufuegenSpitzname();
-		Label modus = hinzufuegenModus(); 
+		Label modus = hinzufuegenModus(btab); 
+		Label guckstdu = hinzufuegenErgebnisWert();
 		Label spielervonspielern = hinzufuegenSpielerVonSpielern();
-		sskopf.getChildren().addAll(spieledestages, spitzname, modus, spielervonspielern);
+		sskopf.getChildren().addAll(spieledestages, spitzname, modus, guckstdu, spielervonspielern);
 		return sskopf;
 	} 
 
@@ -268,18 +284,19 @@ public class EscaleroBedienpaneel extends Application {
 	}
 	
 	public Label hinzufuegenSpitzname() {
-		Label spitzn = new Label("Rinaldo"); 
+		// Label spitzn = new Label("Rinaldo"); 
+		Label spitzn = new Label("DasIstEinGanzBesondersLanger"); 
 		spitzn.getStyleClass().add("spitzname");
 		//TODO
 		spitzn.setPadding(new Insets(2, 2, 2, 2));
-		spitzn.setMinSize(180, 24);
+		spitzn.setMinSize(160, 24);
 		// spitzn.setTextFill(Color.ROYALBLUE);
 		spitzn.setFont(Font.font("Tahoma", 12));
 		spitzn.setAlignment(Pos.CENTER);
 		return spitzn;
 	}
 	
-	public Label hinzufuegenModus() {
+	public Label hinzufuegenModus(BorderPane btab) {
 		Label modus = new Label("W"); 
 		modus.getStyleClass().add("modus");
 		modus.setPadding(new Insets(2, 2, 2, 2));
@@ -288,13 +305,32 @@ public class EscaleroBedienpaneel extends Application {
 		if(WAHLFREIER_EINTRAGEMODUS) {
 			modus.setText("W"); // wahlfreies Eintragen möglich. 
 			modus.setTextFill(Color.BLACK);
+			meldung.setMeldung("Spielmodus: wahlfreies eintragen. "); 
+			aktualisiereMeldeleiste((Label) btab.getChildrenUnmodifiable().get(0));
 			}
 		if(!WAHLFREIER_EINTRAGEMODUS) {
 			modus.setText("A"); // Eintragen nur in aufsteigender Reihenfolge möglich. 
 			modus.setTextFill(Color.CRIMSON);
+			meldung.setMeldung("Spielmodus: in aufsteigender Reihefolge eintragen. "); 
+			aktualisiereMeldeleiste((Label) btab.getChildrenUnmodifiable().get(0));
 			}
 		modus.setAlignment(Pos.CENTER);
 		return modus;
+	} 
+
+	public Label hinzufuegenErgebnisWert() {
+		Label ewert = new Label("W"); 
+		StringProperty sp = ewert.textProperty();
+		IntegerProperty ip = ergebnisfeld.eintragewertProperty();
+		NumberStringConverter converter = new NumberStringConverter();
+		Bindings.bindBidirectional(sp, ip, converter);	
+		ewert.getStyleClass().add("ewert");
+		ewert.setPadding(new Insets(2, 2, 2, 2));
+		ewert.setMinSize(40, 24);
+		ewert.setFont(Font.font("Tahoma", 12));
+		ewert.setTextFill(Color.CRIMSON);
+		ewert.setAlignment(Pos.CENTER);
+		return ewert;
 	} 
 	
 	public Label hinzufuegenSpielerVonSpielern() {
@@ -302,7 +338,7 @@ public class EscaleroBedienpaneel extends Application {
 		spvspl.getStyleClass().add("spielervonspielern");
 		//TODO
 		spvspl.setPadding(new Insets(2, 2, 2, 2));
-		spvspl.setMinSize(60, 20);
+		spvspl.setMinSize(40, 20);
 		// spvspl.setTextFill(Color.ROYALBLUE);
 		spvspl.setFont(Font.font("Tahoma", 12));
 		spvspl.setAlignment(Pos.CENTER);
@@ -473,25 +509,26 @@ public class EscaleroBedienpaneel extends Application {
 			eintrageknopffelder.setSpacing(5);
 			HBox bilderfeld = hinzufuegenKnoepfeOben(); 
 				Button[] bilderKnopf = hinzufuegenBilderknoepfe();
-				// TODO bilderKnopf[0].setOnAction(event->ergebnisfeld.eintragenNeuner(ergebnis));
-				// TODO bilderKnopf[1].setOnAction(event->ergebnisfeld.eintragenZehner(ergebnis));
-				// TODO bilderKnopf[2].setOnAction(event->ergebnisfeld.eintragenBuben(ergebnis));
-				// TODO bilderKnopf[3].setOnAction(event->ergebnisfeld.eintragenDamen(ergebnis));
-				// TODO bilderKnopf[4].setOnAction(event->ergebnisfeld.eintragenKoenige(ergebnis));
-				// TODO bilderKnopf[5].setOnAction(event->ergebnisfeld.eintragenAsse(ergebnis));
+				bilderKnopf[0].setOnAction(event->ergebnisfeld.eintragenNeuner(ergebnis));
+				bilderKnopf[1].setOnAction(event->ergebnisfeld.eintragenZehner(ergebnis));
+				bilderKnopf[2].setOnAction(event->ergebnisfeld.eintragenBuben(ergebnis));
+				bilderKnopf[3].setOnAction(event->ergebnisfeld.eintragenDamen(ergebnis));
+				bilderKnopf[4].setOnAction(event->ergebnisfeld.eintragenKoenige(ergebnis));
+				bilderKnopf[5].setOnAction(event->ergebnisfeld.eintragenAsse(ergebnis));
 			bilderfeld.getChildren().addAll(Bilder[0], Bilder[1], Bilder[2], Bilder[3], Bilder[4], Bilder[5]);
 			HBox musterfeld = hinzufuegenKnoepfeUnten(); 
 				Button[] musterKnopf = hinzufuegenMusterknoepfe();
-				// TODO musterKnopf[0].setOnAction(event->ergebnisfeld.eintragenStrasse(ergebnis, serviert)));
-				// TODO bilderKnopf[1].setOnAction(event->ergebnisfeld.eintragenZehner(ergebnis));
-				// TODO bilderKnopf[2].setOnAction(event->ergebnisfeld.eintragenBuben(ergebnis));
-				// TODO bilderKnopf[3].setOnAction(event->ergebnisfeld.eintragenDamen(ergebnis));
-				// TODO bilderKnopf[4].setOnAction(event->ergebnisfeld.eintragenKoenige(ergebnis));
-				// TODO bilderKnopf[5].setOnAction(event->ergebnisfeld.eintragenAsse(ergebnis));
+				musterKnopf[0].setOnAction(event->ergebnisfeld.eintragenStrasse(ergebnis, servierung));
+				musterKnopf[1].setOnAction(event->ergebnisfeld.eintragenFullhouse(ergebnis, servierung));
+				musterKnopf[2].setOnAction(event->ergebnisfeld.eintragenPoker(ergebnis, servierung));
+				musterKnopf[3].setOnAction(event->ergebnisfeld.eintragenGrande(ergebnis, servierung));
+				// TODO musterKnopf[4].setOnAction(event-><Aktionshmethode Löschen>);
+				// TODO musterKnopf[5].setOnAction(event-><Aktionshmethode Streichen>);
 			musterfeld.getChildren().addAll(Muster[0], Muster[1], Muster[2], Muster[3], Muster[4], Muster[5]);
 		eintrageknopffelder.getChildren().addAll(bilderfeld, musterfeld);			
 		initialisiereErgebnisknoepfe(); 
 		
+				
 		etableau.add(reihenfeld, 0, 0, 1, 1);
 		etableau.add(eintrageknopffelder, 0, 1, 1, 1);
 		etableau.setAlignment(Pos.CENTER);
@@ -503,6 +540,7 @@ public class EscaleroBedienpaneel extends Application {
 	public void neustartErgebnistableau(GridPane ergebnistableau) {
 		// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
 		initialisiereErgebnisknoepfe(); 
+
 		
 	}
 	
@@ -536,8 +574,9 @@ public class EscaleroBedienpaneel extends Application {
 	// Hier wird angezeigt was mit den Reihenknöpfen eingetragen werden kann. 
 	public Label hinzufuegenEintragenWas() {
 		ergebnisfeld.initialisiereErgebnisfeld();
-		String ltext = ergebnisfeld.getEintragenText();
-		Label efeld = new Label(ltext); // für Ergebnistableau-Test stand da "FullHouse serviert." drin.   
+		String ltext = ergebnisfeld.getEintragentext();
+		Label efeld = new Label(ltext); // für Ergebnistableau-Test stand da "FullHouse serviert." drin. 
+		efeld.textProperty().bindBidirectional(ergebnisfeld.eintragentextProperty());
 		efeld.setPadding(new Insets(2, 2, 2, 2));
 		efeld.setMinSize(120, 20);
 		efeld.setFont(Font.font("Tahoma", 12));
@@ -778,7 +817,6 @@ public class EscaleroBedienpaneel extends Application {
 			System.out.println("aktualisiereWurfzaehler, wt.getChildren 4? " + (Button) wt.getChildrenUnmodifiable().get(4));
 		wurf.initialisiereWuerfelsatz(); 
 		wurf.initialisiereHaltemaske();
-		// TODO Knopf [Schrift] bei Wurfzählerstand 3 deaktivieren. 
 		Button sch = new Button(); 
 		sch = (Button) wt.getChildrenUnmodifiable().get(5); 
 		if(wurf.getWurfzaehler() == 3) {deaktiviereSchriftKnopf(sch);}
@@ -840,21 +878,26 @@ public class EscaleroBedienpaneel extends Application {
 
 	// Servierfeld entsprechend der Bedingungen - unmöglich, möglich, serviert  - gestalten. 
 	public void aktualisiereServierfeld(Wurf w, Label sfeld, Wurfergebnis e) {
+		// Servierung ist unmöglich, da mind. 1 Würfel gehalten, Hintergrundfarbe rot. 
 		if(w.isMoeglicheServierung() == false || w.getGehalten() > 0){
 			sfeld.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 			sfeld.setTextFill(Color.LIGHTGRAY);
-			System.out.println("aktualisiereServierfeld, Servierung unmöglich, rot; w.getGehalten(): " + w.getGehalten());
+			System.out.println("WÜRFELTABLEAU; aktualisiereServierfeld, Servierung unmöglich, rot; w.getGehalten(): " + w.getGehalten());
 		}
+		// Servierung möglich, da kein Würfel gehalten, Hintergrundfarbe gelb. 
 		if(w.getGehalten() == 0 && e.validesMuster() == false){
 			sfeld.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
 			sfeld.setTextFill(Color.LIGHTGRAY);
-			System.out.println("aktualisiereServierfeld, Servierung möglich, gelb; w.getGehalten(): " + w.getGehalten());
+			System.out.println("WÜRFELTABLEAU; aktualisiereServierfeld, Servierung möglich, gelb; w.getGehalten(): " + w.getGehalten());
 		}
+		// Servierung wurde erkannt, Hintergrundfarbe grün. 
 		if(w.getGehalten() == 0 && e.validesMuster() == true){
 		// TODO: Audiosignal; Tada.wav? 
 			sfeld.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
 			sfeld.setTextFill(Color.WHITE);
-			System.out.println("aktualisiereServierfeld, Servierung erkannt, grün; w.getGehalten(): " + w.getGehalten());
+			// WICHTIG für Berechnung des Servierzuschlags in den Aktionsmethoden zu den Musterknöpfen im Ergebnisfeld!! 
+					servierung = true;
+			System.out.println("WÜRFELTABLEAU; aktualisiereServierfeld, Servierung erkannt, grün; w.getGehalten(): " + w.getGehalten() + ", Servierindikator = " + servierung);
 		}
 	}
 
@@ -1072,7 +1115,8 @@ public class EscaleroBedienpaneel extends Application {
 		if(wurf.getWurfzaehler() == 0) {deaktiviereHaltefeld(hf);}
 		// Schriftknopf nach Bedarf aktivieren bzw. deaktivieren! 		
 		if(wurf.getWurfzaehler() == 2 || wurf.getWurfzaehler() == 1 || wurf.getWurfzaehler() == 0) {aktiviereSchriftKnopf(schrift);}
-		if(wurf.getWurfzaehler() == 3) {deaktiviereSchriftKnopf(schrift);}		
+		if(wurf.getWurfzaehler() == 3) {deaktiviereSchriftKnopf(schrift);}
+		servierung = false;
 		wurf.wuerfleUngehaltene(wsatz);
 		aktualisiereWuerfelfeld(wsatz, wuerfelfeld);
 		ergebnis.initialisiereAuswerten();
