@@ -131,7 +131,7 @@ public class EscaleroBedienpaneel extends Application {
 	
 
 
-	// Top-top-level Container Escalero Bedienfeld
+	// Top-top-level Container Escalero Bedienpaneel
 	VBox escalerobedienpaneel = new VBox();
 	escalerobedienpaneel.setMinSize(340, 666);
 	escalerobedienpaneel.setAlignment(Pos.TOP_CENTER);
@@ -208,9 +208,10 @@ public class EscaleroBedienpaneel extends Application {
 		sstableau.setSpacing(10);
 			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
 			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(btableau); 
+				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? 
+				// BorderPane mit Textarea Center?  
+				// 
 				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
-				
-				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? BorderPane mit Textarea Center?  
 				TableView[] spielstand = hinzufuegenSpielStand();
 				HBox[] summenbalken = hinzufuegenSummenBalken();
 			BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
