@@ -2,6 +2,8 @@ package wuerfelpoker;
 
 import java.net.URI;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.function.BiConsumer;
 
 import com.sun.javafx.css.converters.StringConverter;
 
@@ -70,13 +72,20 @@ public class EscaleroBedienpaneel extends Application {
 	static final String SPITZNAME_SPIELER_2 = "Spieler2"; 
 	static final String SPITZNAME_SPIELER_3 = "Spieler3"; 
 	static final String SPITZNAME_SPIELER_4 = "Spieler4"; 
+	static final int ANZAHL_SPIELER = 4;
+	static final int ANZAHL_RUNDEN = 11; // 11 mit einer Extrastreichung, normalerweise nur 10. 
+	static final int ANZAHL_WUERFE = 3;
+	
 	
 	// INSTANZVARIABLEN
-	// Wurf, Würfelsatz & Ergebnis initialisieren
-	Wurf wurf = new Wurf(3); // Wurfzähler, Haltefeld, halten/freigeben, Zufallszahl berechen etc.  
+	// Globale Zähler; Wurf, Würfelsatz (Würfeln); Wurfergebnis (Auswerten), Ergebnis (Eintragen), Spielstandtafeln (Anzeigen) initialisieren. 
+	int aktueller_spieler = ANZAHL_SPIELER; // globaler Spielerzähler
+	int aktuelle_runde = ANZAHL_RUNDEN; // globaler Rundenzähler
+	int aktueller_wurf = ANZAHL_WUERFE; // globaler Wurfzähler
+	Wurf wurf = new Wurf(aktueller_wurf); // Wurfzähler, Haltefeld, halten/freigeben, Zufallszahl berechen etc.  
 	Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz(); 
 	Wurfergebnis ergebnis = new Wurfergebnis(wsatz); // Auswertemethoden; Bilderanzahl, Muster. 
-	Rundenzaehler rundenzaehler = new Rundenzaehler(10); 
+	Rundenzaehler rundenzaehler = new Rundenzaehler(aktuelle_runde); 
 	Ergebnisfeld ergebnisfeld = new Ergebnisfeld(); // Aktionskode der Bild- und Musterknöpfe, Eintragewert berechnen. 
 	Button[] Reihe = new Button[3]; // Knopffelder für's EIntragen. 
 	Button[] Bilder = new Button[6]; // Knopffelder für's EIntragen. 
@@ -124,6 +133,49 @@ public class EscaleroBedienpaneel extends Application {
 		// TEST: Meldeleiste aktualisieren. 
 		// meldung.setMeldung("das ist eine neue Meldung"); 
 		// aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0)); 
+		
+		// Also mit dem Reihenarray hat's nicht funktioniert!! 
+		/* Spielstand test = new Spielstand(4); 
+		Reihe[] testtabelle = test.erzeugeSpielstandTabelle();
+		System.out.println("Spielstandtabellentest; testtabelle = " + testtabelle.toString()); 
+		*/ 
+		//Jetzt teste ich ob man auf Reihe zugreifen kann? 
+		/* Reihe test = new Reihe(); 
+		Integer wert1 = 8; // Dame, in der Zeile 4, im Arrayindex 3!! 
+		Integer wert2 = 20; // Strasse, in der Zeile 7, im Arrayindex 6!! 
+		Integer wert3 = 55; // Grande, in der Zeile 10, im Arrayindex 9!! 
+		HashMap<Integer, Integer> testtabelle = test.erzeugeSpielstandReihe();
+		testtabelle.put(3, wert1);
+		testtabelle.put(6, wert2);
+		testtabelle.put(9, wert3);
+		// jetzt auslesen über Konsole: 
+		BiConsumer<Integer, Integer> action = (key, value) -> System.out.println( key + "0" + value);
+		testtabelle.forEach(action);
+		*/ 
+		//Jetzt teste ich mit Klasse Reihe2 die als Wert ein Integer[] Array hat:  
+		Reihe2 test = new Reihe2(); 
+		Integer wert1 = 8; // Dame, in der Zeile 4, im Arrayindex 3!! 
+		Integer wert2 = 20; // Strasse, in der Zeile 7, im Arrayindex 6!! 
+		Integer wert3 = 55; // Grande, in der Zeile 10, im Arrayindex 9!! 
+		HashMap<Integer, Integer[]> testtabelle = test.erzeugeSpielstandReihe();
+		
+		testtabelle.put(3, new Integer[] {0, 8, 0}); // 1. Form 
+		// oder 
+		Integer[] val = {0, 8, 0}; 
+		testtabelle.put(3, val); // 2. Form. 
+		// Da man hier nicht gezielt auf nur 1 Zelle zugreifen kann muss zuerst der 'record' ausgelesen 
+		// werden und nur an der Stelle wo's was neues gibt  ändern und wieder rückschreiben!! 
+		testtabelle.put(6, new Integer[] {20, 0, 0});
+		testtabelle.put(9, new Integer[] {0, 0, 55});
+		// jetzt auslesen über Konsole: 
+		BiConsumer<Integer, Integer[]> action = (key, value) -> System.out.println( key + "0" + value);
+		testtabelle.forEach(action); 
+		// Hmm, Ausgabe schaut so aus "30[Ljava.lang.Integer;@37c52166" also wird das array nicht "aufgelöst"
+		Integer[] integers = testtabelle.get(3); 
+		System.out.println( integers[1]); // Ja genau so geht's, gezielt auslesen; 0 Reihe1, 1 Reihe2, 2 Reihe3.  
+		
+		
+		
 		
 		
 		
