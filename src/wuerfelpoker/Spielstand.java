@@ -3,44 +3,58 @@ package wuerfelpoker;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.MapProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.layout.BorderPane;
 
 public class Spielstand {
-	Reihe[] dreireihen = new Reihe[3];
-	private int spieler = 0; 
+	private IntegerProperty[] reihe = new SimpleIntegerProperty[3];
 
 	
-	// Konstruktor hier wird vom Aufrufer die globale Konstante ANZAHL_SPIELER übergeben. 
-	public Spielstand(int spieler) {
+	
+	public Spielstand(Integer[] integers) {
 		super();
-		this.spieler = spieler;
 	}
 
-	
-	public Reihe[] erzeugeSpielstandTabelle() {
-		Reihe[] dreireihen = new Reihe[3];
-		for(int r = 0; r < 3; r++) {
-			dreireihen[r] = new Reihe();
+	// Standard Getter & Setter
+	public IntegerProperty[] ReiheProperty() {
+		return reihe;
+	}
+
+	public IntegerProperty[] getReihe() {
+		return reihe;
+	}
+
+	public void setReihe(IntegerProperty[] reihe) {
+		this.reihe = reihe;
+	}
+
+
+/*	
+	public IntegerProperty Reihe2Property() {
+		return reihe2;
+	}
+
+	public final int getReihe2() {
+		return reihe2.get(); 
 		}
-		return dreireihen;
-	}
 
-
-
-	public Reihe[] getDreireihen() {
-		return dreireihen;
-	}
-
-
-	public void setDreireihen(Reihe[] dreireihen) {
-		this.dreireihen = dreireihen;
+	public final void setReihe2(int reihe2) {
+		this.reihe2.set(reihe2);
 	}
 
 	
-	@Override
-	public String toString() {
-		return "Spielstand [dreireihen=" + Arrays.toString(dreireihen) + "]";
+	public IntegerProperty Reihe3Property() {
+		return reihe3;
 	}
 
+	public final int getReihe3() {
+		return reihe3.get(); 
+		}
+
+	public final void setReihe3(int reihe3) {
+		this.reihe3.set(reihe3);
+	}
+	*/
 }

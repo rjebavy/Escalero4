@@ -11,10 +11,13 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -40,6 +43,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
+import wuerfelpoker.Reihen;
+
 
 
 
@@ -91,6 +96,11 @@ public class EscaleroBedienpaneel extends Application {
 	Button[] Bilder = new Button[6]; // Knopffelder für's EIntragen. 
 	Button[] Muster = new Button[6]; // Knopffelder für's EIntragen. 
 	GridPane[] Spielstandtafel = new GridPane[4]; // Für jeden der 4 Spieler eine Spielstandtafel. 
+	Spalten dummy = new Spalten(); 
+	ObservableMap<Integer, Integer[]> tafel1 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 1, leider kann HashMap keine verwendbaren Arrays!
+	// ObservableMap<Integer, Integer[]> tafel2 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 2, leider kann HashMap keine verwendbaren Arrays!
+	// ObservableMap<Integer, Integer[]> tafel3 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 3, leider kann HashMap keine verwendbaren Arrays!
+	// ObservableMap<Integer, Integer[]> tafel4 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 4, leider kann HashMap keine verwendbaren Arrays!
 	// Sonstiges 
 	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
 	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
@@ -134,48 +144,98 @@ public class EscaleroBedienpaneel extends Application {
 		// meldung.setMeldung("das ist eine neue Meldung"); 
 		// aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0)); 
 		
-		// Also mit dem Reihenarray hat's nicht funktioniert!! 
-		/* Spielstand test = new Spielstand(4); 
-		Reihe[] testtabelle = test.erzeugeSpielstandTabelle();
-		System.out.println("Spielstandtabellentest; testtabelle = " + testtabelle.toString()); 
-		*/ 
-		//Jetzt teste ich ob man auf Reihe zugreifen kann? 
-		/* Reihe test = new Reihe(); 
-		Integer wert1 = 8; // Dame, in der Zeile 4, im Arrayindex 3!! 
-		Integer wert2 = 20; // Strasse, in der Zeile 7, im Arrayindex 6!! 
-		Integer wert3 = 55; // Grande, in der Zeile 10, im Arrayindex 9!! 
-		HashMap<Integer, Integer> testtabelle = test.erzeugeSpielstandReihe();
-		testtabelle.put(3, wert1);
-		testtabelle.put(6, wert2);
-		testtabelle.put(9, wert3);
-		// jetzt auslesen über Konsole: 
-		BiConsumer<Integer, Integer> action = (key, value) -> System.out.println( key + "0" + value);
-		testtabelle.forEach(action);
-		*/ 
-		//Jetzt teste ich mit Klasse Reihe2 die als Wert ein Integer[] Array hat:  
-		Reihe2 test = new Reihe2(); 
-		Integer wert1 = 8; // Dame, in der Zeile 4, im Arrayindex 3!! 
-		Integer wert2 = 20; // Strasse, in der Zeile 7, im Arrayindex 6!! 
-		Integer wert3 = 55; // Grande, in der Zeile 10, im Arrayindex 9!! 
-		HashMap<Integer, Integer[]> testtabelle = test.erzeugeSpielstandReihe();
+		// SO SOLL'S DANN AM SCHLUSS AUSSEHEN (15.3.18):  
+		Reihen dummy = new Reihen(); 
+		HashMap<Integer, Integer[]> tafel1 = dummy.erzeugeSpielstandTabellen();
+		HashMap<Integer, Integer[]> tafel2 = dummy.erzeugeSpielstandTabellen();
+		HashMap<Integer, Integer[]> tafel3 = dummy.erzeugeSpielstandTabellen();
+		HashMap<Integer, Integer[]> tafel4 = dummy.erzeugeSpielstandTabellen();
+		//Integer[] reiheninhalt = new Integer[3];
+/*
+		 reiheninhalt[0] = 0;
+		 reiheninhalt[1] = 0;
+		 reiheninhalt[2] = 4;
+		 tafel1.put(0, reiheninhalt);
+		 reiheninhalt[0] = 0;
+		 reiheninhalt[1] = 4;
+		 reiheninhalt[2] = 0;
+		 tafel2.put(1, reiheninhalt);		 
+		 reiheninhalt[0] = 9;
+		 reiheninhalt[1] = 0;
+		 reiheninhalt[2] = 0;
+		 tafel3.put(2, reiheninhalt);			 
+		 reiheninhalt[0] = 0;
+		 reiheninhalt[1] = 20;
+		 reiheninhalt[2] = 0;
+		 tafel4.put(6, reiheninhalt);			 
+*/		 
+		dummy.zeigeSpielstandTabellenReihen(tafel1);
+		dummy.zeigeSpielstandTabellenReihen(tafel2);
+		dummy.zeigeSpielstandTabellenReihen(tafel3);
+		dummy.zeigeSpielstandTabellenReihen(tafel4);
 		
-		testtabelle.put(3, new Integer[] {0, 8, 0}); // 1. Form 
-		// oder 
-		Integer[] val = {0, 8, 0}; 
-		testtabelle.put(3, val); // 2. Form. 
-		// Da man hier nicht gezielt auf nur 1 Zelle zugreifen kann muss zuerst der 'record' ausgelesen 
-		// werden und nur an der Stelle wo's was neues gibt  ändern und wieder rückschreiben!! 
-		testtabelle.put(6, new Integer[] {20, 0, 0});
-		testtabelle.put(9, new Integer[] {0, 0, 55});
-		// jetzt auslesen über Konsole: 
-		BiConsumer<Integer, Integer[]> action = (key, value) -> System.out.println( key + "0" + value);
-		testtabelle.forEach(action); 
-		// Hmm, Ausgabe schaut so aus "30[Ljava.lang.Integer;@37c52166" also wird das array nicht "aufgelöst"
-		Integer[] integers = testtabelle.get(3); 
-		System.out.println( integers[1]); // Ja genau so geht's, gezielt auslesen; 0 Reihe1, 1 Reihe2, 2 Reihe3.  
+		HashMap<Integer, Integer[]> test = new HashMap<Integer, Integer[]>();
+		// test = dummy.zeigeSpielstandTabellenReihen(tafel1);
+		// System.out.println("Tabelle - " + test);
+
 		
+/*		// Reinschreiben in test: 
+		Integer[] reiheninhalt = new Integer[3];
+		// einzeln: 
+		System.out.println("\nReinschreiben einzeln; in test - "); 
+		 reiheninhalt[0] = 6;
+		 reiheninhalt[1] = 18;
+		 reiheninhalt[2] = 30;
+		System.out.println("schreibe, reiheninhalt(ohne index): " + reiheninhalt); 
+		System.out.println("schreibe, reiheninhalt(mit index): " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + "."); 
+		 test.put(5, reiheninhalt);
+		 System.out.println("geschrieben, auf index 5 = Ass): " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + ".");  
+		 
+		// Auslesen aus test: 
+		// einzeln: 
+		System.out.println("\nAuslesen einzeln; aus test - "); 
+		// Integer[] rinhalt = new Integer[3];
+		String bild = dummy.waehleSchluesselbild(5);
+		Integer key = 5;
+		Integer[] rinhalt = test.get(key); // Aah er Wert im getObject ist der Index = Key der HashMap!!! 
+		// Das steht so nicht im Buch Java Insel1 und wurde auf den gestern besuchten Webseite auch nicht erklärt!!!
+		// System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt);
+		System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");		
+*/			 	
+			 	
+	
+			 	
+		// Reinschreiben in test: 	
+		Integer[] reiheninhalt = new Integer[3];
+		 // alle: 
+		System.out.println("\nReinschreiben alle; in test - "); 
+		reiheninhalt[0] = 1;
+		 reiheninhalt[1] = 2;
+		 reiheninhalt[2] = 3;
+		 System.out.println("schreibe, reiheninhalt(mit key 0-10): " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + "."); 
+		 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
+			for(int r = 0; r < 11; r++) {
+				test.put(r, reiheninhalt);
+			}
+		 
+		// Auslesen aus test: 
+		// alle: 
+		System.out.println("\nAuslesen alle; aus test - "); 
+		String bild = "";
+		for(int z = 0; z < 11; z++) {
+			bild = dummy.waehleSchluesselbild(z);
+			Integer[] rinhalt = test.get(z);
+			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");	
+		}
+
+		/*
+		// Einzeltest Tafel anzeigen, direkt über Klase Reihe: Ok; 16:45.
+		Reihen test2 = new Reihen(); 
+		HashMap<Integer, Integer[]> testtabelle = test2.erzeugeSpielstandTabellen();
+		test2.zeigeSpielstandTabellenReihen(testtabelle);
+	*/
 		
-		
+	
 		
 		
 		
@@ -263,21 +323,29 @@ public class EscaleroBedienpaneel extends Application {
 				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? 
 				// BorderPane mit Textarea Center?  
 				// 
-				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
-				TableView[] spielstand = hinzufuegenSpielStand();
-				HBox[] summenbalken = hinzufuegenSummenBalken();
-			BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
-		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.			
+			// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 
+				// VBox[] bilderbalken = hinzufuegenBilderBalken(); 
+				// TableView[] spielstand = hinzufuegenSpielStand();
+				//HBox[] summenbalken = hinzufuegenSummenBalken();
+			// BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
+				VBox bilderbalken = hinzufuegenBilderBalken(); 	
+				TableView spielstand = hinzufuegenSpielStand();
+				HBox summenbalken = hinzufuegenSummenBalken();
+			BorderPane spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
+		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.	
+			VBox welcome = new VBox(); 
 		TabPane spielstandansichten = hinzufuegenSpielstandAnsichten(); 
 			spielstandansichten.setTabMaxHeight(16);
 			spielstandansichten.setSide(Side.BOTTOM);
 			ObservableList<Tab> spielstandansicht = spielstandansichten.getTabs(); 
 			// System.out.println("spielstandansichten; ObservableList = " + spielstandansicht);
-			spielstandansicht.get(0).setContent(spielstandtafel[0]);
-			spielstandansicht.get(1).setContent(spielstandtafel[0]);
-			spielstandansicht.get(2).setContent(spielstandtafel[1]);
-			spielstandansicht.get(3).setContent(spielstandtafel[2]);
-			spielstandansicht.get(4).setContent(spielstandtafel[3]);
+			spielstandansicht.get(0).setContent(welcome);
+			spielstandansicht.get(1).setContent(spielstandtafel);
+			// spielstandansicht.get(2).setContent(spielstandtafel[1]);
+			// spielstandansicht.get(3).setContent(spielstandtafel[2]);
+			// spielstandansicht.get(4).setContent(spielstandtafel[3]);
+			
+
 		
 			// Aus unerfindlichen Gründen kann ich bei Tab bzw TabPane nicht wie sonst üblich mit GetCildren() ein Node 
 			// aus einem Container herausholen!! Ich versuch's jetzt hier oberhalb direkt in die TabPane?  
@@ -415,12 +483,17 @@ public class EscaleroBedienpaneel extends Application {
 		Tab drei = new Tab(); 
 			drei.setText(SPITZNAME_SPIELER_4);
 			drei.setClosable(false);
+		
 		TabPane ssansichten = new TabPane();
 		// TODO
-			ssansichten.getTabs().addAll(willkommen, meins, eins, zwei, drei);
+			 ssansichten.getTabs().addAll(willkommen, meins, eins, zwei, drei);
+		
 		return ssansichten;		
 	} 
 	
+	
+	// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 
+	/*
 	public BorderPane[] hinzufuegenSpielstandTafeln(VBox[] bilderbalken, TableView[] spielstand, HBox[] summenbalken) {
 		BorderPane[] sstafeln = new BorderPane[4];
 		for(int s = 0; s < 4; s++) {
@@ -440,9 +513,9 @@ public class EscaleroBedienpaneel extends Application {
 		VBox[] bbalken = new VBox[4]; 
 		for(int b = 0; b < 4; b++ ) {
 			bbalken[b] = new VBox();
-			/* bbalken[b].setMinSize(60, 150);
-			bbalken[b].setSpacing(0);
-			bbalken[b].setAlignment(Pos.CENTER); */
+			// bbalken[b].setMinSize(60, 150);
+			// bbalken[b].setSpacing(0);
+			// bbalken[b].setAlignment(Pos.CENTER);
 			bbalken[b].getStyleClass().add( "bildbalken");
 			Label neun = new Label("9"); 
 			neun.getStyleClass().add( "bildbalkenelement");
@@ -474,7 +547,7 @@ public class EscaleroBedienpaneel extends Application {
 		}
 		return bbalken;
 	}
-		
+
 	public TableView[] hinzufuegenSpielStand() {
 		TableView[] sstand = new TableView[4];
 		for(int s = 0; s < 4; s++) {
@@ -487,8 +560,74 @@ public class EscaleroBedienpaneel extends Application {
 		}
 		return sstand;
 	}
+*/
+	// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 
+	public BorderPane hinzufuegenSpielstandTafeln(VBox bilderbalken, TableView spielstand, HBox summenbalken) {
+		BorderPane sstafeln = new BorderPane();
+			sstafeln = new BorderPane();
+			sstafeln.setMinSize(150, 300);
+			sstafeln.setLeft(bilderbalken);
+			sstafeln.setCenter(spielstand);
+			sstafeln.setBottom(summenbalken);
+			// bei GridPane; sstafeln[s].add(child, columnIndex, rowIndex, colspan, rowspan);
+
+		// TODO
+		return sstafeln; 
+	}
 	
-	public HBox[] hinzufuegenSummenBalken() {
+	public VBox hinzufuegenBilderBalken() {
+		VBox bbalken = new VBox(); 
+			bbalken = new VBox();
+			// bbalken.setMinSize(60, 150);
+			// bbalken.setSpacing(0);
+			// bbalken.setAlignment(Pos.CENTER);
+			bbalken.getStyleClass().add( "bildbalken");
+			Label neun = new Label("9"); 
+			neun.getStyleClass().add( "bildbalkenelement");
+			Label zehn = new Label("10"); 
+			zehn.getStyleClass().add( "bildbalkenelement");
+			Label bube = new Label("B"); 
+			bube.getStyleClass().add( "bildbalkenelement");
+			Label dame = new Label("D"); 
+			dame.getStyleClass().add( "bildbalkenelement");
+			Label koenig = new Label("K"); 
+			koenig.getStyleClass().add( "bildbalkenelement");
+			Label ass = new Label("A"); 
+			ass.getStyleClass().add( "bildbalkenelement");
+			Label strasse = new Label("St"); 
+			strasse.getStyleClass().add( "bildbalkenelement");
+			Label full = new Label("Fu"); 
+			full.getStyleClass().add( "bildbalkenelement");
+			Label poker = new Label("Po"); 
+			poker.getStyleClass().add( "bildbalkenelement");
+			Label grande = new Label("Gr"); 
+			grande.getStyleClass().add( "bildbalkenelement");
+			if(EXTRA_STREICHUNG) {
+				Label streich = new Label("X"); 
+				streich.getStyleClass().add( "bildbalkenelement");
+				bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+				}
+			if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
+		}
+		return bbalken;
+	}
+	
+	public TableView<Spalten> hinzufuegenSpielStand() {
+		TableView<Spalten> sstand = new TableView<>();
+		sstand.setItems((ObservableList<Spalten>) tafel1);
+			sstand = new TableView();
+			sstand.setMinSize(100, 150);
+			TableColumn reiheEins = new TableColumn("Reihe 1");
+			TableColumn reiheZwei = new TableColumn("Reihe 2");
+			TableColumn reiheDrei = new TableColumn("Reihe 3");
+			
+			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+		return sstand;
+	}
+	
+	
+	// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 	
+/*	public HBox[] hinzufuegenSummenBalken() {
 		HBox[] sbalken = new HBox[4]; 
 		Label[] summen = new Label[4]; 
 		Label[] summereihe1 = new Label[4]; 
@@ -514,6 +653,36 @@ public class EscaleroBedienpaneel extends Application {
 				summereihe3[b].setMinSize(83, 30);
 			sbalken[b].getChildren().addAll(summen[b], summereihe1[b], summereihe2[b], summereihe3[b]);
 		}			
+		// TODO 
+		return sbalken;
+	}
+*/
+	public HBox hinzufuegenSummenBalken() {
+		HBox sbalken = new HBox(); 
+		Label summen = new Label(); 
+		Label summereihe1 = new Label(); 
+		Label summereihe2 = new Label(); 
+		Label summereihe3 = new Label(); 
+
+			sbalken = new HBox();
+			sbalken.getStyleClass().add("summenbalken");
+			sbalken.setMinSize(80, 20);
+			sbalken.setSpacing(0);
+				summen = new Label("Summen: "); 
+				summen.getStyleClass().add("summen");
+ 				summen.setMinSize(90, 30);
+				// summen.setAlignment(Pos.CENTER);
+				summereihe1 = new Label("0"); 
+				summereihe1.getStyleClass().add("summereihe1");
+				summereihe1.setMinSize(83, 30);
+				summereihe2 = new Label("0"); 
+				summereihe2.getStyleClass().add("summereihe2");
+				summereihe2.setMinSize(83, 30);
+				summereihe3 = new Label("0"); 
+				summereihe3.getStyleClass().add("summereihe3");
+				summereihe3.setMinSize(83, 30);
+			sbalken.getChildren().addAll(summen, summereihe1, summereihe2, summereihe3);
+	
 		// TODO 
 		return sbalken;
 	}
