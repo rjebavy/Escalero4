@@ -614,7 +614,7 @@ public class EscaleroBedienpaneel extends Application {
 	
 	public TableView<Spalten> hinzufuegenSpielStand() {
 		TableView<Spalten> sstand = new TableView<>();
-		sstand.setItems((ObservableList<Spalten>) tafel1);
+		// sstand.setItems((ObservableList<Spalten>) tafel1); // erzeugt Fehler com.sun.javafx.collections.ObservableMapWrapper cannot be cast to javafx.collections.ObservableList
 			sstand = new TableView();
 			sstand.setMinSize(100, 150);
 			TableColumn reiheEins = new TableColumn("Reihe 1");
