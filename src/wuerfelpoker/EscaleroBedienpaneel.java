@@ -96,11 +96,6 @@ public class EscaleroBedienpaneel extends Application {
 	Button[] Bilder = new Button[6]; // Knopffelder für's EIntragen. 
 	Button[] Muster = new Button[6]; // Knopffelder für's EIntragen. 
 	GridPane[] Spielstandtafel = new GridPane[4]; // Für jeden der 4 Spieler eine Spielstandtafel. 
-	Spalten dummy = new Spalten(); 
-	ObservableMap<Integer, Integer[]> tafel1 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 1, leider kann HashMap keine verwendbaren Arrays!
-	// ObservableMap<Integer, Integer[]> tafel2 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 2, leider kann HashMap keine verwendbaren Arrays!
-	// ObservableMap<Integer, Integer[]> tafel3 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 3, leider kann HashMap keine verwendbaren Arrays!
-	// ObservableMap<Integer, Integer[]> tafel4 = dummy.erzeugeSpielstandTabellen(); // Spielstandtabelle für Spieler 4, leider kann HashMap keine verwendbaren Arrays!
 	// Sonstiges 
 	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
 	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
@@ -322,29 +317,24 @@ public class EscaleroBedienpaneel extends Application {
 			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(btableau); 
 				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? 
 				// BorderPane mit Textarea Center?  
-				// 
-			// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 
-				// VBox[] bilderbalken = hinzufuegenBilderBalken(); 
-				// TableView[] spielstand = hinzufuegenSpielStand();
-				//HBox[] summenbalken = hinzufuegenSummenBalken();
-			// BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
-				VBox bilderbalken = hinzufuegenBilderBalken(); 	
-				TableView spielstand = hinzufuegenSpielStand();
-				HBox summenbalken = hinzufuegenSummenBalken();
-			BorderPane spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
+				// willkommenstafel
+				BorderPane willkommenstafel = new BorderPane(); 
+				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
+				TableView[] spielstand = hinzufuegenSpielStand();
+				HBox[] summenbalken = hinzufuegenSummenBalken();
+			BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
 		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.	
-			VBox welcome = new VBox(); 
 		TabPane spielstandansichten = hinzufuegenSpielstandAnsichten(); 
 			spielstandansichten.setTabMaxHeight(16);
 			spielstandansichten.setSide(Side.BOTTOM);
 			ObservableList<Tab> spielstandansicht = spielstandansichten.getTabs(); 
 			// System.out.println("spielstandansichten; ObservableList = " + spielstandansicht);
-			spielstandansicht.get(0).setContent(welcome);
-			spielstandansicht.get(1).setContent(spielstandtafel);
-			// spielstandansicht.get(2).setContent(spielstandtafel[1]);
-			// spielstandansicht.get(3).setContent(spielstandtafel[2]);
-			// spielstandansicht.get(4).setContent(spielstandtafel[3]);
-			
+			spielstandansicht.get(0).setContent(willkommenstafel);
+			spielstandansicht.get(1).setContent(spielstandtafel[0]);
+			spielstandansicht.get(2).setContent(spielstandtafel[1]);
+			spielstandansicht.get(3).setContent(spielstandtafel[2]);
+			spielstandansicht.get(4).setContent(spielstandtafel[3]);
+			// 
 
 		
 			// Aus unerfindlichen Gründen kann ich bei Tab bzw TabPane nicht wie sonst üblich mit GetCildren() ein Node 
@@ -492,8 +482,7 @@ public class EscaleroBedienpaneel extends Application {
 	} 
 	
 	
-	// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 
-	/*
+	// Die 4 Spielstandtafeln, 1 je Spieler.  
 	public BorderPane[] hinzufuegenSpielstandTafeln(VBox[] bilderbalken, TableView[] spielstand, HBox[] summenbalken) {
 		BorderPane[] sstafeln = new BorderPane[4];
 		for(int s = 0; s < 4; s++) {
@@ -560,74 +549,8 @@ public class EscaleroBedienpaneel extends Application {
 		}
 		return sstand;
 	}
-*/
-	// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 
-	public BorderPane hinzufuegenSpielstandTafeln(VBox bilderbalken, TableView spielstand, HBox summenbalken) {
-		BorderPane sstafeln = new BorderPane();
-			sstafeln = new BorderPane();
-			sstafeln.setMinSize(150, 300);
-			sstafeln.setLeft(bilderbalken);
-			sstafeln.setCenter(spielstand);
-			sstafeln.setBottom(summenbalken);
-			// bei GridPane; sstafeln[s].add(child, columnIndex, rowIndex, colspan, rowspan);
-
-		// TODO
-		return sstafeln; 
-	}
-	
-	public VBox hinzufuegenBilderBalken() {
-		VBox bbalken = new VBox(); 
-			bbalken = new VBox();
-			// bbalken.setMinSize(60, 150);
-			// bbalken.setSpacing(0);
-			// bbalken.setAlignment(Pos.CENTER);
-			bbalken.getStyleClass().add( "bildbalken");
-			Label neun = new Label("9"); 
-			neun.getStyleClass().add( "bildbalkenelement");
-			Label zehn = new Label("10"); 
-			zehn.getStyleClass().add( "bildbalkenelement");
-			Label bube = new Label("B"); 
-			bube.getStyleClass().add( "bildbalkenelement");
-			Label dame = new Label("D"); 
-			dame.getStyleClass().add( "bildbalkenelement");
-			Label koenig = new Label("K"); 
-			koenig.getStyleClass().add( "bildbalkenelement");
-			Label ass = new Label("A"); 
-			ass.getStyleClass().add( "bildbalkenelement");
-			Label strasse = new Label("St"); 
-			strasse.getStyleClass().add( "bildbalkenelement");
-			Label full = new Label("Fu"); 
-			full.getStyleClass().add( "bildbalkenelement");
-			Label poker = new Label("Po"); 
-			poker.getStyleClass().add( "bildbalkenelement");
-			Label grande = new Label("Gr"); 
-			grande.getStyleClass().add( "bildbalkenelement");
-			if(EXTRA_STREICHUNG) {
-				Label streich = new Label("X"); 
-				streich.getStyleClass().add( "bildbalkenelement");
-				bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
-				}
-			if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
-		}
-		return bbalken;
-	}
-	
-	public TableView<Spalten> hinzufuegenSpielStand() {
-		TableView<Spalten> sstand = new TableView<>();
-		// sstand.setItems((ObservableList<Spalten>) tafel1); // erzeugt Fehler com.sun.javafx.collections.ObservableMapWrapper cannot be cast to javafx.collections.ObservableList
-			sstand = new TableView();
-			sstand.setMinSize(100, 150);
-			TableColumn reiheEins = new TableColumn("Reihe 1");
-			TableColumn reiheZwei = new TableColumn("Reihe 2");
-			TableColumn reiheDrei = new TableColumn("Reihe 3");
-			
-			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
-		return sstand;
-	}
-	
-	
-	// Bis auf weiteres nur eine Tabelle!! Des Zeugs mit Observable, FXCollections, HashMaps, ObservableMaps etc. hat nicht funktioniert!!! 	
-/*	public HBox[] hinzufuegenSummenBalken() {
+ 	
+public HBox[] hinzufuegenSummenBalken() {
 		HBox[] sbalken = new HBox[4]; 
 		Label[] summen = new Label[4]; 
 		Label[] summereihe1 = new Label[4]; 
@@ -656,36 +579,8 @@ public class EscaleroBedienpaneel extends Application {
 		// TODO 
 		return sbalken;
 	}
-*/
-	public HBox hinzufuegenSummenBalken() {
-		HBox sbalken = new HBox(); 
-		Label summen = new Label(); 
-		Label summereihe1 = new Label(); 
-		Label summereihe2 = new Label(); 
-		Label summereihe3 = new Label(); 
 
-			sbalken = new HBox();
-			sbalken.getStyleClass().add("summenbalken");
-			sbalken.setMinSize(80, 20);
-			sbalken.setSpacing(0);
-				summen = new Label("Summen: "); 
-				summen.getStyleClass().add("summen");
- 				summen.setMinSize(90, 30);
-				// summen.setAlignment(Pos.CENTER);
-				summereihe1 = new Label("0"); 
-				summereihe1.getStyleClass().add("summereihe1");
-				summereihe1.setMinSize(83, 30);
-				summereihe2 = new Label("0"); 
-				summereihe2.getStyleClass().add("summereihe2");
-				summereihe2.setMinSize(83, 30);
-				summereihe3 = new Label("0"); 
-				summereihe3.getStyleClass().add("summereihe3");
-				summereihe3.setMinSize(83, 30);
-			sbalken.getChildren().addAll(summen, summereihe1, summereihe2, summereihe3);
-	
-		// TODO 
-		return sbalken;
-	}
+
 	
 	public HBox hinzufuegenTotalEins() {
 		HBox teins = new HBox(); 
