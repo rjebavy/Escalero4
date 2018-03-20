@@ -73,7 +73,7 @@ public class EscaleroBedienpaneel extends Application {
 	// KONSTANTEN
 	static final boolean WAHLFREIER_EINTRAGEMODUS = false;
 	static final boolean EXTRA_STREICHUNG = true; 
-	static final String SPITZNAME_SPIELER_1 = "Spieler1"; 
+	static final String SPITZNAME_SPIELER_1 = "Rinaldo"; 
 	static final String SPITZNAME_SPIELER_2 = "Spieler2"; 
 	static final String SPITZNAME_SPIELER_3 = "Spieler3"; 
 	static final String SPITZNAME_SPIELER_4 = "Spieler4"; 
@@ -84,7 +84,7 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// INSTANZVARIABLEN
 	// Globale Zähler; Wurf, Würfelsatz (Würfeln); Wurfergebnis (Auswerten), Ergebnis (Eintragen), Spielstandtafeln (Anzeigen) initialisieren. 
-	int aktueller_spieler = ANZAHL_SPIELER; // globaler Spielerzähler
+	int aktueller_spieler = ANZAHL_SPIELER; // globaler Spielerzähler. 
 	int aktuelle_runde = ANZAHL_RUNDEN; // globaler Rundenzähler
 	int aktueller_wurf = ANZAHL_WUERFE; // globaler Wurfzähler
 	Wurf wurf = new Wurf(aktueller_wurf); // Wurfzähler, Haltefeld, halten/freigeben, Zufallszahl berechen etc.  
@@ -96,6 +96,7 @@ public class EscaleroBedienpaneel extends Application {
 	Button[] Bilder = new Button[6]; // Knopffelder für's EIntragen. 
 	Button[] Muster = new Button[6]; // Knopffelder für's EIntragen. 
 	GridPane[] Spielstandtafel = new GridPane[4]; // Für jeden der 4 Spieler eine Spielstandtafel. 
+	Reihen eintragen = new Reihen();
 	// Sonstiges 
 	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
 	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
@@ -259,6 +260,15 @@ public class EscaleroBedienpaneel extends Application {
 // BEDIENTABLEAU, FX-Nodes & Eigenschaften: 
 
 	//TODO 
+	public BorderPane erzeugeBedientableau() {
+		BorderPane btableau = new BorderPane();
+		btableau.getStyleClass().add("bedientableau");
+		// btableau.setMinSize(340, 58);
+		Label mleiste = erzeugeMeldeleiste();
+		btableau.setBottom(mleiste);		
+		// TODO
+		return btableau; 	
+	}
 	
 	// BEDIENTABLEAU, Ende. 
 	
@@ -271,16 +281,6 @@ public class EscaleroBedienpaneel extends Application {
 			neustartErgebnistableau(etableau);
 			ergebnisfeld.setEintragewert(0);
 		}
-	
-	public BorderPane erzeugeBedientableau() {
-		BorderPane btableau = new BorderPane();
-		btableau.getStyleClass().add("bedientableau");
-		// btableau.setMinSize(340, 58);
-		Label mleiste = erzeugeMeldeleiste();
-		btableau.setBottom(mleiste);		
-		// TODO
-		return btableau; 	
-	}
 		
 	public Label erzeugeMeldeleiste() {
 		Label meldeleiste = new Label("Keine Meldung. "); 
@@ -304,8 +304,8 @@ public class EscaleroBedienpaneel extends Application {
 // SPIELSTANDTABLEAU, FX-Nodes & Eigenschaften: 
 //TODO 
 	// Erzeugermethode. 
-	public VBox erzeugeSpielstandtableau(BorderPane bedientableau) {
-		BorderPane btableau = bedientableau;
+	public VBox erzeugeSpielstandtableau(BorderPane spielstandtableau) {
+		BorderPane sstandtableau = spielstandtableau;
 	// Alle FX Nodes erzeugen
 		VBox sstableau = new VBox();
 		sstableau.getStyleClass().add("spielstandtableau");
@@ -314,7 +314,7 @@ public class EscaleroBedienpaneel extends Application {
 		sstableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		sstableau.setSpacing(10);
 			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
-			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(btableau); 
+			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(sstandtableau); 
 				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? 
 				// BorderPane mit Textarea Center?  
 				// willkommenstafel
@@ -396,7 +396,11 @@ public class EscaleroBedienpaneel extends Application {
 	
 	public Label hinzufuegenSpitzname() {
 		// Label spitzn = new Label("Rinaldo"); 
-		Label spitzn = new Label("DasIstEinGanzBesondersLanger"); 
+		Label spitzn = new Label(); 
+		if(aktueller_spieler == 4) {spitzn.setText(SPITZNAME_SPIELER_1);}
+		if(aktueller_spieler == 3) {spitzn.setText(SPITZNAME_SPIELER_2);}
+		if(aktueller_spieler == 2) {spitzn.setText(SPITZNAME_SPIELER_3);}
+		if(aktueller_spieler == 1) {spitzn.setText(SPITZNAME_SPIELER_4);}
 		spitzn.getStyleClass().add("spitzname");
 		//TODO
 		spitzn.setPadding(new Insets(2, 2, 2, 2));
@@ -579,8 +583,6 @@ public HBox[] hinzufuegenSummenBalken() {
 		// TODO 
 		return sbalken;
 	}
-
-
 	
 	public HBox hinzufuegenTotalEins() {
 		HBox teins = new HBox(); 
