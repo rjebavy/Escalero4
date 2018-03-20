@@ -98,10 +98,14 @@ public class EscaleroBedienpaneel extends Application {
 	GridPane[] Spielstandtafel = new GridPane[4]; // Für jeden der 4 Spieler eine Spielstandtafel. 
 	// Da HashMap keine Arrays zuläßt keine Suberzeugermethode sondern hier im Main Haupt! 
 	Reihen eintragen = new Reihen();
-	HashMap<Integer, Integer[]> eintragetabelle1 = eintragen.erzeugeSpielstandTabellen();
-	HashMap<Integer, Integer[]> eintragetabelle2 = eintragen.erzeugeSpielstandTabellen();
-	HashMap<Integer, Integer[]> eintragetabelle3 = eintragen.erzeugeSpielstandTabellen();
-	HashMap<Integer, Integer[]> eintragetabelle4 = eintragen.erzeugeSpielstandTabellen();
+	HashMap<Integer, Integer[]> eintragetabelle1 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
+	HashMap<Integer, Integer[]> eintragetabelle2 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
+	HashMap<Integer, Integer[]> eintragetabelle3 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
+	HashMap<Integer, Integer[]> eintragetabelle4 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
+	// Die Koordinaten zum Eintragen
+	Integer[] spielstand_X = new Integer[3]; 
+	Integer spielstand_Y = new Integer(0);
+	
 	// Sonstiges 
 	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
 	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
