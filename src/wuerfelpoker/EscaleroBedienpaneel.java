@@ -96,7 +96,12 @@ public class EscaleroBedienpaneel extends Application {
 	Button[] Bilder = new Button[6]; // Knopffelder für's EIntragen. 
 	Button[] Muster = new Button[6]; // Knopffelder für's EIntragen. 
 	GridPane[] Spielstandtafel = new GridPane[4]; // Für jeden der 4 Spieler eine Spielstandtafel. 
+	// Da HashMap keine Arrays zuläßt keine Suberzeugermethode sondern hier im Main Haupt! 
 	Reihen eintragen = new Reihen();
+	HashMap<Integer, Integer[]> eintragetabelle1 = eintragen.erzeugeSpielstandTabellen();
+	HashMap<Integer, Integer[]> eintragetabelle2 = eintragen.erzeugeSpielstandTabellen();
+	HashMap<Integer, Integer[]> eintragetabelle3 = eintragen.erzeugeSpielstandTabellen();
+	HashMap<Integer, Integer[]> eintragetabelle4 = eintragen.erzeugeSpielstandTabellen();
 	// Sonstiges 
 	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
 	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
