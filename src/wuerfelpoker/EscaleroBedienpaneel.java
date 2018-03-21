@@ -167,7 +167,7 @@ public class EscaleroBedienpaneel extends Application {
 		// alle: 
 		System.out.println("\nAuslesen alle; aus eintragetabelle1 - "); 
 		String bild = "";
-		for(int z = 0; z < 11; z++) {
+		for(int z = 0; z < 12; z++) {
 			bild = eintragen.waehleSchluesselbild(z);
 			Integer[] rinhalt = eintragetabelle1.get(z);
 			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");	
@@ -175,7 +175,7 @@ public class EscaleroBedienpaneel extends Application {
 		
 		// teste, laden der Spielstandzeile(n) in die observableList: 
 		Spielstandzeile zeile = new Spielstandzeile(); 
-		for(int z = 0; z < 11 ; z++) {
+		for(int z = 0; z < 12 ; z++) {
 		Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
 		zeile.setReihe1(String.valueOf(lade[0])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 		zeile.setReihe2(String.valueOf(lade[1])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 

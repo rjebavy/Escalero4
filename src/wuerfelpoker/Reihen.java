@@ -13,14 +13,14 @@ public class Reihen {
 		
 	}
 
-	// Erzeuge eine Spielstandtabelle zu 11 Zeilen und 3 Reihen. 
+	// Erzeuge eine Spielstandtabelle zu 12 Zeilen und 3 Reihen; 12 Zeile für Summe!!  
 	public HashMap<Integer, Integer[]> erzeugeSpielstandTabellen() {
 		 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
 		 reiheninhalt[0] = null;
 		 reiheninhalt[1] = null;
 		 reiheninhalt[2] = null;
 		 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
-			for(int r = 0; r < 11; r++) {
+			for(int r = 0; r < 12; r++) {
 				sstabel.put(r, reiheninhalt);
 			}
 	return sstabel;
@@ -30,7 +30,7 @@ public class Reihen {
 	public HashMap<Integer, Integer[]> zeigeSpielstandTabellenReihen(HashMap<Integer, Integer[]> sstabel) {
 		HashMap<Integer, Integer[]> sstb = sstabel; 
 		String bild = "";
-		for(int z = 0; z < 11; z++) {
+		for(int z = 0; z < 12; z++) {
 			bild = waehleSchluesselbild(z);
 			Integer[] reiheninhalt = sstb.get(3);
 			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + ".");	
@@ -74,6 +74,9 @@ public class Reihen {
 			break;
 		case 10:
 			bild = "Streichung";
+			break;
+		case 11:
+			bild = "Summe";
 			break;
 		default: 
 			bild = "Fehler!";
