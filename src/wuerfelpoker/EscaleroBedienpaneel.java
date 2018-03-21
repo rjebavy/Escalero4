@@ -3,11 +3,13 @@ package wuerfelpoker;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 import com.sun.javafx.css.converters.StringConverter;
 
 import javafx.application.Application;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
@@ -42,6 +44,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.NumberStringConverter;
 import wuerfelpoker.Reihen;
 
@@ -102,6 +105,15 @@ public class EscaleroBedienpaneel extends Application {
 	HashMap<Integer, Integer[]> eintragetabelle2 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
 	HashMap<Integer, Integer[]> eintragetabelle3 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
 	HashMap<Integer, Integer[]> eintragetabelle4 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
+	// Da ObservableList keine Arrays zuläßt keine Suberzeugermethode sondern hier im Main Haupt! 
+	Callback<Spielstandzeile, Observable[]> cb1 = (Spielstandzeile s)-> new Observable[] {s.reihe1Property(), s.reihe2Property(), s.reihe3Property()};
+	ObservableList<Spielstandzeile> olist1 = FXCollections.observableArrayList(cb1); 
+	Callback<Spielstandzeile, Observable[]> cb2 = (Spielstandzeile s)-> new Observable[] {s.reihe1Property(), s.reihe2Property(), s.reihe3Property()};
+	ObservableList<Spielstandzeile> olist2 = FXCollections.observableArrayList(cb2); 
+	Callback<Spielstandzeile, Observable[]> cb3 = (Spielstandzeile s)-> new Observable[] {s.reihe1Property(), s.reihe2Property(), s.reihe3Property()};
+	ObservableList<Spielstandzeile> olist3 = FXCollections.observableArrayList(cb3); 
+	Callback<Spielstandzeile, Observable[]> cb4 = (Spielstandzeile s)-> new Observable[] {s.reihe1Property(), s.reihe2Property(), s.reihe3Property()};
+	ObservableList<Spielstandzeile> olist4 = FXCollections.observableArrayList(cb4); 
 	// Die Koordinaten zum Eintragen
 	Integer[] spielstand_X = new Integer[3]; 
 	Integer spielstand_Y = new Integer(0);
@@ -136,7 +148,9 @@ public class EscaleroBedienpaneel extends Application {
 		// Bedientableau ist kein Dummy NODE! 
 		BorderPane bedientableau = erzeugeBedientableau(); 
 		// Spielstandtableau ist kein Dummy NODE! 
-		VBox spielstandtableau = erzeugeSpielstandtableau(bedientableau);
+		VBox spielstandtableau = erzeugeSpielstandtableau(bedientableau); // hier wird das Bedientableau übergeben wegen Meldeleiste!!
+		
+		// Je Spieler eine 
 		
 		// Temporär um nicht immer schließen und starten zu müssen. 
 		Button nochmal = new Button("Nochmal!"); 
@@ -148,100 +162,28 @@ public class EscaleroBedienpaneel extends Application {
 		// TEST: Meldeleiste aktualisieren. 
 		// meldung.setMeldung("das ist eine neue Meldung"); 
 		// aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0)); 
-		
-		// SO SOLL'S DANN AM SCHLUSS AUSSEHEN (15.3.18):  
-		Reihen dummy = new Reihen(); 
-		HashMap<Integer, Integer[]> tafel1 = dummy.erzeugeSpielstandTabellen();
-		HashMap<Integer, Integer[]> tafel2 = dummy.erzeugeSpielstandTabellen();
-		HashMap<Integer, Integer[]> tafel3 = dummy.erzeugeSpielstandTabellen();
-		HashMap<Integer, Integer[]> tafel4 = dummy.erzeugeSpielstandTabellen();
-		//Integer[] reiheninhalt = new Integer[3];
-/*
-		 reiheninhalt[0] = 0;
-		 reiheninhalt[1] = 0;
-		 reiheninhalt[2] = 4;
-		 tafel1.put(0, reiheninhalt);
-		 reiheninhalt[0] = 0;
-		 reiheninhalt[1] = 4;
-		 reiheninhalt[2] = 0;
-		 tafel2.put(1, reiheninhalt);		 
-		 reiheninhalt[0] = 9;
-		 reiheninhalt[1] = 0;
-		 reiheninhalt[2] = 0;
-		 tafel3.put(2, reiheninhalt);			 
-		 reiheninhalt[0] = 0;
-		 reiheninhalt[1] = 20;
-		 reiheninhalt[2] = 0;
-		 tafel4.put(6, reiheninhalt);			 
-*/		 
-		dummy.zeigeSpielstandTabellenReihen(tafel1);
-		dummy.zeigeSpielstandTabellenReihen(tafel2);
-		dummy.zeigeSpielstandTabellenReihen(tafel3);
-		dummy.zeigeSpielstandTabellenReihen(tafel4);
-		
-		HashMap<Integer, Integer[]> test = new HashMap<Integer, Integer[]>();
-		// test = dummy.zeigeSpielstandTabellenReihen(tafel1);
-		// System.out.println("Tabelle - " + test);
 
-		
-/*		// Reinschreiben in test: 
-		Integer[] reiheninhalt = new Integer[3];
-		// einzeln: 
-		System.out.println("\nReinschreiben einzeln; in test - "); 
-		 reiheninhalt[0] = 6;
-		 reiheninhalt[1] = 18;
-		 reiheninhalt[2] = 30;
-		System.out.println("schreibe, reiheninhalt(ohne index): " + reiheninhalt); 
-		System.out.println("schreibe, reiheninhalt(mit index): " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + "."); 
-		 test.put(5, reiheninhalt);
-		 System.out.println("geschrieben, auf index 5 = Ass): " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + ".");  
-		 
-		// Auslesen aus test: 
-		// einzeln: 
-		System.out.println("\nAuslesen einzeln; aus test - "); 
-		// Integer[] rinhalt = new Integer[3];
-		String bild = dummy.waehleSchluesselbild(5);
-		Integer key = 5;
-		Integer[] rinhalt = test.get(key); // Aah er Wert im getObject ist der Index = Key der HashMap!!! 
-		// Das steht so nicht im Buch Java Insel1 und wurde auf den gestern besuchten Webseite auch nicht erklärt!!!
-		// System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt);
-		System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");		
-*/			 	
-			 	
-	
-			 	
-		// Reinschreiben in test: 	
-		Integer[] reiheninhalt = new Integer[3];
-		 // alle: 
-		System.out.println("\nReinschreiben alle; in test - "); 
-		reiheninhalt[0] = 1;
-		 reiheninhalt[1] = 2;
-		 reiheninhalt[2] = 3;
-		 System.out.println("schreibe, reiheninhalt(mit key 0-10): " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + "."); 
-		 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
-			for(int r = 0; r < 11; r++) {
-				test.put(r, reiheninhalt);
-			}
-		 
-		// Auslesen aus test: 
+		// Auslesen aus eintragetabelle1: 
 		// alle: 
-		System.out.println("\nAuslesen alle; aus test - "); 
+		System.out.println("\nAuslesen alle; aus eintragetabelle1 - "); 
 		String bild = "";
 		for(int z = 0; z < 11; z++) {
-			bild = dummy.waehleSchluesselbild(z);
-			Integer[] rinhalt = test.get(z);
+			bild = eintragen.waehleSchluesselbild(z);
+			Integer[] rinhalt = eintragetabelle1.get(z);
 			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");	
 		}
+		
+		// teste, laden der Spielstandzeile(n) in die observableList: 
+		Spielstandzeile zeile = new Spielstandzeile(); 
+		for(int z = 0; z < 11 ; z++) {
+		Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+		zeile.setReihe1(String.valueOf(lade[0])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+		zeile.setReihe2(String.valueOf(lade[1])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+		zeile.setReihe3(String.valueOf(lade[2])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+		olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element). 
+		}
 
-		/*
-		// Einzeltest Tafel anzeigen, direkt über Klase Reihe: Ok; 16:45.
-		Reihen test2 = new Reihen(); 
-		HashMap<Integer, Integer[]> testtabelle = test2.erzeugeSpielstandTabellen();
-		test2.zeigeSpielstandTabellenReihen(testtabelle);
-	*/
-		
 	
-		
 		
 		
 	
@@ -313,8 +255,8 @@ public class EscaleroBedienpaneel extends Application {
 // SPIELSTANDTABLEAU, FX-Nodes & Eigenschaften: 
 //TODO 
 	// Erzeugermethode. 
-	public VBox erzeugeSpielstandtableau(BorderPane spielstandtableau) {
-		BorderPane sstandtableau = spielstandtableau;
+	public VBox erzeugeSpielstandtableau(BorderPane bedientableau) {
+		BorderPane btableau = bedientableau;
 	// Alle FX Nodes erzeugen
 		VBox sstableau = new VBox();
 		sstableau.getStyleClass().add("spielstandtableau");
@@ -323,13 +265,14 @@ public class EscaleroBedienpaneel extends Application {
 		sstableau.setBorder(new Border(new BorderStroke(Color.OLIVE, BorderStrokeStyle.SOLID, new CornerRadii(2), new BorderWidths(1))));
 		sstableau.setSpacing(10);
 			// Den SpielstandKopf mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
-			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(sstandtableau); 
+			HBox spielstandtableaukopf = hinzufuegenSpielstandKopf(btableau); 
 				// TODO noch ein 5.! Element, einen "Willkommenschirm", noch unklar welchen Containertype? 
 				// BorderPane mit Textarea Center?  
 				// willkommenstafel
 				BorderPane willkommenstafel = new BorderPane(); 
 				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
 				TableView[] spielstand = hinzufuegenSpielStand();
+				// >>>> HIER MUSS DER INHALT KOMMEN!! 
 				HBox[] summenbalken = hinzufuegenSummenBalken();
 			BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
 		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.	
