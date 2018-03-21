@@ -876,7 +876,7 @@ public class EscaleroBedienpaneel extends Application {
 			HBox musterfeld = hinzufuegenKnoepfeUnten(); 
 				Button[] musterKnopf = hinzufuegenMusterknoepfe();
 				musterKnopf[0].setOnAction(event->ergebnisfeld.eintragenStrasse(ergebnis, servierung));
-				musterKnopf[1].setOnAction(event->ergebnisfeld.eintragenFullhouse(ergebnis, servierung));
+				musterKnopf[1].setOnAction(event->aktionFullhouse());
 				musterKnopf[2].setOnAction(event->ergebnisfeld.eintragenPoker(ergebnis, servierung));
 				musterKnopf[3].setOnAction(event->ergebnisfeld.eintragenGrande(ergebnis, servierung));
 				// TODO musterKnopf[4].setOnAction(event-><Aktionshmethode Löschen>);
@@ -1031,11 +1031,7 @@ public class EscaleroBedienpaneel extends Application {
 		return Bilder; 
 	}
 
-	public void deaktiviereBilderknoepfe() {
-		for(int b = 0; b < 6; b++) {
-			Bilder[b].setDisable(true);
-		}
-	}
+
 	
 	// D i e  M u s t e r k n ö p f e: 	
 	// Untere Reihe, Musterknöpfe
@@ -1060,7 +1056,21 @@ public class EscaleroBedienpaneel extends Application {
 		return Muster; 
 	}
 
-	public void deaktivierMusterknoepfe() {
+	// Aktionskode Knopf [FullHouse]
+	public void aktionFullhouse() {
+		ergebnisfeld.eintragenFullhouse(ergebnis, servierung);
+		deaktiviereAlleKnoepfeBisAufLoesche();
+	}
+	
+	
+	// Ergebnisknöpfe allgemein. 
+	public void deaktiviereBilderknoepfe() {
+		for(int b = 0; b < 6; b++) {
+			Bilder[b].setDisable(true);
+		}
+	}
+	
+	public void deaktiviereMusterknoepfe() {
 		for(int b = 0; b < 6; b++) {
 			Muster[b].setDisable(true);
 		}
@@ -1120,6 +1130,13 @@ public class EscaleroBedienpaneel extends Application {
 			}
 		Muster[4].setDisable(false); // Knopf [streiche] hat kein Muster. 
 		Muster[5].setDisable(false); // Knopf [lösche] hat kein Muster.
+	}
+	
+	// Wenn ein Eintrageknopf geklickt wurde alle bis auf [lösche] deaktivieren. Wird im Aktionskode für jeden Eintrageknopf verwendet. 
+	public void deaktiviereAlleKnoepfeBisAufLoesche() {
+		deaktiviereBilderknoepfe();
+		deaktiviereMusterknoepfe(); 
+		Muster[5].setDisable(false);
 	}
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
