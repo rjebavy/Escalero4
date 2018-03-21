@@ -968,6 +968,13 @@ public class EscaleroBedienpaneel extends Application {
 		}
 	}
 	
+	// Wenn ein Eintrageknopf geklickt wurde alle Reihenknöpfe eaktivieren. Wird im Aktionskode für jeden Eintrageknopf verwendet. 
+	public void aktiviereReihenknoepfe() {
+		for(int b = 0; b < 3; b++) {
+			Reihe[b].setDisable(false);
+		}
+	}	
+	
 	public void eintragenReihe1(int wert) {
 		// TODO
 	}
@@ -1060,6 +1067,7 @@ public class EscaleroBedienpaneel extends Application {
 	public void aktionFullhouse() {
 		ergebnisfeld.eintragenFullhouse(ergebnis, servierung);
 		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();
 	}
 	
 	
