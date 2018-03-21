@@ -16,9 +16,9 @@ public class Reihen {
 	// Erzeuge eine Spielstandtabelle zu 12 Zeilen und 3 Reihen; 12 Zeile für Summe!!  
 	public HashMap<Integer, Integer[]> erzeugeSpielstandTabellen() {
 		 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
-		 reiheninhalt[0] = null;
-		 reiheninhalt[1] = null;
-		 reiheninhalt[2] = null;
+		 reiheninhalt[0] = 1;
+		 reiheninhalt[1] = 2;
+		 reiheninhalt[2] = 255;
 		 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
 			for(int r = 0; r < 12; r++) {
 				sstabel.put(r, reiheninhalt);
@@ -82,6 +82,39 @@ public class Reihen {
 			bild = "Fehler!";
 		}
 		return bild; 
+	}
+
+	
+	
+	
+	// Reihensummen berechnen und in Zeile 12 eintragen. 
+	public void berechneReihensummen(HashMap<Integer, Integer[]> sstabel) {
+		Integer[] summe = new Integer[3];
+		Integer[] zeile = new Integer[3];
+		Integer[] filter = new Integer[3];		
+		HashMap<Integer, Integer[]> hm = sstabel; 
+		// Summen auf 0 setzen. 
+		for(int s = 0; s < 3; s++) {
+			summe[s] = 0;
+		}
+		// Zeilen 1 -11 (index 0 - 10) aufaddieren
+		for(int i = 0; i < 11; i++) {
+			zeile = hm.get(i);
+			// Streichung rausfiltern; Wert über 100! Wahrscheinlich nehm ich 255. 
+				for(int j = 0; j < 3; j++) {
+					if( zeile[j] > 100 ) {
+						filter[j] = 0;
+					}
+					else {
+						filter[j] = zeile[j];
+					}
+				}
+			summe[0] = summe[0] + filter[0]; 
+			summe[1] = summe[1] + filter[1]; 
+			summe[2] = summe[2] + filter[2]; 
+		}
+		// Summe in Zeile 12 (index/key 11) eintragen. 
+		hm.put(11, summe);
 	}
 	
 	

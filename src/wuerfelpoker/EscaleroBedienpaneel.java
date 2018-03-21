@@ -163,6 +163,10 @@ public class EscaleroBedienpaneel extends Application {
 		// meldung.setMeldung("das ist eine neue Meldung"); 
 		// aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0)); 
 
+		
+		// teste, HashMap, Reihen aufsummieren. 
+		eintragen.berechneReihensummen(eintragetabelle1);
+		
 		// Auslesen aus eintragetabelle1: 
 		// alle: 
 		System.out.println("\nAuslesen alle; aus eintragetabelle1 - "); 
@@ -172,7 +176,7 @@ public class EscaleroBedienpaneel extends Application {
 			Integer[] rinhalt = eintragetabelle1.get(z);
 			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");	
 		}
-		
+
 		// teste, laden der Spielstandzeile(n) in die observableList: 
 		Spielstandzeile zeile = new Spielstandzeile(); 
 		for(int z = 0; z < 12 ; z++) {
@@ -183,7 +187,7 @@ public class EscaleroBedienpaneel extends Application {
 		olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element). 
 		}
 
-	
+		// teste, HashMap, Reihen aufsummieren.  
 		
 		
 	
