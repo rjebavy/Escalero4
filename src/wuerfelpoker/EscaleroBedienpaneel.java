@@ -28,6 +28,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -651,12 +652,32 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// Endlich der Spielstandtabelleninhalt! Leider 4 mal, TableView kann keine Arrays!! 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand1(ObservableList<Spielstandzeile> olist1) {
+		Spielstandzeile zeile = new Spielstandzeile(); 
+
 		TableView<Spielstandzeile> sstand = new TableView<>();
 			sstand.setMinSize(100, 150);
 			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			reiheEins.setCellValueFactory(new PropertyValueFactory<>("reihe1"));
 			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			reiheZwei.setCellValueFactory(new PropertyValueFactory<>("reihe2"));
 			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			reiheDrei.setCellValueFactory(new PropertyValueFactory<>("reihe3"));
 			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+			
+		/*	
+		// Lese HashMap und schreib in ObservableList	
+		for(int z = 0; z < 11 ; z++) {
+			Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			zeile.setReihe1(String.valueOf(lade[0])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(String.valueOf(lade[1])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(String.valueOf(lade[2])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element). 
+		}
+		*/ 	
+			
+		sstand.setItems(olist1);
+		
+ 
 		return sstand;
 	}
 
