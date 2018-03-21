@@ -274,11 +274,26 @@ public class EscaleroBedienpaneel extends Application {
 				// BorderPane mit Textarea Center?  
 				// willkommenstafel
 				BorderPane willkommenstafel = new BorderPane(); 
-				VBox[] bilderbalken = hinzufuegenBilderBalken(); 
-				TableView[] spielstand = hinzufuegenSpielStand();
-				// >>>> HIER MUSS DER INHALT KOMMEN!! 
-				HBox[] summenbalken = hinzufuegenSummenBalken();
-			BorderPane[] spielstandtafel = hinzufuegenSpielstandTafeln(bilderbalken, spielstand, summenbalken); 
+					// Hier die vertikalen Bilderbalken in den Spielstandtabellen: 
+					VBox bilderbalken1 = hinzufuegenBilderBalken1();
+					VBox bilderbalken2 = hinzufuegenBilderBalken2(); 
+					VBox bilderbalken3 = hinzufuegenBilderBalken3(); 
+					VBox bilderbalken4 = hinzufuegenBilderBalken4(); 
+					// >>>> HIER MUSS DER INHALT KOMMEN!! die 4 TabelViews mit den dazugehörigen ObservableLists. 
+					TableView<Spielstandzeile> spielstand1 = hinzufuegenSpielStand1(olist1);
+					TableView<Spielstandzeile> spielstand2 = hinzufuegenSpielStand2(olist2);
+					TableView<Spielstandzeile> spielstand3 = hinzufuegenSpielStand3(olist3);
+					TableView<Spielstandzeile> spielstand4 = hinzufuegenSpielStand4(olist4);
+					// Hier die horizontalen Summenbalken zuunterst in den Spielstandtabellen: 
+					HBox summenbalken1 = hinzufuegenSummenBalken1();
+					HBox summenbalken2 = hinzufuegenSummenBalken2();
+					HBox summenbalken3 = hinzufuegenSummenBalken3();
+					HBox summenbalken4 = hinzufuegenSummenBalken4();
+			// Die 4 Spielstandtafeln, mit Bilderbalken links, Spielstand in der Mitte und Summenbalken unten. 
+			BorderPane spielstandtafel1 = hinzufuegenSpielstandTafeln1(bilderbalken1, spielstand1, summenbalken1);
+			BorderPane spielstandtafel2 = hinzufuegenSpielstandTafeln1(bilderbalken2, spielstand2, summenbalken2); 
+			BorderPane spielstandtafel3 = hinzufuegenSpielstandTafeln1(bilderbalken3, spielstand3, summenbalken3); 
+			BorderPane spielstandtafel4 = hinzufuegenSpielstandTafeln1(bilderbalken4, spielstand4, summenbalken4); 
 		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.	
 		TabPane spielstandansichten = hinzufuegenSpielstandAnsichten(); 
 			spielstandansichten.setTabMaxHeight(16);
@@ -286,10 +301,10 @@ public class EscaleroBedienpaneel extends Application {
 			ObservableList<Tab> spielstandansicht = spielstandansichten.getTabs(); 
 			// System.out.println("spielstandansichten; ObservableList = " + spielstandansicht);
 			spielstandansicht.get(0).setContent(willkommenstafel);
-			spielstandansicht.get(1).setContent(spielstandtafel[0]);
-			spielstandansicht.get(2).setContent(spielstandtafel[1]);
-			spielstandansicht.get(3).setContent(spielstandtafel[2]);
-			spielstandansicht.get(4).setContent(spielstandtafel[3]);
+			spielstandansicht.get(1).setContent(spielstandtafel1);
+			spielstandansicht.get(2).setContent(spielstandtafel2);
+			spielstandansicht.get(3).setContent(spielstandtafel3);
+			spielstandansicht.get(4).setContent(spielstandtafel4);
 			// 
 
 		
@@ -442,30 +457,56 @@ public class EscaleroBedienpaneel extends Application {
 	} 
 	
 	
-	// Die 4 Spielstandtafeln, 1 je Spieler.  
-	public BorderPane[] hinzufuegenSpielstandTafeln(VBox[] bilderbalken, TableView[] spielstand, HBox[] summenbalken) {
-		BorderPane[] sstafeln = new BorderPane[4];
-		for(int s = 0; s < 4; s++) {
-			sstafeln[s] = new BorderPane();
-			sstafeln[s].setMinSize(150, 300);
-			sstafeln[s].setLeft(bilderbalken[s]);
-			sstafeln[s].setCenter(spielstand[s]);
-			sstafeln[s].setBottom(summenbalken[s]);
-			// bei GridPane; sstafeln[s].add(child, columnIndex, rowIndex, colspan, rowspan);
-			
-		}
-		// TODO
+	// Leider 4 Spielstandtafeln, TableView kann keine Arrays!! 
+	public BorderPane hinzufuegenSpielstandTafeln1(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
+		BorderPane sstafeln = new BorderPane();
+			sstafeln = new BorderPane();
+			sstafeln.setMinSize(150, 300);
+			sstafeln.setLeft(bilderbalken);
+			sstafeln.setCenter(spielstand);
+			sstafeln.setBottom(summenbalken);
 		return sstafeln; 
 	}
 	
-	public VBox[] hinzufuegenBilderBalken() {
-		VBox[] bbalken = new VBox[4]; 
-		for(int b = 0; b < 4; b++ ) {
-			bbalken[b] = new VBox();
-			// bbalken[b].setMinSize(60, 150);
-			// bbalken[b].setSpacing(0);
-			// bbalken[b].setAlignment(Pos.CENTER);
-			bbalken[b].getStyleClass().add( "bildbalken");
+	public BorderPane hinzufuegenSpielstandTafeln2(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
+		BorderPane sstafeln = new BorderPane();
+			sstafeln = new BorderPane();
+			sstafeln.setMinSize(150, 300);
+			sstafeln.setLeft(bilderbalken);
+			sstafeln.setCenter(spielstand);
+			sstafeln.setBottom(summenbalken);
+		return sstafeln; 
+	}
+	
+	public BorderPane hinzufuegenSpielstandTafeln3(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
+		BorderPane sstafeln = new BorderPane();
+			sstafeln = new BorderPane();
+			sstafeln.setMinSize(150, 300);
+			sstafeln.setLeft(bilderbalken);
+			sstafeln.setCenter(spielstand);
+			sstafeln.setBottom(summenbalken);
+		return sstafeln; 
+	}
+	
+	public BorderPane hinzufuegenSpielstandTafeln4(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
+		BorderPane sstafeln = new BorderPane();
+			sstafeln = new BorderPane();
+			sstafeln.setMinSize(150, 300);
+			sstafeln.setLeft(bilderbalken);
+			sstafeln.setCenter(spielstand);
+			sstafeln.setBottom(summenbalken);
+		return sstafeln; 
+	}
+
+	
+	// Leider 4 mal Bilderbalken, TableView kann keine Arrays!! 
+	public VBox hinzufuegenBilderBalken1() {
+		VBox bbalken = new VBox(); 
+			bbalken = new VBox();
+			// bbalken.setMinSize(60, 150);
+			// bbalken.setSpacing(0);
+			// bbalken.setAlignment(Pos.CENTER);
+			bbalken.getStyleClass().add( "bildbalken");
 			Label neun = new Label("9"); 
 			neun.getStyleClass().add( "bildbalkenelement");
 			Label zehn = new Label("10"); 
@@ -489,56 +530,276 @@ public class EscaleroBedienpaneel extends Application {
 			if(EXTRA_STREICHUNG) {
 				Label streich = new Label("X"); 
 				streich.getStyleClass().add( "bildbalkenelement");
-				bbalken[b].getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+				bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
 				}
-			if(!EXTRA_STREICHUNG) {bbalken[b].getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
+			if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
 			}
-		}
+		return bbalken;
+	}
+	
+	public VBox hinzufuegenBilderBalken2() {
+		VBox bbalken = new VBox(); 
+			bbalken = new VBox();
+			// bbalken.setMinSize(60, 150);
+			// bbalken.setSpacing(0);
+			// bbalken.setAlignment(Pos.CENTER);
+			bbalken.getStyleClass().add( "bildbalken");
+			Label neun = new Label("9"); 
+			neun.getStyleClass().add( "bildbalkenelement");
+			Label zehn = new Label("10"); 
+			zehn.getStyleClass().add( "bildbalkenelement");
+			Label bube = new Label("B"); 
+			bube.getStyleClass().add( "bildbalkenelement");
+			Label dame = new Label("D"); 
+			dame.getStyleClass().add( "bildbalkenelement");
+			Label koenig = new Label("K"); 
+			koenig.getStyleClass().add( "bildbalkenelement");
+			Label ass = new Label("A"); 
+			ass.getStyleClass().add( "bildbalkenelement");
+			Label strasse = new Label("St"); 
+			strasse.getStyleClass().add( "bildbalkenelement");
+			Label full = new Label("Fu"); 
+			full.getStyleClass().add( "bildbalkenelement");
+			Label poker = new Label("Po"); 
+			poker.getStyleClass().add( "bildbalkenelement");
+			Label grande = new Label("Gr"); 
+			grande.getStyleClass().add( "bildbalkenelement");
+			if(EXTRA_STREICHUNG) {
+				Label streich = new Label("X"); 
+				streich.getStyleClass().add( "bildbalkenelement");
+				bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+				}
+			if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
+			}
+		return bbalken;
+	}	
+
+	public VBox hinzufuegenBilderBalken3() {
+		VBox bbalken = new VBox(); 
+			bbalken = new VBox();
+			// bbalken.setMinSize(60, 150);
+			// bbalken.setSpacing(0);
+			// bbalken.setAlignment(Pos.CENTER);
+			bbalken.getStyleClass().add( "bildbalken");
+			Label neun = new Label("9"); 
+			neun.getStyleClass().add( "bildbalkenelement");
+			Label zehn = new Label("10"); 
+			zehn.getStyleClass().add( "bildbalkenelement");
+			Label bube = new Label("B"); 
+			bube.getStyleClass().add( "bildbalkenelement");
+			Label dame = new Label("D"); 
+			dame.getStyleClass().add( "bildbalkenelement");
+			Label koenig = new Label("K"); 
+			koenig.getStyleClass().add( "bildbalkenelement");
+			Label ass = new Label("A"); 
+			ass.getStyleClass().add( "bildbalkenelement");
+			Label strasse = new Label("St"); 
+			strasse.getStyleClass().add( "bildbalkenelement");
+			Label full = new Label("Fu"); 
+			full.getStyleClass().add( "bildbalkenelement");
+			Label poker = new Label("Po"); 
+			poker.getStyleClass().add( "bildbalkenelement");
+			Label grande = new Label("Gr"); 
+			grande.getStyleClass().add( "bildbalkenelement");
+			if(EXTRA_STREICHUNG) {
+				Label streich = new Label("X"); 
+				streich.getStyleClass().add( "bildbalkenelement");
+				bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+				}
+			if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
+			}
+		return bbalken;
+	}
+	
+	public VBox hinzufuegenBilderBalken4() {
+		VBox bbalken = new VBox(); 
+			bbalken = new VBox();
+			// bbalken.setMinSize(60, 150);
+			// bbalken.setSpacing(0);
+			// bbalken.setAlignment(Pos.CENTER);
+			bbalken.getStyleClass().add( "bildbalken");
+			Label neun = new Label("9"); 
+			neun.getStyleClass().add( "bildbalkenelement");
+			Label zehn = new Label("10"); 
+			zehn.getStyleClass().add( "bildbalkenelement");
+			Label bube = new Label("B"); 
+			bube.getStyleClass().add( "bildbalkenelement");
+			Label dame = new Label("D"); 
+			dame.getStyleClass().add( "bildbalkenelement");
+			Label koenig = new Label("K"); 
+			koenig.getStyleClass().add( "bildbalkenelement");
+			Label ass = new Label("A"); 
+			ass.getStyleClass().add( "bildbalkenelement");
+			Label strasse = new Label("St"); 
+			strasse.getStyleClass().add( "bildbalkenelement");
+			Label full = new Label("Fu"); 
+			full.getStyleClass().add( "bildbalkenelement");
+			Label poker = new Label("Po"); 
+			poker.getStyleClass().add( "bildbalkenelement");
+			Label grande = new Label("Gr"); 
+			grande.getStyleClass().add( "bildbalkenelement");
+			if(EXTRA_STREICHUNG) {
+				Label streich = new Label("X"); 
+				streich.getStyleClass().add( "bildbalkenelement");
+				bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande, streich);
+				}
+			if(!EXTRA_STREICHUNG) {bbalken.getChildren().addAll(neun, zehn, bube, dame, koenig, ass, strasse, full, poker, grande);
+			}
 		return bbalken;
 	}
 
-	public TableView[] hinzufuegenSpielStand() {
-		TableView[] sstand = new TableView[4];
-		for(int s = 0; s < 4; s++) {
-			sstand[s] = new TableView();
-			sstand[s].setMinSize(100, 150);
-			TableColumn reiheEins = new TableColumn("Reihe 1");
-			TableColumn reiheZwei = new TableColumn("Reihe 2");
-			TableColumn reiheDrei = new TableColumn("Reihe 3");
-			sstand[s].getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
-		}
+	
+	// Endlich der Spielstandtabelleninhalt! Leider 4 mal, TableView kann keine Arrays!! 
+	public TableView<Spielstandzeile> hinzufuegenSpielStand1(ObservableList<Spielstandzeile> olist1) {
+		TableView<Spielstandzeile> sstand = new TableView<>();
+			sstand.setMinSize(100, 150);
+			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
 		return sstand;
 	}
- 	
-public HBox[] hinzufuegenSummenBalken() {
-		HBox[] sbalken = new HBox[4]; 
-		Label[] summen = new Label[4]; 
-		Label[] summereihe1 = new Label[4]; 
-		Label[] summereihe2 = new Label[4]; 
-		Label[] summereihe3 = new Label[4]; 
-		for(int b = 0; b < 4; b++) {
-			sbalken[b] = new HBox();
-			sbalken[b].getStyleClass().add("summenbalken");
-			sbalken[b].setMinSize(80, 20);
-			sbalken[b].setSpacing(0);
-				summen[b] = new Label("Summen: "); 
-				summen[b].getStyleClass().add("summen");
- 				summen[b].setMinSize(90, 30);
+
+	public TableView<Spielstandzeile> hinzufuegenSpielStand2(ObservableList<Spielstandzeile> olist2) {
+		TableView<Spielstandzeile> sstand = new TableView<>();
+			sstand.setMinSize(100, 150);
+			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+		return sstand;
+	}
+	
+	public TableView<Spielstandzeile> hinzufuegenSpielStand3(ObservableList<Spielstandzeile> olist3) {
+		TableView<Spielstandzeile> sstand = new TableView<>();
+			sstand.setMinSize(100, 150);
+			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+		return sstand;
+	}
+	
+	public TableView<Spielstandzeile> hinzufuegenSpielStand4(ObservableList<Spielstandzeile> olist4) {
+		TableView<Spielstandzeile> sstand = new TableView<>();
+			sstand.setMinSize(100, 150);
+			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+		return sstand;
+	}
+
+	
+	// Leider 4 mal Summenbalken, TableView kann keine Arrays!! 
+	public HBox hinzufuegenSummenBalken1() {
+		HBox sbalken = new HBox(); 
+		Label summen = new Label(); 
+		Label summereihe1 = new Label(); 
+		Label summereihe2 = new Label(); 
+		Label summereihe3 = new Label(); 
+			sbalken = new HBox();
+			sbalken.getStyleClass().add("summenbalken");
+			sbalken.setMinSize(80, 20);
+			sbalken.setSpacing(0);
+				summen = new Label("Summen: "); 
+				summen.getStyleClass().add("summen");
+ 				summen.setMinSize(90, 30);
 				// summen[b].setAlignment(Pos.CENTER);
-				summereihe1[b] = new Label("0"); 
-				summereihe1[b].getStyleClass().add("summereihe1");
-				summereihe1[b].setMinSize(83, 30);
-				summereihe2[b] = new Label("0"); 
-				summereihe2[b].getStyleClass().add("summereihe2");
-				summereihe2[b].setMinSize(83, 30);
-				summereihe3[b] = new Label("0"); 
-				summereihe3[b].getStyleClass().add("summereihe3");
-				summereihe3[b].setMinSize(83, 30);
-			sbalken[b].getChildren().addAll(summen[b], summereihe1[b], summereihe2[b], summereihe3[b]);
-		}			
-		// TODO 
+				summereihe1 = new Label("0"); 
+				summereihe1.getStyleClass().add("summereihe1");
+				summereihe1.setMinSize(83, 30);
+				summereihe2 = new Label("0"); 
+				summereihe2.getStyleClass().add("summereihe2");
+				summereihe2.setMinSize(83, 30);
+				summereihe3 = new Label("0"); 
+				summereihe3.getStyleClass().add("summereihe3");
+				summereihe3.setMinSize(83, 30);
+			sbalken.getChildren().addAll(summen, summereihe1, summereihe2, summereihe3);
 		return sbalken;
 	}
+
+	public HBox hinzufuegenSummenBalken2() {
+		HBox sbalken = new HBox(); 
+		Label summen = new Label(); 
+		Label summereihe1 = new Label(); 
+		Label summereihe2 = new Label(); 
+		Label summereihe3 = new Label(); 
+			sbalken = new HBox();
+			sbalken.getStyleClass().add("summenbalken");
+			sbalken.setMinSize(80, 20);
+			sbalken.setSpacing(0);
+				summen = new Label("Summen: "); 
+				summen.getStyleClass().add("summen");
+ 				summen.setMinSize(90, 30);
+				// summen[b].setAlignment(Pos.CENTER);
+				summereihe1 = new Label("0"); 
+				summereihe1.getStyleClass().add("summereihe1");
+				summereihe1.setMinSize(83, 30);
+				summereihe2 = new Label("0"); 
+				summereihe2.getStyleClass().add("summereihe2");
+				summereihe2.setMinSize(83, 30);
+				summereihe3 = new Label("0"); 
+				summereihe3.getStyleClass().add("summereihe3");
+				summereihe3.setMinSize(83, 30);
+			sbalken.getChildren().addAll(summen, summereihe1, summereihe2, summereihe3);
+		return sbalken;
+	}
+	
+	public HBox hinzufuegenSummenBalken3() {
+		HBox sbalken = new HBox(); 
+		Label summen = new Label(); 
+		Label summereihe1 = new Label(); 
+		Label summereihe2 = new Label(); 
+		Label summereihe3 = new Label(); 
+			sbalken = new HBox();
+			sbalken.getStyleClass().add("summenbalken");
+			sbalken.setMinSize(80, 20);
+			sbalken.setSpacing(0);
+				summen = new Label("Summen: "); 
+				summen.getStyleClass().add("summen");
+ 				summen.setMinSize(90, 30);
+				// summen[b].setAlignment(Pos.CENTER);
+				summereihe1 = new Label("0"); 
+				summereihe1.getStyleClass().add("summereihe1");
+				summereihe1.setMinSize(83, 30);
+				summereihe2 = new Label("0"); 
+				summereihe2.getStyleClass().add("summereihe2");
+				summereihe2.setMinSize(83, 30);
+				summereihe3 = new Label("0"); 
+				summereihe3.getStyleClass().add("summereihe3");
+				summereihe3.setMinSize(83, 30);
+			sbalken.getChildren().addAll(summen, summereihe1, summereihe2, summereihe3);
+		return sbalken;
+	}
+	
+	public HBox hinzufuegenSummenBalken4() {
+		HBox sbalken = new HBox(); 
+		Label summen = new Label(); 
+		Label summereihe1 = new Label(); 
+		Label summereihe2 = new Label(); 
+		Label summereihe3 = new Label(); 
+			sbalken = new HBox();
+			sbalken.getStyleClass().add("summenbalken");
+			sbalken.setMinSize(80, 20);
+			sbalken.setSpacing(0);
+				summen = new Label("Summen: "); 
+				summen.getStyleClass().add("summen");
+ 				summen.setMinSize(90, 30);
+				// summen[b].setAlignment(Pos.CENTER);
+				summereihe1 = new Label("0"); 
+				summereihe1.getStyleClass().add("summereihe1");
+				summereihe1.setMinSize(83, 30);
+				summereihe2 = new Label("0"); 
+				summereihe2.getStyleClass().add("summereihe2");
+				summereihe2.setMinSize(83, 30);
+				summereihe3 = new Label("0"); 
+				summereihe3.getStyleClass().add("summereihe3");
+				summereihe3.setMinSize(83, 30);
+			sbalken.getChildren().addAll(summen, summereihe1, summereihe2, summereihe3);
+		return sbalken;
+	}
+
 	
 	public HBox hinzufuegenTotalEins() {
 		HBox teins = new HBox(); 
