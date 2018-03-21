@@ -178,16 +178,6 @@ public class EscaleroBedienpaneel extends Application {
 			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");	
 		}
 
-		// teste, laden der Spielstandzeile(n) in die observableList: 
-		Spielstandzeile zeile = new Spielstandzeile(); 
-		for(int z = 0; z < 12 ; z++) {
-		Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
-		zeile.setReihe1(String.valueOf(lade[0])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
-		zeile.setReihe2(String.valueOf(lade[1])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
-		zeile.setReihe3(String.valueOf(lade[2])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
-		olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element). 
-		}
-
 		// zeige, X- & Y-Koordinaten fürs Eintragen. 
 		System.out.println("\nGlobale Variable, spielstand_X[0] = " + spielstand_X[0]); 
 		System.out.println("Globale Variable, spielstand_X[1] = " + spielstand_X[1]); 
@@ -656,31 +646,36 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// Endlich der Spielstandtabelleninhalt! Leider 4 mal, TableView kann keine Arrays!! 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand1(ObservableList<Spielstandzeile> olist1) {
-		Spielstandzeile zeile = new Spielstandzeile(); 
-
+		
 		TableView<Spielstandzeile> sstand = new TableView<>();
 			sstand.setMinSize(100, 150);
 			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
 			reiheEins.setCellValueFactory(new PropertyValueFactory<>("reihe1"));
+			reiheEins.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
 			reiheZwei.setCellValueFactory(new PropertyValueFactory<>("reihe2"));
+			reiheZwei.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
 			reiheDrei.setCellValueFactory(new PropertyValueFactory<>("reihe3"));
+			reiheDrei.setMinWidth(80);
 			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
-			
-		/*	
-		// Lese HashMap und schreib in ObservableList	
+		
+		// Lese HashMap und schreib in ObservableList
+		olist1.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
 		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
 			zeile.setReihe1(String.valueOf(lade[0])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(String.valueOf(lade[1])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe3(String.valueOf(lade[2])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
-			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element). 
+			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
 		}
-		*/ 	
-			
+				
 		sstand.setItems(olist1);
 		
+		// OK!! Der Rest ist Kosmetik: 
+		// 1) Anpassen Zeilenhöhen auf Bilderbalken. 
+		// 2) Anpassen der Spaltenbreiten auf Summenbalken. 
  
 		return sstand;
 	}

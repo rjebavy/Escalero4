@@ -408,10 +408,12 @@ is being used to size a border should also be in pixels.
 }
 
 .bildbalken {
-    -fx-min-width: 4.9999em; 
-    -fx-min-height: 12.4995em;
-    -fx-spacing: 0px;
+    -fx-min-width: 4.9999em; /* 60 */ 
+    /* -fx-min-height: 12.4995em; // 150  */
+    -fx-min-height: 14.9994em; /* 180  */
+    -fx-spacing: 4px;
     -fx-padding-right: 2px;
+    -fx-padding-bottom: 0px;  
     -fx-alignment: CENTER;
     
     /* -fx-margin-top: 40px; */
@@ -429,7 +431,8 @@ is being used to size a border should also be in pixels.
     -fx-border-radius: 0px;        /* top-left top-right bottom-right bottom-left corner of the element  */ 
     -fx-border-width: 1px;
     -fx-min-width: 4.9999em;  /* 60 */
-    -fx-min-height: 1.6666em; /* 22; also ist 1 = 0.08333em */ 
+    /* -fx-min-height: 2.0832em; // 22; also ist 1 = 0.08333em   */
+    -fx-min-height: 1.6666em; /* 25 */
     -fx-alignment: CENTER; 
     -fx-content-display: CENTER;
     -fx-font-weight: bold;
@@ -2518,7 +2521,7 @@ is being used to size a border should also be in pixels.
 .tree-table-view .filler,
 .table-view > .column-header-background > .show-hide-columns-button,
 .tree-table-view > .column-header-background > .show-hide-columns-button,
-.table-view:constrained-resize .filler,
+/* .table-view:constrained-resize .filler,   // MAG KEINEN FILLER RECHTS DER TABELLE */
 .tree-table-view:constrained-resize .filler {
     -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0, 0 1 1 0, 1 2 2 1;
