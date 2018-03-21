@@ -116,7 +116,7 @@ public class EscaleroBedienpaneel extends Application {
 	Callback<Spielstandzeile, Observable[]> cb4 = (Spielstandzeile s)-> new Observable[] {s.reihe1Property(), s.reihe2Property(), s.reihe3Property()};
 	ObservableList<Spielstandzeile> olist4 = FXCollections.observableArrayList(cb4); 
 	// Die Koordinaten zum Eintragen
-	Integer[] spielstand_X = new Integer[3]; 
+	Integer[] spielstand_X = new Integer[] {0, 0, 0}; 
 	Integer spielstand_Y = new Integer(0);
 	
 	// Sonstiges 
@@ -188,7 +188,11 @@ public class EscaleroBedienpaneel extends Application {
 		olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element). 
 		}
 
-		// teste, HashMap, Reihen aufsummieren.  
+		// zeige, X- & Y-Koordinaten fürs Eintragen. 
+		System.out.println("\nGlobale Variable, spielstand_X[0] = " + spielstand_X[0]); 
+		System.out.println("Globale Variable, spielstand_X[1] = " + spielstand_X[1]); 
+		System.out.println("Globale Variable, spielstand_X[2] = " + spielstand_X[2]); 
+		System.out.println("Globale Variable, spielstand_Y = " + spielstand_Y); 
 		
 		
 	
@@ -235,7 +239,7 @@ public class EscaleroBedienpaneel extends Application {
 		public void aktionNochmal(GridPane wtableau, GridPane etableau) {
 			neustartWuerfeltableau(wtableau);
 			neustartErgebnistableau(etableau);
-			ergebnisfeld.setEintragewert(0);
+			ergebnisfeld.initialisiereErgebnisfeld();
 		}
 		
 	public Label erzeugeMeldeleiste() {
@@ -866,19 +870,19 @@ public class EscaleroBedienpaneel extends Application {
 			eintrageknopffelder.setSpacing(5);
 			HBox bilderfeld = hinzufuegenKnoepfeOben(); 
 				Button[] bilderKnopf = hinzufuegenBilderknoepfe();
-				bilderKnopf[0].setOnAction(event->ergebnisfeld.eintragenNeuner(ergebnis));
-				bilderKnopf[1].setOnAction(event->ergebnisfeld.eintragenZehner(ergebnis));
-				bilderKnopf[2].setOnAction(event->ergebnisfeld.eintragenBuben(ergebnis));
-				bilderKnopf[3].setOnAction(event->ergebnisfeld.eintragenDamen(ergebnis));
-				bilderKnopf[4].setOnAction(event->ergebnisfeld.eintragenKoenige(ergebnis));
-				bilderKnopf[5].setOnAction(event->ergebnisfeld.eintragenAsse(ergebnis));
+				bilderKnopf[0].setOnAction(event->aktionNeuner());
+				bilderKnopf[1].setOnAction(event->aktionZehner());
+				bilderKnopf[2].setOnAction(event->aktionBuben());
+				bilderKnopf[3].setOnAction(event->aktionDamen());
+				bilderKnopf[4].setOnAction(event->aktionKoenige());
+				bilderKnopf[5].setOnAction(event->aktionAsse());
 			bilderfeld.getChildren().addAll(Bilder[0], Bilder[1], Bilder[2], Bilder[3], Bilder[4], Bilder[5]);
 			HBox musterfeld = hinzufuegenKnoepfeUnten(); 
 				Button[] musterKnopf = hinzufuegenMusterknoepfe();
-				musterKnopf[0].setOnAction(event->ergebnisfeld.eintragenStrasse(ergebnis, servierung));
+				musterKnopf[0].setOnAction(event->aktionStrasse());
 				musterKnopf[1].setOnAction(event->aktionFullhouse());
-				musterKnopf[2].setOnAction(event->ergebnisfeld.eintragenPoker(ergebnis, servierung));
-				musterKnopf[3].setOnAction(event->ergebnisfeld.eintragenGrande(ergebnis, servierung));
+				musterKnopf[2].setOnAction(event->aktionPoker());
+				musterKnopf[3].setOnAction(event->aktionGrande());
 				// TODO musterKnopf[4].setOnAction(event-><Aktionshmethode Löschen>);
 				// TODO musterKnopf[5].setOnAction(event-><Aktionshmethode Streichen>);
 			musterfeld.getChildren().addAll(Muster[0], Muster[1], Muster[2], Muster[3], Muster[4], Muster[5]);
@@ -973,6 +977,12 @@ public class EscaleroBedienpaneel extends Application {
 		for(int b = 0; b < 3; b++) {
 			Reihe[b].setDisable(false);
 		}
+		// TODO Koordinaten nur für Test, in Endversion von hier entfernen. 
+		// zeige, X- & Y-Koordinaten fürs Eintragen. 
+		System.out.println("\nGlobale Variable, spielstand_X[0] = " + spielstand_X[0]); 
+		System.out.println("Globale Variable, spielstand_X[1] = " + spielstand_X[1]); 
+		System.out.println("Globale Variable, spielstand_X[2] = " + spielstand_X[2]); 
+		System.out.println("Globale Variable, spielstand_Y = " + spielstand_Y); 
 	}	
 	
 	public void eintragenReihe1(int wert) {
@@ -1038,7 +1048,49 @@ public class EscaleroBedienpaneel extends Application {
 		return Bilder; 
 	}
 
-
+	// Aktionskode Knopf [Neuner]
+	public void aktionNeuner() {
+		ergebnisfeld.eintragenNeuner(ergebnis);
+		spielstand_Y = 0;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();	
+	}
+	// Aktionskode Knopf [Zehner]	
+	public void aktionZehner() {
+		ergebnisfeld.eintragenZehner(ergebnis);
+		spielstand_Y = 1;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();	
+	}
+	// Aktionskode Knopf [Buben]	
+	public void aktionBuben() {
+		ergebnisfeld.eintragenBuben(ergebnis);
+		spielstand_Y = 2;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();	
+	}
+	// Aktionskode Knopf [Damen]	
+	public void aktionDamen() {
+		ergebnisfeld.eintragenDamen(ergebnis);
+		spielstand_Y = 3;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();	
+	}
+	// Aktionskode Knopf [Könige]	
+	public void aktionKoenige() {
+		ergebnisfeld.eintragenKoenige(ergebnis);
+		spielstand_Y = 4;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();	
+	}
+	// Aktionskode Knopf [Asse]	
+	public void aktionAsse() {
+		ergebnisfeld.eintragenAsse(ergebnis);
+		spielstand_Y = 5;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();	
+	}
+	
 	
 	// D i e  M u s t e r k n ö p f e: 	
 	// Untere Reihe, Musterknöpfe
@@ -1063,13 +1115,34 @@ public class EscaleroBedienpaneel extends Application {
 		return Muster; 
 	}
 
-	// Aktionskode Knopf [FullHouse]
-	public void aktionFullhouse() {
-		ergebnisfeld.eintragenFullhouse(ergebnis, servierung);
+	// Aktionskode Knopf [Straße]
+	public void aktionStrasse() {
+		ergebnisfeld.eintragenStrasse(ergebnis, servierung);
+		spielstand_Y = 6;
 		deaktiviereAlleKnoepfeBisAufLoesche();
 		aktiviereReihenknoepfe();
 	}
-	
+	// Aktionskode Knopf [FullHouse]
+	public void aktionFullhouse() {
+		ergebnisfeld.eintragenFullhouse(ergebnis, servierung);
+		spielstand_Y = 7;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();
+	}
+	// Aktionskode Knopf [Poker]
+	public void aktionPoker() {
+		ergebnisfeld.eintragenPoker(ergebnis, servierung);
+		spielstand_Y = 8;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();
+	}
+	// Aktionskode Knopf [Grande]
+	public void aktionGrande() {
+		ergebnisfeld.eintragenGrande(ergebnis, servierung);
+		spielstand_Y = 9;
+		deaktiviereAlleKnoepfeBisAufLoesche();
+		aktiviereReihenknoepfe();
+	}
 	
 	// Ergebnisknöpfe allgemein. 
 	public void deaktiviereBilderknoepfe() {

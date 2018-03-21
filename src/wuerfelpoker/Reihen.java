@@ -64,7 +64,7 @@ public class Reihen {
 			bild = "Straﬂe";
 			break;
 		case 7:
-			bild = "FullsHouse";
+			bild = "FullHouse";
 			break;
 		case 8:
 			bild = "Poker";
