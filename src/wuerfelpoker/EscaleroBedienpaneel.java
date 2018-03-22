@@ -12,7 +12,11 @@ import javafx.application.Application;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -76,7 +80,7 @@ public class EscaleroBedienpaneel extends Application {
 
 	
 	// KONSTANTEN
-	static final boolean WAHLFREIER_EINTRAGEMODUS = false;
+	static final boolean WAHLFREIER_EINTRAGEMODUS = true; // Der Speilmodus "in aufsteigender Reihenfolge eintragen" geht sich bis 23.3.18 nicht mehr aus. 
 	static final boolean EXTRA_STREICHUNG = true; 
 	static final String SPITZNAME_SPIELER_1 = "Rinaldo"; 
 	static final String SPITZNAME_SPIELER_2 = "Spieler2"; 
@@ -118,7 +122,8 @@ public class EscaleroBedienpaneel extends Application {
 	// Die Koordinaten zum Eintragen
 	Integer spielstand_X = new Integer(0); 
 	Integer spielstand_Y = new Integer(0);
-	
+	// Brauch ich für Reihensummen
+	Summenbalken reihensumme = new Summenbalken();
 	// Sonstiges 
 	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
 	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
@@ -176,7 +181,7 @@ public class EscaleroBedienpaneel extends Application {
 
 		
 		// teste, HashMap, Reihen aufsummieren. 
-		berechneReihensummen(eintragetabelle1);
+		berechneReihensummen1();
 		
 		// zeige, X- & Y-Koordinaten fürs Eintragen. 
 		System.out.println("\nGlobale Variable, spielstand_X = " + spielstand_X); 
@@ -513,19 +518,27 @@ public class EscaleroBedienpaneel extends Application {
 			// TODO else Alarm Message-Box falls nicht schon oberhalb geklärt. 
 		}
 		
-		// Reihensummen berechnen und in Zeile 12 eintragen. 
-		public void berechneReihensummen(HashMap<Integer, Integer[]> sstabel) {
+	// R e i h e n s u m m e n berechnen und in Zeile 12 eintragen. 
+	// Alle Reihensummen berechnen. 
+	public void berechneReihensumme() {
+		if(aktueller_spieler == 4) {berechneReihensummen1();}
+		if(aktueller_spieler == 3) {berechneReihensummen2();}
+		if(aktueller_spieler == 2) {berechneReihensummen3();}
+		if(aktueller_spieler == 1) {berechneReihensummen4();}	
+	}
+	
+	// Reihensummen Spieler1. 
+		public void berechneReihensummen1() {
 			Integer[] summe = new Integer[3];
 			Integer[] zeile = new Integer[3];
 			Integer[] filter = new Integer[3];		
-			HashMap<Integer, Integer[]> hm = sstabel; 
 			// Summen auf 0 setzen. 
 			for(int s = 0; s < 3; s++) {
 				summe[s] = 0;
 			}
 			// Zeilen 1 -11 (index 0 - 10) aufaddieren
 			for(int i = 0; i < 11; i++) {
-				zeile = hm.get(i);
+				zeile = eintragetabelle1.get(i);
 				// Streichung rausfiltern; Wert über 100! Wahrscheinlich nehm ich 255. 
 					for(int j = 0; j < 3; j++) {
 						if( zeile[j] > 100 ) {
@@ -540,9 +553,92 @@ public class EscaleroBedienpaneel extends Application {
 				summe[2] = summe[2] + filter[2]; 
 			}
 			// Summe in Zeile 12 (index/key 11) eintragen. 
-			hm.put(11, summe);
+			eintragetabelle1.put(11, summe);
 		}
-		
+	// Reihensummen Spieler2. 
+		public void berechneReihensummen2() {
+			Integer[] summe = new Integer[3];
+			Integer[] zeile = new Integer[3];
+			Integer[] filter = new Integer[3];		
+			// Summen auf 0 setzen. 
+			for(int s = 0; s < 3; s++) {
+				summe[s] = 0;
+			}
+			// Zeilen 1 -11 (index 0 - 10) aufaddieren
+			for(int i = 0; i < 11; i++) {
+				zeile = eintragetabelle2.get(i);
+				// Streichung rausfiltern; Wert über 100! Wahrscheinlich nehm ich 255. 
+					for(int j = 0; j < 3; j++) {
+						if( zeile[j] > 100 ) {
+							filter[j] = 0;
+						}
+						else {
+							filter[j] = zeile[j];
+						}
+					}
+				summe[0] = summe[0] + filter[0]; 
+				summe[1] = summe[1] + filter[1]; 
+				summe[2] = summe[2] + filter[2]; 
+			}
+			// Summe in Zeile 12 (index/key 11) eintragen. 
+			eintragetabelle2.put(11, summe);
+		}
+	// Reihensummen Spieler3. 
+		public void berechneReihensummen3() {
+			Integer[] summe = new Integer[3];
+			Integer[] zeile = new Integer[3];
+			Integer[] filter = new Integer[3];		
+			// Summen auf 0 setzen. 
+			for(int s = 0; s < 3; s++) {
+				summe[s] = 0;
+			}
+			// Zeilen 1 -11 (index 0 - 10) aufaddieren
+			for(int i = 0; i < 11; i++) {
+				zeile = eintragetabelle3.get(i);
+				// Streichung rausfiltern; Wert über 100! Wahrscheinlich nehm ich 255. 
+					for(int j = 0; j < 3; j++) {
+						if( zeile[j] > 100 ) {
+							filter[j] = 0;
+						}
+						else {
+							filter[j] = zeile[j];
+						}
+					}
+				summe[0] = summe[0] + filter[0]; 
+				summe[1] = summe[1] + filter[1]; 
+				summe[2] = summe[2] + filter[2]; 
+			}
+			// Summe in Zeile 12 (index/key 11) eintragen. 
+			eintragetabelle3.put(11, summe);
+		}
+	// Reihensummen Spieler4. 
+		public void berechneReihensummen4() {
+			Integer[] summe = new Integer[3];
+			Integer[] zeile = new Integer[3];
+			Integer[] filter = new Integer[3];		
+			// Summen auf 0 setzen. 
+			for(int s = 0; s < 3; s++) {
+				summe[s] = 0;
+			}
+			// Zeilen 1 -11 (index 0 - 10) aufaddieren
+			for(int i = 0; i < 11; i++) {
+				zeile = eintragetabelle4.get(i);
+				// Streichung rausfiltern; Wert über 100! Wahrscheinlich nehm ich 255. 
+					for(int j = 0; j < 3; j++) {
+						if( zeile[j] > 100 ) {
+							filter[j] = 0;
+						}
+						else {
+							filter[j] = zeile[j];
+						}
+					}
+				summe[0] = summe[0] + filter[0]; 
+				summe[1] = summe[1] + filter[1]; 
+				summe[2] = summe[2] + filter[2]; 
+			}
+			// Summe in Zeile 12 (index/key 11) eintragen. 
+			eintragetabelle4.put(11, summe);
+		}
 		
 	// Ab hier der S p i e l s t a n d k o p f 	
 	public HBox hinzufuegenSpielstandKopf(BorderPane btableau) {
