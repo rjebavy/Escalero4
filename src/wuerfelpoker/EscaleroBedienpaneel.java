@@ -48,7 +48,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.NumberStringConverter;
-import wuerfelpoker.Reihen;
+
 
 
 
@@ -102,11 +102,10 @@ public class EscaleroBedienpaneel extends Application {
 	Button[] Muster = new Button[6]; // Knopffelder für's EIntragen. 
 	GridPane[] Spielstandtafel = new GridPane[4]; // Für jeden der 4 Spieler eine Spielstandtafel. 
 	// Da HashMap keine Arrays zuläßt keine Suberzeugermethode sondern hier im Main Haupt! 
-	Reihen eintragen = new Reihen();
-	HashMap<Integer, Integer[]> eintragetabelle1 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
-	HashMap<Integer, Integer[]> eintragetabelle2 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
-	HashMap<Integer, Integer[]> eintragetabelle3 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
-	HashMap<Integer, Integer[]> eintragetabelle4 = eintragen.erzeugeSpielstandTabellen(); // Leere HashMap 11 x 3, gefüllt mit null. 
+	HashMap<Integer, Integer[]> eintragetabelle1 = erzeugeSpielstandTabelle1(); // Leere HashMap 11 x 3, gefüllt mit 0. 
+	HashMap<Integer, Integer[]> eintragetabelle2 = erzeugeSpielstandTabelle2(); // Leere HashMap 11 x 3, gefüllt mit 0. 
+	HashMap<Integer, Integer[]> eintragetabelle3 = erzeugeSpielstandTabelle3(); // Leere HashMap 11 x 3, gefüllt mit 0. 
+	HashMap<Integer, Integer[]> eintragetabelle4 = erzeugeSpielstandTabelle4(); // Leere HashMap 11 x 3, gefüllt mit 0.
 	// Da ObservableList keine Arrays zuläßt keine Suberzeugermethode sondern hier im Main Haupt! 
 	Callback<Spielstandzeile, Observable[]> cb1 = (Spielstandzeile s)-> new Observable[] {s.reihe1Property(), s.reihe2Property(), s.reihe3Property()};
 	ObservableList<Spielstandzeile> olist1 = FXCollections.observableArrayList(cb1); 
@@ -177,23 +176,17 @@ public class EscaleroBedienpaneel extends Application {
 
 		
 		// teste, HashMap, Reihen aufsummieren. 
-		eintragen.berechneReihensummen(eintragetabelle1);
+		berechneReihensummen(eintragetabelle1);
 		
-		// Auslesen aus eintragetabelle1: 
-		// alle: 
-		System.out.println("\nAuslesen alle; aus eintragetabelle1 - "); 
-		String bild = "";
-		for(int z = 0; z < 12; z++) {
-			bild = eintragen.waehleSchluesselbild(z);
-			Integer[] rinhalt = eintragetabelle1.get(z);
-			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");	
-		}
-
 		// zeige, X- & Y-Koordinaten fürs Eintragen. 
 		System.out.println("\nGlobale Variable, spielstand_X = " + spielstand_X); 
 		System.out.println("Globale Variable, spielstand_Y = " + spielstand_Y); 
 		
-		
+		// Test: welche ObjektID haben die 4 Tabellen bzw HashMaps ? 
+		System.out.println("eintragtabelle1; Objekt ist: " + eintragetabelle1);
+		System.out.println("eintragtabelle2; Objekt ist: " + eintragetabelle2);
+		System.out.println("eintragtabelle3; Objekt ist: " + eintragetabelle3);
+		System.out.println("eintragtabelle4; Objekt ist: " + eintragetabelle4);
 	
 	
 
@@ -346,7 +339,7 @@ public class EscaleroBedienpaneel extends Application {
 		// Definierter Ausgangszustand, ???. 
 		// initialisiere????(); 
 		VBox bt = spielstandtableau; 
-		// Fokus auf Spielstandtabelle des aktuellen Spielers: 
+		// Fokus auf Spielstandtafel des aktuellen Spielers: 
 		TabPane tabp = (TabPane) bt.getChildrenUnmodifiable().get(1);
 		 SingleSelectionModel<Tab> selectionModel = tabp.getSelectionModel();
 		 // selectionModel.select(tab); //select by object
@@ -355,6 +348,9 @@ public class EscaleroBedienpaneel extends Application {
 		if(aktueller_spieler == 3) {selectionModel.select(2);}
 		if(aktueller_spieler == 2) {selectionModel.select(3);}
 		if(aktueller_spieler == 1) {selectionModel.select(4);}
+		// Da Spieler gewechselt Koordinaten auf 0!!  
+		spielstand_X = 0; 
+		spielstand_Y = 0;		
 		// Spitznamen aktualisieren: 
 		HBox sstableaukopf = (HBox) bt.getChildrenUnmodifiable().get(0);
 		Label spitzn = (Label) sstableaukopf.getChildrenUnmodifiable().get(1);
@@ -368,7 +364,187 @@ public class EscaleroBedienpaneel extends Application {
 
 	
 	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom SPIELSTANDTABLEAU
+	
+	// Erzeuge 4 Spielstandtabellen zu 12 Zeilen und 3 Reihen; 12 Zeile für Summe!!  
+		// "Leere" Spielstandtabelle1 alle Zellen auf 0.  
+		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle1() {
+			 Integer[] reiheninhalt = new Integer[3];
+			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
+			 reiheninhalt[0] = 0;
+			 reiheninhalt[1] = 0;
+			 reiheninhalt[2] = 0;
+			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
+				for(int r = 0; r < 12; r++) {
+					sstabel.put(r, reiheninhalt);
+				}
+		return sstabel;
+		}
+		// "Leere" Spielstandtabelle2 alle Zellen auf 0.  
+		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle2() {
+			 Integer[] reiheninhalt = new Integer[3];
+			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
+			 reiheninhalt[0] = 0;
+			 reiheninhalt[1] = 0;
+			 reiheninhalt[2] = 0;
+			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
+				for(int r = 0; r < 12; r++) {
+					sstabel.put(r, reiheninhalt);
+				}
+		return sstabel;
+		}
+		// "Leere" Spielstandtabelle3 alle Zellen auf 0.  
+		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle3() {
+			 Integer[] reiheninhalt = new Integer[3];
+			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
+			 reiheninhalt[0] = 0;
+			 reiheninhalt[1] = 0;
+			 reiheninhalt[2] = 0;
+			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
+				for(int r = 0; r < 12; r++) {
+					sstabel.put(r, reiheninhalt);
+				}
+		return sstabel;
+		}
+		// "Leere" Spielstandtabelle4 alle Zellen auf 0.  
+		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle4() {
+			 Integer[] reiheninhalt = new Integer[3];
+			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
+			 reiheninhalt[0] = 0;
+			 reiheninhalt[1] = 0;
+			 reiheninhalt[2] = 0;
+			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
+				for(int r = 0; r < 12; r++) {
+					sstabel.put(r, reiheninhalt);
+				}
+		return sstabel;
+		}
 
+		//Eine Tabelle mit Schlüssel & Reiheinhalte anzeigen. 
+		public HashMap<Integer, Integer[]> zeigeSpielstandTabellenReihen(HashMap<Integer, Integer[]> sstabel) {
+			HashMap<Integer, Integer[]> sstb = sstabel; 
+			String bild = "";
+			for(int z = 0; z < 12; z++) {
+				bild = waehleSchluesselbild(z);
+				Integer[] reiheninhalt = sstb.get(3);
+				System.out.println("Schlüssel - " + bild + " mit Inhalt: " + reiheninhalt[0] + ", " + reiheninhalt[1] + ", " + reiheninhalt[2] + ".");	
+			}
+			return sstb;
+		}
+
+		// Wähle das Schlüsselbild für Auflisten des Inhalts. 
+		public String waehleSchluesselbild(int schluesselbild) {
+			String bild = null;
+			switch (schluesselbild) {
+			case 0:
+				bild = "Neun";
+				break;
+			case 1:
+				bild = "Zehn";
+				break;
+			case 2:
+				bild = "Bube";
+				break;
+			case 3:
+				bild = "Dame";
+				break;
+			case 4:
+				bild = "König";
+				break;
+			case 5:
+				bild = "Ass";
+				break;
+			case 6:
+				bild = "Straße";
+				break;
+			case 7:
+				bild = "FullHouse";
+				break;
+			case 8:
+				bild = "Poker";
+				break;
+			case 9:
+				bild = "Grande";
+				break;
+			case 10:
+				bild = "Streichung";
+				break;
+			case 11:
+				bild = "Summe";
+				break;
+			default: 
+				bild = "Fehler!";
+			}
+			return bild; 
+		}
+		
+		// Eintragen eines Ergebniswertes über die Reihenknöpfe. 
+		public void eintragenReihe(HashMap<Integer, Integer[]> eintragtabelle, Integer spielstand_Y, Integer spielstand_X, Integer wert) {		
+			// Der Aktionskode des Reihenknopfes übergibt die Eintragetabelle des jeweiligen Spielers, sowie die Y-Koordinate, entspricht der Tabellenzeile.  
+			// Aber auch die X-Koordinate, welche dem Knopf entspricht: Index 0 bei [Reihe1], Index 1 bei [Reihe2] & Index 2 bei [Reihe3]
+			boolean leer = false; 
+			boolean gestrichen = true; 
+			// Test: welche Tabelle wird übergeben? 
+			System.out.println("eintragtabelle; Ojekt ist: " + eintragtabelle);
+			Integer[] eintragezeile = new Integer[] {0, 0, 0};
+			eintragezeile = eintragtabelle.get(spielstand_Y); // Hole die 3 Zellen in Zeile Y. 
+			// Hier wird geprüft ob die mit den übergebenen Koordinaten (Y Zeile, X Reihe bzw. Spalte) angegebene Tabellenzelle frei bzw. nicht bereits gestrichen ist. 
+			if(eintragezeile[spielstand_X] == 0) {
+					leer = true;
+					gestrichen = false;
+					}; 
+			if(eintragezeile[spielstand_X] > 0 && eintragezeile[spielstand_X] <= 100 ) {
+						leer = false;
+						gestrichen = false;
+						// TODO Alarm Message-Box Eintragezelle nicht frei!!
+						System.out.println("eintragenReihe; Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " ist nicht leer! " + eintragezeile[spielstand_X]); 
+					}; 
+			if(eintragezeile[spielstand_X] == 255) {
+					leer = false;
+					gestrichen = true;
+					// TODO Alarm Message-Box Eintragezelle bereits gestrichen!! 
+					System.out.println("eintragenReihe; Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " wurde bereits gestrichen! " + eintragezeile[spielstand_X]); 
+					}; 
+			// Wenn bis dahin die Zelle spielstand_Y:spielstand_X leer und nicht gestrichen ist wird eingetragen sonst Fehlermeldung. 
+			if(leer & !gestrichen) {
+				eintragezeile[spielstand_X] = wert; 
+				eintragtabelle.put(spielstand_Y, eintragezeile);
+				System.out.println("eintragenReihe; es wurde der Wert " + wert + " in die Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " eingetragen! "); 
+			}
+			// TODO else Alarm Message-Box falls nicht schon oberhalb geklärt. 
+		}
+		
+		// Reihensummen berechnen und in Zeile 12 eintragen. 
+		public void berechneReihensummen(HashMap<Integer, Integer[]> sstabel) {
+			Integer[] summe = new Integer[3];
+			Integer[] zeile = new Integer[3];
+			Integer[] filter = new Integer[3];		
+			HashMap<Integer, Integer[]> hm = sstabel; 
+			// Summen auf 0 setzen. 
+			for(int s = 0; s < 3; s++) {
+				summe[s] = 0;
+			}
+			// Zeilen 1 -11 (index 0 - 10) aufaddieren
+			for(int i = 0; i < 11; i++) {
+				zeile = hm.get(i);
+				// Streichung rausfiltern; Wert über 100! Wahrscheinlich nehm ich 255. 
+					for(int j = 0; j < 3; j++) {
+						if( zeile[j] > 100 ) {
+							filter[j] = 0;
+						}
+						else {
+							filter[j] = zeile[j];
+						}
+					}
+				summe[0] = summe[0] + filter[0]; 
+				summe[1] = summe[1] + filter[1]; 
+				summe[2] = summe[2] + filter[2]; 
+			}
+			// Summe in Zeile 12 (index/key 11) eintragen. 
+			hm.put(11, summe);
+		}
+		
+		
+	// Ab hier der S p i e l s t a n d k o p f 	
 	public HBox hinzufuegenSpielstandKopf(BorderPane btableau) {
 		BorderPane btab = btableau;
 		HBox sskopf = new HBox(); 
@@ -480,6 +656,7 @@ public class EscaleroBedienpaneel extends Application {
 		if(aktueller_spieler == 1) {spvspl.setText("4" + "/" + spieleranzahl);}
 	}
 	
+	// Die S p i e l s t a n d k a r t e i 
 	public TabPane hinzufuegenSpielstandAnsichten() {
 		// TODO 
 		Tab willkommen = new Tab(); 
@@ -508,8 +685,8 @@ public class EscaleroBedienpaneel extends Application {
 		return ssansichten;		
 	} 
 	
-	
 	// Leider 4 Spielstandtafeln, TableView kann keine Arrays!! 
+	// Spielstandtafel 1
 	public BorderPane hinzufuegenSpielstandTafeln1(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
 		BorderPane sstafeln = new BorderPane();
 			sstafeln = new BorderPane();
@@ -519,7 +696,7 @@ public class EscaleroBedienpaneel extends Application {
 			sstafeln.setBottom(summenbalken);
 		return sstafeln; 
 	}
-	
+	// Spielstandtafel 2	
 	public BorderPane hinzufuegenSpielstandTafeln2(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
 		BorderPane sstafeln = new BorderPane();
 			sstafeln = new BorderPane();
@@ -529,7 +706,7 @@ public class EscaleroBedienpaneel extends Application {
 			sstafeln.setBottom(summenbalken);
 		return sstafeln; 
 	}
-	
+	// Spielstandtafel 3	
 	public BorderPane hinzufuegenSpielstandTafeln3(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
 		BorderPane sstafeln = new BorderPane();
 			sstafeln = new BorderPane();
@@ -539,7 +716,7 @@ public class EscaleroBedienpaneel extends Application {
 			sstafeln.setBottom(summenbalken);
 		return sstafeln; 
 	}
-	
+	// Spielstandtafel 4	
 	public BorderPane hinzufuegenSpielstandTafeln4(VBox bilderbalken, TableView<Spielstandzeile> spielstand, HBox summenbalken) {
 		BorderPane sstafeln = new BorderPane();
 			sstafeln = new BorderPane();
@@ -549,7 +726,6 @@ public class EscaleroBedienpaneel extends Application {
 			sstafeln.setBottom(summenbalken);
 		return sstafeln; 
 	}
-
 	
 	// Leider 4 mal Bilderbalken, TableView kann keine Arrays!! 
 	public VBox hinzufuegenBilderBalken1() {
@@ -764,7 +940,7 @@ public class EscaleroBedienpaneel extends Application {
 		olist2.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
 		for(int z = 0; z < 11 ; z++) {
 			Spielstandzeile zeile = new Spielstandzeile(); 
-			Integer[] lade = eintragetabelle2.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			Integer[] lade = eintragetabelle2.get(z); // lade das Integer-Array aus der HashMap eintragetabelle2. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
 			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
@@ -786,7 +962,7 @@ public class EscaleroBedienpaneel extends Application {
  
 		return sstand;
 	}
-	// Spielstandtabelle von Spieler 1. 
+	// Spielstandtabelle von Spieler 3. 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand3(ObservableList<Spielstandzeile> olist3) {
 		
 		TableView<Spielstandzeile> sstand = new TableView<>();
@@ -806,7 +982,7 @@ public class EscaleroBedienpaneel extends Application {
 		olist3.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
 		for(int z = 0; z < 11 ; z++) {
 			Spielstandzeile zeile = new Spielstandzeile(); 
-			Integer[] lade = eintragetabelle3.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			Integer[] lade = eintragetabelle3.get(z); // lade das Integer-Array aus der HashMap eintragetabelle3. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
 			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
@@ -828,7 +1004,7 @@ public class EscaleroBedienpaneel extends Application {
  
 		return sstand;
 	}
-	// Spielstandtabelle von Spieler 1. 
+	// Spielstandtabelle von Spieler 4. 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand4(ObservableList<Spielstandzeile> olist4) {
 		
 		TableView<Spielstandzeile> sstand = new TableView<>();
@@ -848,7 +1024,7 @@ public class EscaleroBedienpaneel extends Application {
 		olist4.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
 		for(int z = 0; z < 11 ; z++) {
 			Spielstandzeile zeile = new Spielstandzeile(); 
-			Integer[] lade = eintragetabelle4.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			Integer[] lade = eintragetabelle4.get(z); // lade das Integer-Array aus der HashMap eintragetabelle4. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
 			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
@@ -869,6 +1045,89 @@ public class EscaleroBedienpaneel extends Application {
 		// 2) Anpassen der Spaltenbreiten auf Summenbalken. 
  
 		return sstand;
+	}
+	
+	public void aktualisiereSpielstand() {
+		if(aktueller_spieler == 4) {aktualisiereSpielstand1();}
+		if(aktueller_spieler == 3) {aktualisiereSpielstand2();}
+		if(aktueller_spieler == 2) {aktualisiereSpielstand3();}
+		if(aktueller_spieler == 1) {aktualisiereSpielstand4();}
+	}
+	
+	public void aktualisiereSpielstand1() {
+		olist1.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
+			Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+		}	
+	}
+		
+	public void aktualisiereSpielstand2() {
+		olist2.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
+			Integer[] lade = eintragetabelle2.get(z); // lade das Integer-Array aus der HashMap eintragetabelle2. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist2.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+		}	
+	}	
+	
+	public void aktualisiereSpielstand3() {
+		olist3.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
+			Integer[] lade = eintragetabelle3.get(z); // lade das Integer-Array aus der HashMap eintragetabelle3. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist3.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+		}	
+	}
+	
+	public void aktualisiereSpielstand4() {
+		olist4.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
+			Integer[] lade = eintragetabelle4.get(z); // lade das Integer-Array aus der HashMap eintragetabelle4. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist4.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+		}
 	}
 	
 	// Leider 4 mal Summenbalken, TableView kann keine Arrays!! 
@@ -1133,69 +1392,75 @@ public class EscaleroBedienpaneel extends Application {
 
 	// Aktionskode Knopf [Reihe1]
 	public void aktionReihe1() {
-		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintrageungne nicht an gelöst ist. 
+		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintragungen nicht an gelöst ist. 
+		Integer wert = 0; 
 		spielstand_X = 0;
 		if(aktueller_spieler == 4) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 3) {			
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 2) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 1) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert);
 			}
 		deaktiviereReihenknoepfe();
+		aktualisiereSpielstand();
 	}
 	// Aktionskode Knopf [Reihe2]
 	public void aktionReihe2() {
-		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintrageungne nicht an gelöst ist. 
+		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintragungen nicht an gelöst ist. 
+		Integer wert = 0; 
 		spielstand_X = 1;
 		if(aktueller_spieler == 4) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 3) {			
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 2) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 1) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert);
 			}
 		deaktiviereReihenknoepfe();
+		aktualisiereSpielstand();
 	}
 	// Aktionskode Knopf [Reihe3]
 	public void aktionReihe3() {
-		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintrageungne nicht an gelöst ist. 
+		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintragungen nicht an gelöst ist. 
+		Integer wert = 0; 
 		spielstand_X = 2;
 		if(aktueller_spieler == 4) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 3) {			
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 2) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert);
 			}
 		if(aktueller_spieler == 1) {
-			Integer wert = ergebnisfeld.getEintragewert();
-			eintragen.eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert, eintragen);
+			wert = ergebnisfeld.getEintragewert();
+			eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert);
 			}
 		deaktiviereReihenknoepfe();
+		aktualisiereSpielstand();
 	}	
 	
 	// Reihenknöpfe deaktivieren; wird von Aktionskode Reihenknöpfe verwendet; es wird eingetragen dann Knopf deaktiviert. 
