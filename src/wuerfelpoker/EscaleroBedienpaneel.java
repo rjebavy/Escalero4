@@ -168,10 +168,16 @@ public class EscaleroBedienpaneel extends Application {
 		wechsle.setFont(Font.font("Tahoma", 10));
 		wechsle.setMinSize(80, 16); 
 		wechsle.setOnAction(event->aktionWechsleSpieler(spielstandtableau));
+		// TODO Temporär als Notausgang für Hauptprogrammschleife: 
+		Button abbrechen = new Button("Abbrechen"); 
+		abbrechen.setFont(Font.font("Tahoma", 10));
+		abbrechen.setMinSize(50, 16); 
+		abbrechen.setOnAction(event->aktionAbbrechen());
+		// Sammelbox für alle obigen Knöpfe. 
 		HBox knoepfe = new HBox(); 
 		knoepfe.setAlignment(Pos.CENTER);
 		knoepfe.setSpacing(10);
-		knoepfe.getChildren().addAll(nochmal, wechsle);
+		knoepfe.getChildren().addAll(nochmal, wechsle, abbrechen);
 		bedientableau.setCenter(knoepfe);
 		
 		
@@ -192,9 +198,14 @@ public class EscaleroBedienpaneel extends Application {
 		System.out.println("eintragtabelle2; Objekt ist: " + eintragetabelle2);
 		System.out.println("eintragtabelle3; Objekt ist: " + eintragetabelle3);
 		System.out.println("eintragtabelle4; Objekt ist: " + eintragetabelle4);
-	
-	
 
+		// Test: alle Zähler ? 
+		System.out.println("\nalle Zähler: "); 
+		System.out.println("aktueller_spieler: " + aktueller_spieler); // globaler Spielerzähler. 
+		System.out.println("aktuelle_runde: " + aktuelle_runde); // globaler Rundenzähler. 
+		System.out.println("aktueller_wurf: " + aktueller_wurf); // globaler Wurfzähler
+
+	
 
 	// Top-top-level Container Escalero Bedienpaneel
 	VBox escalerobedienpaneel = new VBox();
@@ -250,6 +261,23 @@ public class EscaleroBedienpaneel extends Application {
 				}
 			neustartSpielstandtableau(sstableau);	
 		}
+
+		// temporärer Aktionskode für Knopf [Wechsle Spieler]
+		// TODO Wenn Endversion wieder entfernen. 
+		public void aktionAbbrechen() {
+			initialisiereAlleZaehler(); 
+		}
+	
+		public void initialisiereAlleZaehler() {
+			aktueller_spieler = ANZAHL_SPIELER; // globaler Spielerzähler. 
+			aktuelle_runde = ANZAHL_RUNDEN; // globaler Rundenzähler
+			aktueller_wurf = ANZAHL_WUERFE; // globaler Wurfzähler 
+			System.out.println("\nalle Zähler initialisiert? "); 
+			System.out.println("aktueller_spieler: " + aktueller_spieler); // globaler Spielerzähler. 
+			System.out.println("aktuelle_runde: " + aktuelle_runde); // globaler Rundenzähler. 
+			System.out.println("aktueller_wurf: " + aktueller_wurf); // globaler Wurfzähler
+		}
+		
 		
 	public Label erzeugeMeldeleiste() {
 		Label meldeleiste = new Label("Keine Meldung. "); 
@@ -1855,7 +1883,7 @@ public class EscaleroBedienpaneel extends Application {
 	// Aktualisierungsmethode. 	
 	public void neustartWuerfeltableau(GridPane wuerfeltableau) {
 		GridPane wt = wuerfeltableau; 
-		wurf.setWurfzaehler(3);
+		wurf.setWurfzaehler(aktueller_wurf);
 		ergebnis.initialisiereAuswerten(); // Alle Würfelbildzähler auf 0. 
 		wurf.initialisiereGehalten(); // Gehaltenzähler auf 0. 
 		// FX Nodes initialisieren	
