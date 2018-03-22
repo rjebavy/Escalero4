@@ -116,7 +116,7 @@ public class EscaleroBedienpaneel extends Application {
 	Callback<Spielstandzeile, Observable[]> cb4 = (Spielstandzeile s)-> new Observable[] {s.reihe1Property(), s.reihe2Property(), s.reihe3Property()};
 	ObservableList<Spielstandzeile> olist4 = FXCollections.observableArrayList(cb4); 
 	// Die Koordinaten zum Eintragen
-	Integer[] spielstand_X = new Integer[] {0, 0, 0}; 
+	Integer spielstand_X = new Integer(0); 
 	Integer spielstand_Y = new Integer(0);
 	
 	// Sonstiges 
@@ -179,9 +179,7 @@ public class EscaleroBedienpaneel extends Application {
 		}
 
 		// zeige, X- & Y-Koordinaten fürs Eintragen. 
-		System.out.println("\nGlobale Variable, spielstand_X[0] = " + spielstand_X[0]); 
-		System.out.println("Globale Variable, spielstand_X[1] = " + spielstand_X[1]); 
-		System.out.println("Globale Variable, spielstand_X[2] = " + spielstand_X[2]); 
+		System.out.println("\nGlobale Variable, spielstand_X = " + spielstand_X); 
 		System.out.println("Globale Variable, spielstand_Y = " + spielstand_Y); 
 		
 		
@@ -857,7 +855,7 @@ public class EscaleroBedienpaneel extends Application {
 			Label rundenZaehler = hinzufuegenRundenzaehler(rundenzaehler);
 			Label eintragenWas = hinzufuegenEintragenWas(); 
 			Button[] reihenKnopf = hinzufuegenReihenknoepfe();
-			// TODO reihenKnopf[0].setOnAction(event->eintragenReihe1(ergebnisfeld.getEintrageWert()));
+				reihenKnopf[0].setOnAction(event->aktionReihe1());
 			// TODO reihenKnopf[1].setOnAction(event->eintragenReihe2(ergebnisfeld.getEintrageWert()));
 			// TODO reihenKnopf[2].setOnAction(event->eintragenReihe3(ergebnisfeld.getEintrageWert()));
 			reihenfeld.getChildren().addAll(rundenZaehler, eintragenWas, reihenKnopf[0], reihenKnopf[1], reihenKnopf[2]);
@@ -961,22 +959,43 @@ public class EscaleroBedienpaneel extends Application {
 		return Reihe; 
 	}
 
+	// Aktionskode Knopf [Reihe1]
+	public void aktionReihe1() {
+		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintrageungne nicht an gelöst ist. 
+		spielstand_X = 0;
+		if(aktueller_spieler == 4) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 3) {			
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 2) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 1) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		deaktiviereReihenknoepfe();
+	}
+	
 	public void deaktiviereReihenknoepfe() {
 		for(int b = 0; b < 3; b++) {
 			Reihe[b].setDisable(true);
 		}
 	}
 	
-	// Wenn ein Eintrageknopf geklickt wurde alle Reihenknöpfe eaktivieren. Wird im Aktionskode für jeden Eintrageknopf verwendet. 
+	// Wenn ein Eintrageknopf geklickt wurde alle Reihenknöpfe aktivieren. Wird im Aktionskode für jeden Eintrageknopf verwendet. 
 	public void aktiviereReihenknoepfe() {
 		for(int b = 0; b < 3; b++) {
 			Reihe[b].setDisable(false);
 		}
 		// TODO Koordinaten nur für Test, in Endversion von hier entfernen. 
 		// zeige, X- & Y-Koordinaten fürs Eintragen. 
-		System.out.println("\nGlobale Variable, spielstand_X[0] = " + spielstand_X[0]); 
-		System.out.println("Globale Variable, spielstand_X[1] = " + spielstand_X[1]); 
-		System.out.println("Globale Variable, spielstand_X[2] = " + spielstand_X[2]); 
+		System.out.println("\nGlobale Variable, spielstand_X = " + spielstand_X); 
 		System.out.println("Globale Variable, spielstand_Y = " + spielstand_Y); 
 	}	
 	

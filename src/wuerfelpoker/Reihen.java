@@ -14,11 +14,12 @@ public class Reihen {
 	}
 
 	// Erzeuge eine Spielstandtabelle zu 12 Zeilen und 3 Reihen; 12 Zeile für Summe!!  
+	// "Leere" Spielstandtabelle alle Zellen auf 0.  
 	public HashMap<Integer, Integer[]> erzeugeSpielstandTabellen() {
 		 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
-		 reiheninhalt[0] = 1;
-		 reiheninhalt[1] = 2;
-		 reiheninhalt[2] = 255;
+		 reiheninhalt[0] = 0;
+		 reiheninhalt[1] = 0;
+		 reiheninhalt[2] = 0;
 		 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
 			for(int r = 0; r < 12; r++) {
 				sstabel.put(r, reiheninhalt);
@@ -83,9 +84,51 @@ public class Reihen {
 		}
 		return bild; 
 	}
-
 	
-	
+	// Eintragen eines Ergebniswertes über die Reihenknöpfe. 
+	public void eintragenReihe(HashMap<Integer, Integer[]> eintragtabelle, Integer spielstand_Y, Integer spielstand_X, Integer wert, Reihen eintragen) {
+		// Der Aktionskode des Reihenknopfes übergibt die Eintragetabelle des jeweiligen Spielers, sowie die Y-Koordinate, entspricht der Tabellenzeile.  
+		// Aber auch die X-Koordinate, welche dem Knopf entspricht: Index 0 bei [Reihe1], Index 1 bei [Reihe2] & Index 2 bei [Reihe3]
+		boolean leer = false; 
+		boolean gestrichen = true; 
+		Integer[] eintragezeile = eintragtabelle.get(spielstand_Y); // Hole die 3 Zellen in Zeile Y. 
+		// Hier wird geprüft ob die mit den übergebenen Koordinaten (Y Zeile, X Reihe bzw. Spalte) angegebene Tabellenzelle frei bzw. nicht bereits gestrichen ist. 
+		if(eintragezeile[spielstand_X] == 0) {
+				leer = true;
+				gestrichen = false;
+				}; 
+		if(eintragezeile[spielstand_X] > 0 && eintragezeile[spielstand_X] <= 100 ) {
+					leer = false;
+					gestrichen = false;
+					// TODO Alarm Message-Box Eintragezelle nicht frei!!
+					System.out.println("eintragenReihe; Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " ist nicht leer! " + eintragezeile[spielstand_X]); 
+				}; 
+		if(eintragezeile[spielstand_X] == 255) {
+				leer = false;
+				gestrichen = true;
+				// TODO Alarm Message-Box Eintragezelle bereits gestrichen!! 
+				System.out.println("eintragenReihe; Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " wurde bereits gestrichen! " + eintragezeile[spielstand_X]); 
+				}; 
+		// Wenn bis dahin die Zelle spielstand_Y:spielstand_X leer und nicht gestrichen ist wird eingetragen sonst Fehlermeldung. 
+		if(leer & !gestrichen) {
+			eintragezeile[spielstand_X] = wert; 
+			eintragtabelle.put(spielstand_Y, eintragezeile);
+			System.out.println("eintragenReihe; es wurde der Wert " + wert + " in die Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " eingestragen! "); 
+		}
+		// TODO else Alarm Message-Box falls nicht schon oberhalb geklärt. 
+		// TODO temporär zur Eintragekontrolle und weil die TableView, das Drecksding, nix anzeigt!! 
+				// Dazu auc temporär 1 weitere Übergabeparameter: Reihen eintragen
+		// Auslesen aus eintragetabelle1: 
+		// alle: 
+		System.out.println("\nAuslesen alle; aus eintragetabelle1 - "); 
+		String bild = "";
+		Integer[] rinhalt = new Integer[] {0, 0, 0};
+		for(int z = 0; z < 12; z++) {
+			bild = eintragen.waehleSchluesselbild(z);
+			rinhalt = eintragtabelle.get(z);
+			System.out.println("Schlüssel - " + bild + " mit Inhalt: " + rinhalt[0] + ", " + rinhalt[1] + ", " + rinhalt[2] + ".");	
+		}
+	}
 	
 	// Reihensummen berechnen und in Zeile 12 eintragen. 
 	public void berechneReihensummen(HashMap<Integer, Integer[]> sstabel) {
@@ -116,7 +159,6 @@ public class Reihen {
 		// Summe in Zeile 12 (index/key 11) eintragen. 
 		hm.put(11, summe);
 	}
-	
 	
 	
 	// Standard Getter & Setter	
