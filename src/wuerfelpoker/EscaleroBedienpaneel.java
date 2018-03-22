@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -153,12 +154,22 @@ public class EscaleroBedienpaneel extends Application {
 		
 		// Je Spieler eine 
 		
-		// Temporär um nicht immer schließen und starten zu müssen. 
+		// TODO Temporär um nicht immer schließen und starten zu müssen. 
 		Button nochmal = new Button("Nochmal!"); 
 		nochmal.setFont(Font.font("Tahoma", 10));
 		nochmal.setMinSize(50, 16); 
 		nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau));
-		bedientableau.setCenter(nochmal);
+		// TODO Temporär um Eintragen in 4 Tabellen zu testen: 
+		Button wechsle = new Button("Wechsle Spieler"); 
+		wechsle.setFont(Font.font("Tahoma", 10));
+		wechsle.setMinSize(80, 16); 
+		wechsle.setOnAction(event->aktionWechsleSpieler(spielstandtableau));
+		HBox knoepfe = new HBox(); 
+		knoepfe.setAlignment(Pos.CENTER);
+		knoepfe.setSpacing(10);
+		knoepfe.getChildren().addAll(nochmal, wechsle);
+		bedientableau.setCenter(knoepfe);
+		
 		
 		// TEST: Meldeleiste aktualisieren. 
 		// meldung.setMeldung("das ist eine neue Meldung"); 
@@ -228,6 +239,18 @@ public class EscaleroBedienpaneel extends Application {
 			neustartWuerfeltableau(wtableau);
 			neustartErgebnistableau(etableau);
 			ergebnisfeld.initialisiereErgebnisfeld();
+		}
+	
+		// temporärer Aktionskode für Knopf [Wechsle Spieler]
+		// TODO Wenn Endversion wieder entfernen. 
+		public void aktionWechsleSpieler(VBox sstableau) {
+			if(aktueller_spieler != 0) {
+				aktueller_spieler--;
+				}
+			if(aktueller_spieler == 0) {
+				aktueller_spieler = 4;
+				}
+			neustartSpielstandtableau(sstableau);	
 		}
 		
 	public Label erzeugeMeldeleiste() {
@@ -319,10 +342,27 @@ public class EscaleroBedienpaneel extends Application {
 	}
 		
 	// Aktualisierungsmethode. 	
-	// public void neustartErgebnistableau(GridPane ergebnistableau) {
-		// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
-		// initialisiereErgebnisknoepfe(); 
-	// }		
+	public void neustartSpielstandtableau(VBox spielstandtableau) {
+		// Definierter Ausgangszustand, ???. 
+		// initialisiere????(); 
+		VBox bt = spielstandtableau; 
+		// Fokus auf Spielstandtabelle des aktuellen Spielers: 
+		TabPane tabp = (TabPane) bt.getChildrenUnmodifiable().get(1);
+		 SingleSelectionModel<Tab> selectionModel = tabp.getSelectionModel();
+		 // selectionModel.select(tab); //select by object
+		 // selectionModel.select(1); //select by index starting with 0
+		if(aktueller_spieler == 4) {selectionModel.select(1);}
+		if(aktueller_spieler == 3) {selectionModel.select(2);}
+		if(aktueller_spieler == 2) {selectionModel.select(3);}
+		if(aktueller_spieler == 1) {selectionModel.select(4);}
+		// Spitznamen aktualisieren: 
+		HBox sstableaukopf = (HBox) bt.getChildrenUnmodifiable().get(0);
+		Label spitzn = (Label) sstableaukopf.getChildrenUnmodifiable().get(1);
+		aktualisiereSpitzname(spitzn);
+		// Spieler voon Spielern aktualisieren: 
+		Label spvspl = (Label) sstableaukopf.getChildrenUnmodifiable().get(4);
+		aktualisiereSpielerVonSpielern(spvspl);
+	}		
 		
 	// SPIELSTANDTABLEAU, Ende. 
 
@@ -375,6 +415,13 @@ public class EscaleroBedienpaneel extends Application {
 		return spitzn;
 	}
 	
+	public void aktualisiereSpitzname(Label spitzname) {
+		if(aktueller_spieler == 4) {spitzname.setText(SPITZNAME_SPIELER_1);}
+		if(aktueller_spieler == 3) {spitzname.setText(SPITZNAME_SPIELER_2);}
+		if(aktueller_spieler == 2) {spitzname.setText(SPITZNAME_SPIELER_3);}
+		if(aktueller_spieler == 1) {spitzname.setText(SPITZNAME_SPIELER_4);}
+	}
+	
 	public Label hinzufuegenModus(BorderPane btab) {
 		Label modus = new Label("W"); 
 		modus.getStyleClass().add("modus");
@@ -423,6 +470,15 @@ public class EscaleroBedienpaneel extends Application {
 		spvspl.setAlignment(Pos.CENTER);
 		return spvspl;	
 	}
+
+	public void aktualisiereSpielerVonSpielern(Label spvspl) {
+		Integer anzahl = ANZAHL_SPIELER; 
+		String spieleranzahl = anzahl.toString(); 
+		if(aktueller_spieler == 4) {spvspl.setText("1" + "/" + spieleranzahl);}
+		if(aktueller_spieler == 3) {spvspl.setText("2" + "/" + spieleranzahl);}
+		if(aktueller_spieler == 2) {spvspl.setText("3" + "/" + spieleranzahl);}
+		if(aktueller_spieler == 1) {spvspl.setText("4" + "/" + spieleranzahl);}
+	}
 	
 	public TabPane hinzufuegenSpielstandAnsichten() {
 		// TODO 
@@ -441,10 +497,13 @@ public class EscaleroBedienpaneel extends Application {
 		Tab drei = new Tab(); 
 			drei.setText(SPITZNAME_SPIELER_4);
 			drei.setClosable(false);
-		
 		TabPane ssansichten = new TabPane();
 		// TODO
 			 ssansichten.getTabs().addAll(willkommen, meins, eins, zwei, drei);
+			 SingleSelectionModel<Tab> selectionModel = ssansichten.getSelectionModel();
+			 // selectionModel.select(tab); //select by object
+			 // selectionModel.select(1); //select by index starting with 0
+			 // selectionModel.clearSelection(); //clear your selection
 		
 		return ssansichten;		
 	} 
@@ -643,6 +702,7 @@ public class EscaleroBedienpaneel extends Application {
 
 	
 	// Endlich der Spielstandtabelleninhalt! Leider 4 mal, TableView kann keine Arrays!! 
+	// Spielstandtabelle von Spieler 1. 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand1(ObservableList<Spielstandzeile> olist1) {
 		
 		TableView<Spielstandzeile> sstand = new TableView<>();
@@ -663,9 +723,16 @@ public class EscaleroBedienpaneel extends Application {
 		for(int z = 0; z < 11 ; z++) {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
-			zeile.setReihe1(String.valueOf(lade[0])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
-			zeile.setReihe2(String.valueOf(lade[1])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
-			zeile.setReihe3(String.valueOf(lade[2])); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
 		}
 				
@@ -677,37 +744,132 @@ public class EscaleroBedienpaneel extends Application {
  
 		return sstand;
 	}
-
+	// Spielstandtabelle von Spieler 2. 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand2(ObservableList<Spielstandzeile> olist2) {
+		
 		TableView<Spielstandzeile> sstand = new TableView<>();
 			sstand.setMinSize(100, 150);
 			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			reiheEins.setCellValueFactory(new PropertyValueFactory<>("reihe1"));
+			reiheEins.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			reiheZwei.setCellValueFactory(new PropertyValueFactory<>("reihe2"));
+			reiheZwei.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			reiheDrei.setCellValueFactory(new PropertyValueFactory<>("reihe3"));
+			reiheDrei.setMinWidth(80);
 			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+		
+		// Lese HashMap und schreib in ObservableList
+		olist2.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
+			Integer[] lade = eintragetabelle2.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist2.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+		}
+				
+		sstand.setItems(olist2);
+		
+		// OK!! Der Rest ist Kosmetik: 
+		// 1) Anpassen Zeilenhöhen auf Bilderbalken. 
+		// 2) Anpassen der Spaltenbreiten auf Summenbalken. 
+ 
 		return sstand;
 	}
-	
+	// Spielstandtabelle von Spieler 1. 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand3(ObservableList<Spielstandzeile> olist3) {
+		
 		TableView<Spielstandzeile> sstand = new TableView<>();
 			sstand.setMinSize(100, 150);
 			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			reiheEins.setCellValueFactory(new PropertyValueFactory<>("reihe1"));
+			reiheEins.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			reiheZwei.setCellValueFactory(new PropertyValueFactory<>("reihe2"));
+			reiheZwei.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			reiheDrei.setCellValueFactory(new PropertyValueFactory<>("reihe3"));
+			reiheDrei.setMinWidth(80);
 			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+		
+		// Lese HashMap und schreib in ObservableList
+		olist3.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
+			Integer[] lade = eintragetabelle3.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist3.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+		}
+				
+		sstand.setItems(olist3);
+		
+		// OK!! Der Rest ist Kosmetik: 
+		// 1) Anpassen Zeilenhöhen auf Bilderbalken. 
+		// 2) Anpassen der Spaltenbreiten auf Summenbalken. 
+ 
 		return sstand;
 	}
-	
+	// Spielstandtabelle von Spieler 1. 
 	public TableView<Spielstandzeile> hinzufuegenSpielStand4(ObservableList<Spielstandzeile> olist4) {
+		
 		TableView<Spielstandzeile> sstand = new TableView<>();
 			sstand.setMinSize(100, 150);
 			TableColumn<Spielstandzeile, String> reiheEins = new TableColumn<>("Reihe 1");
+			reiheEins.setCellValueFactory(new PropertyValueFactory<>("reihe1"));
+			reiheEins.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheZwei = new TableColumn<>("Reihe 2");
+			reiheZwei.setCellValueFactory(new PropertyValueFactory<>("reihe2"));
+			reiheZwei.setMinWidth(80);
 			TableColumn<Spielstandzeile, String> reiheDrei = new TableColumn<>("Reihe 3");
+			reiheDrei.setCellValueFactory(new PropertyValueFactory<>("reihe3"));
+			reiheDrei.setMinWidth(80);
 			sstand.getColumns().addAll(reiheEins, reiheZwei, reiheDrei); 
+		
+		// Lese HashMap und schreib in ObservableList
+		olist4.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		for(int z = 0; z < 11 ; z++) {
+			Spielstandzeile zeile = new Spielstandzeile(); 
+			Integer[] lade = eintragetabelle4.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			String[] konvertiert = new String[] {" ", " ", " "}; 
+			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			konvertiert[0] = konvertiereIntegerToString(lade[0]);
+			konvertiert[1] = konvertiereIntegerToString(lade[1]);
+			konvertiert[2] = konvertiereIntegerToString(lade[2]);
+			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
+			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			olist4.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+		}
+				
+		sstand.setItems(olist4);
+		
+		// OK!! Der Rest ist Kosmetik: 
+		// 1) Anpassen Zeilenhöhen auf Bilderbalken. 
+		// 2) Anpassen der Spaltenbreiten auf Summenbalken. 
+ 
 		return sstand;
 	}
-
 	
 	// Leider 4 mal Summenbalken, TableView kann keine Arrays!! 
 	public HBox hinzufuegenSummenBalken1() {
@@ -835,6 +997,16 @@ public class EscaleroBedienpaneel extends Application {
 		HBox tdrei = new HBox(); 
 		// TODO 
 		return tdrei;
+	}
+
+	// für Konversion eines HashMap Wertes in einen TableView String. 
+	public String konvertiereIntegerToString(Integer wert) {
+		String text = "";
+		// Damit Null für leer funktionert muß diese if-clause NACH dem Zahlenbereich kommen!! Testergebnis 22.3.18-11:53. 
+		if(wert >= 1 || wert <= 100) {text = wert.toString();} // ein Wert zwischen 1 und 100, der Eintragewertebereich, wird unverändert dargestellt.
+		if(wert == 0) {text = "-";} // eine Null wird als Bindestrich dargestellt, leere Tabellenzelle. 
+		if(wert == 255) {text = "X";} // eine 255 steht für eine Streichung und wird als großes X dargestellt. 
+		return text;
 	}
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom SPIELSTANDTABLEAU. 	
