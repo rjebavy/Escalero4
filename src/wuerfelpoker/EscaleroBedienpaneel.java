@@ -63,7 +63,7 @@ public class EscaleroBedienpaneel extends Application {
 	//	* <https://github.com/rjebavy> 
 	//
 	/** 
-	* @version 0.155
+	* @version 0.179
 	* @author Reinhard Jebavy
 	*/
 
