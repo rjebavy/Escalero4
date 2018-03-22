@@ -856,8 +856,8 @@ public class EscaleroBedienpaneel extends Application {
 			Label eintragenWas = hinzufuegenEintragenWas(); 
 			Button[] reihenKnopf = hinzufuegenReihenknoepfe();
 				reihenKnopf[0].setOnAction(event->aktionReihe1());
-			// TODO reihenKnopf[1].setOnAction(event->eintragenReihe2(ergebnisfeld.getEintrageWert()));
-			// TODO reihenKnopf[2].setOnAction(event->eintragenReihe3(ergebnisfeld.getEintrageWert()));
+				reihenKnopf[1].setOnAction(event->aktionReihe2());
+				reihenKnopf[2].setOnAction(event->aktionReihe3());
 			reihenfeld.getChildren().addAll(rundenZaehler, eintragenWas, reihenKnopf[0], reihenKnopf[1], reihenKnopf[2]);
 		VBox eintrageknopffelder = hinzufuegenEintrageknopffelder(); 
 			eintrageknopffelder.setSpacing(5);
@@ -981,7 +981,52 @@ public class EscaleroBedienpaneel extends Application {
 			}
 		deaktiviereReihenknoepfe();
 	}
+	// Aktionskode Knopf [Reihe2]
+	public void aktionReihe2() {
+		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintrageungne nicht an gelöst ist. 
+		spielstand_X = 1;
+		if(aktueller_spieler == 4) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 3) {			
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 2) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 1) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		deaktiviereReihenknoepfe();
+	}
+	// Aktionskode Knopf [Reihe3]
+	public void aktionReihe3() {
+		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintrageungne nicht an gelöst ist. 
+		spielstand_X = 2;
+		if(aktueller_spieler == 4) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle1, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 3) {			
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle2, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 2) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle3, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		if(aktueller_spieler == 1) {
+			Integer wert = ergebnisfeld.getEintragewert();
+			eintragen.eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert, eintragen);
+			}
+		deaktiviereReihenknoepfe();
+	}	
 	
+	// Reihenknöpfe deaktivieren; wird von Aktionskode Reihenknöpfe verwendet; es wird eingetragen dann Knopf deaktiviert. 
 	public void deaktiviereReihenknoepfe() {
 		for(int b = 0; b < 3; b++) {
 			Reihe[b].setDisable(true);
