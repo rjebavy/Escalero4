@@ -458,12 +458,13 @@ public class EscaleroBedienpaneel extends Application {
 		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle1() {
 			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
 			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
+			 // DIE LÖSUNG für PROBLEM1: 11 gleiche Einträge! Von DI Taus nach Idee von Martin, 23.3.18-11:08; BINGO!!
+//					 Integer[] reiheninhalt = new Integer[3];
+//					 reiheninhalt[0] = 0;
+//					 reiheninhalt[1] = 0;
+//					 reiheninhalt[2] = 0;
 				for(int r = 0; r < 12; r++) {
-					 Integer[] reiheninhalt = new Integer[3];
-					 reiheninhalt[0] = 0;
-					 reiheninhalt[1] = 0;
-					 reiheninhalt[2] = 0;
-					sstabel.put(r, reiheninhalt);
+					sstabel.put(r, new Integer[] {0,0,0});
 				}
 		return sstabel;
 		}
