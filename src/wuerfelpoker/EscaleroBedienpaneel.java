@@ -456,53 +456,53 @@ public class EscaleroBedienpaneel extends Application {
 	// Erzeuge 4 Spielstandtabellen zu 12 Zeilen und 3 Reihen; 12 Zeile für Summe!!  
 		// "Leere" Spielstandtabelle1 alle Zellen auf 0.  
 		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle1() {
-			 Integer[] reiheninhalt = new Integer[3];
 			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
-			 reiheninhalt[0] = 0;
-			 reiheninhalt[1] = 0;
-			 reiheninhalt[2] = 0;
 			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
 				for(int r = 0; r < 12; r++) {
+					 Integer[] reiheninhalt = new Integer[3];
+					 reiheninhalt[0] = 0;
+					 reiheninhalt[1] = 0;
+					 reiheninhalt[2] = 0;
 					sstabel.put(r, reiheninhalt);
 				}
 		return sstabel;
 		}
 		// "Leere" Spielstandtabelle2 alle Zellen auf 0.  
 		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle2() {
-			 Integer[] reiheninhalt = new Integer[3];
+//			 Integer[] reiheninhalt = new Integer[3];
 			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
-			 reiheninhalt[0] = 0;
-			 reiheninhalt[1] = 0;
-			 reiheninhalt[2] = 0;
+//			 reiheninhalt[0] = 0;
+//			 reiheninhalt[1] = 0;
+//			 reiheninhalt[2] = 0;
 			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
 				for(int r = 0; r < 12; r++) {
-					sstabel.put(r, reiheninhalt);
+					sstabel.put(r, new Integer[] {0,0,0});
 				}
 		return sstabel;
 		}
 		// "Leere" Spielstandtabelle3 alle Zellen auf 0.  
 		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle3() {
-			 Integer[] reiheninhalt = new Integer[3];
+//			 Integer[] reiheninhalt = new Integer[3];
 			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
-			 reiheninhalt[0] = 0;
-			 reiheninhalt[1] = 0;
-			 reiheninhalt[2] = 0;
+//			 reiheninhalt[0] = 0;
+//			 reiheninhalt[1] = 0;
+//			 reiheninhalt[2] = 0;
 			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
 				for(int r = 0; r < 12; r++) {
-					sstabel.put(r, reiheninhalt);
+					sstabel.put(r, new Integer[] {0,0,0});
 				}
 		return sstabel;
 		}
 		// "Leere" Spielstandtabelle4 alle Zellen auf 0.  
 		public HashMap<Integer, Integer[]> erzeugeSpielstandTabelle4() {
-			 Integer[] reiheninhalt = new Integer[3];
+//			 Integer[] reiheninhalt = new Integer[3];
 			 HashMap<Integer, Integer[]> sstabel = new HashMap<Integer, Integer[]>();
-			 reiheninhalt[0] = 0;
-			 reiheninhalt[1] = 0;
-			 reiheninhalt[2] = 0;
+//			 reiheninhalt[0] = 0;
+//			 reiheninhalt[1] = 0;
+//			 reiheninhalt[2] = 0;
 			 // Und weil jetzt Schlüssel Integer und nicht Enum ist geht: 
 				for(int r = 0; r < 12; r++) {
-					sstabel.put(r, reiheninhalt);
+					sstabel.put(r, new Integer[] {0,0,0});
 				}
 		return sstabel;
 		}
@@ -597,6 +597,10 @@ public class EscaleroBedienpaneel extends Application {
 				eintragezeile[spielstand_X] = wert; 
 				eintragtabelle.put(spielstand_Y, eintragezeile);
 				System.out.println("eintragenReihe; es wurde der Wert " + wert + " in die Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " eingetragen! "); 
+			}
+			for(int z =0; z < 11; z++) {
+				eintragezeile = eintragtabelle.get(z);
+				System.out.println("eintragenReihe; Wert " + wert + " index z " + z + " Eintragezeilen " + eintragezeile[0] + " " + eintragezeile[1] + " " + eintragezeile[2]);
 			}
 			// TODO else Alarm Message-Box falls nicht schon oberhalb geklärt. 
 		}
@@ -1091,8 +1095,9 @@ public class EscaleroBedienpaneel extends Application {
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			// olist1.add(0, zeile); 
-			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+			olist1.add(spielstand_Y, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).	
 		}
+		
 				
 		sstand.setItems(olist1);
 		
@@ -1124,7 +1129,7 @@ public class EscaleroBedienpaneel extends Application {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle2.get(z); // lade das Integer-Array aus der HashMap eintragetabelle2. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
-			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			// System.out.println("\nhinzufuegenSpielStand2; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
@@ -1166,7 +1171,7 @@ public class EscaleroBedienpaneel extends Application {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle3.get(z); // lade das Integer-Array aus der HashMap eintragetabelle3. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
-			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			// System.out.println("\nhinzufuegenSpielStand3; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
@@ -1212,7 +1217,7 @@ public class EscaleroBedienpaneel extends Application {
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
-			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// System.out.println("hinzufuegenSpielStand4; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
 			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
@@ -1244,7 +1249,7 @@ public class EscaleroBedienpaneel extends Application {
 			// olist1.clear(); 
 			Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
-			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + "key " + z + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
@@ -1268,11 +1273,11 @@ public class EscaleroBedienpaneel extends Application {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle2.get(z); // lade das Integer-Array aus der HashMap eintragetabelle2. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
-			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			// System.out.println("\nhinzufuegenSpielStand2; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
-			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// System.out.println("hinzufuegenSpielStand2; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
 			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
@@ -1287,11 +1292,11 @@ public class EscaleroBedienpaneel extends Application {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle3.get(z); // lade das Integer-Array aus der HashMap eintragetabelle3. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
-			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			// System.out.println("\nhinzufuegenSpielStand3; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
-			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// System.out.println("hinzufuegenSpielStand3; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
 			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
@@ -1306,11 +1311,11 @@ public class EscaleroBedienpaneel extends Application {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle4.get(z); // lade das Integer-Array aus der HashMap eintragetabelle4. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
-			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			// System.out.println("\nhinzufuegenSpielStand4; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
-			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// System.out.println("hinzufuegenSpielStand4; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
 			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
