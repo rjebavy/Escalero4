@@ -139,7 +139,7 @@ public class Ergebnisfeld {
 		initialisiereErgebnisfeld();
 		int anzahl = 1; 
 		setEintragentext(anzahl + " Streichung");
-		setEintragewert(anzahl * 0);
+		setEintragewert(anzahl * 255);
 	}
 	
 	// Knopf [x]

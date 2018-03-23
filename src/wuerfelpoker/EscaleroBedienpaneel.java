@@ -99,7 +99,7 @@ public class EscaleroBedienpaneel extends Application {
 	Wurf wurf = new Wurf(aktueller_wurf); // Wurfzähler, Haltefeld, halten/freigeben, Zufallszahl berechen etc.  
 	Wuerfel[] wsatz = wurf.initialisiereWuerfelsatz(); 
 	Wurfergebnis ergebnis = new Wurfergebnis(wsatz); // Auswertemethoden; Bilderanzahl, Muster. 
-	Rundenzaehler rundenzaehler = new Rundenzaehler(aktuelle_runde); 
+	// Rundenzaehler rundenzaehler = new Rundenzaehler(aktuelle_runde); 
 	Ergebnisfeld ergebnisfeld = new Ergebnisfeld(); // Aktionskode der Bild- und Musterknöpfe, Eintragewert berechnen. 
 	Button[] Reihe = new Button[3]; // Knopffelder für's EIntragen. 
 	Button[] Bilder = new Button[6]; // Knopffelder für's EIntragen. 
@@ -159,20 +159,28 @@ public class EscaleroBedienpaneel extends Application {
 		// Je Spieler eine 
 		
 		// TODO Temporär um nicht immer schließen und starten zu müssen. 
-		Button nochmal = new Button("Nochmal!"); 
+		Button nochmal = new Button(); 
+		if(aktuelle_runde == ANZAHL_RUNDEN) {
+			nochmal.setText("Spielen");
+		}
+		else {
+			nochmal.setText("Nochmal!");
+		}
 		nochmal.setFont(Font.font("Tahoma", 10));
 		nochmal.setMinSize(50, 16); 
-		nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau));
+		nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau, bedientableau, spielstandtableau));
 		// TODO Temporär um Eintragen in 4 Tabellen zu testen: 
 		Button wechsle = new Button("Wechsle Spieler"); 
 		wechsle.setFont(Font.font("Tahoma", 10));
 		wechsle.setMinSize(80, 16); 
-		wechsle.setOnAction(event->aktionWechsleSpieler(spielstandtableau));
+		wechsle.setDisable(true);
+		wechsle.setOnAction(event->aktionWechsleSpieler(spielstandtableau, wuerfeltableau, bedientableau, ergebnistableau));
 		// TODO Temporär als Notausgang für Hauptprogrammschleife: 
 		Button abbrechen = new Button("Abbrechen"); 
 		abbrechen.setFont(Font.font("Tahoma", 10));
 		abbrechen.setMinSize(50, 16); 
-		abbrechen.setOnAction(event->aktionAbbrechen());
+		abbrechen.setDisable(true);
+		abbrechen.setOnAction(event->aktionAbbrechen(bedientableau, wuerfeltableau));
 		// Sammelbox für alle obigen Knöpfe. 
 		HBox knoepfe = new HBox(); 
 		knoepfe.setAlignment(Pos.CENTER);
@@ -244,28 +252,75 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// temporärer Aktionskode für Knopf [Nochmal!]
 		// TODO Wenn Endversion wieder entfernen. 
-		public void aktionNochmal(GridPane wtableau, GridPane etableau) {
+		public void aktionNochmal(GridPane wtableau, GridPane etableau, BorderPane btab, VBox sstableau) {
+			neustartSpielstandtableau(sstableau); 
+			HBox rfeld = (HBox) etableau.getChildrenUnmodifiable().get(0);
+			Label rundz = (Label) rfeld.getChildrenUnmodifiable().get(0);
+			aktualisiereRundenzaehler(rundz);
 			neustartWuerfeltableau(wtableau);
 			neustartErgebnistableau(etableau);
 			ergebnisfeld.initialisiereErgebnisfeld();
+			HBox knepf = (HBox) btab.getChildrenUnmodifiable().get(1);
+			Button noamoi = (Button) knepf.getChildrenUnmodifiable().get(0);
+			Button wexel = (Button) knepf.getChildrenUnmodifiable().get(1);
+			Button auss = (Button) knepf.getChildrenUnmodifiable().get(2);
+			noamoi.setDisable(true);
+			wexel.setDisable(false);
+			auss.setDisable(false);
+			
 		}
 	
 		// temporärer Aktionskode für Knopf [Wechsle Spieler]
 		// TODO Wenn Endversion wieder entfernen. 
-		public void aktionWechsleSpieler(VBox sstableau) {
-			if(aktueller_spieler != 0) {
-				aktueller_spieler--;
-				}
-			if(aktueller_spieler == 0) {
-				aktueller_spieler = 4;
-				}
-			neustartSpielstandtableau(sstableau);	
+		public void aktionWechsleSpieler(VBox sstableau, GridPane wuerfeltableau, BorderPane btab, GridPane ergtableau) {
+			if(aktuelle_runde != 0) {
+				if(aktueller_spieler != 0) {
+					aktueller_spieler--;
+					neustartWuerfeltableau(wuerfeltableau); 
+					}
+				if(aktueller_spieler == 0) {
+					aktuelle_runde--;
+					aktueller_spieler = 4;
+					neustartWuerfeltableau(wuerfeltableau); 
+					}
+				neustartSpielstandtableau(sstableau); 
+				HBox rfeld = (HBox) ergtableau.getChildrenUnmodifiable().get(0);
+				Label rundz = (Label) rfeld.getChildrenUnmodifiable().get(0);
+				aktualisiereRundenzaehler(rundz); 
+				System.out.print("aktionWechsleSpieler; Rundenzähler, aktuelle_runde = " + aktuelle_runde);  
+			}
+			if(aktuelle_runde == 0) {
+			// TODO Spielstand in DB speichern
+			// Meldung "Weiterspielen mit selber Besetzung, [Nochmal!] klicken". 
+			HBox knepf = (HBox) btab.getChildrenUnmodifiable().get(1);
+			Button noamoi = (Button) knepf.getChildrenUnmodifiable().get(0);
+			Button wexel = (Button) knepf.getChildrenUnmodifiable().get(1);
+			Button auss = (Button) knepf.getChildrenUnmodifiable().get(2);
+			noamoi.setDisable(false);
+			auss.setDisable(true);
+			noamoi.setText("Nochmal!");
+			meldung.setMeldung("Weiterspielen mit selber Besetzung, [Nochmal!] klicken. "); 
+			aktualisiereMeldeleiste((Label) btab.getChildrenUnmodifiable().get(0));
+			wexel.setDisable(true);
+			}
 		}
 
-		// temporärer Aktionskode für Knopf [Wechsle Spieler]
+		// temporärer Aktionskode für Knopf [Abbrechen]
 		// TODO Wenn Endversion wieder entfernen. 
-		public void aktionAbbrechen() {
+		public void aktionAbbrechen(BorderPane btab, GridPane wtab) {
 			initialisiereAlleZaehler(); 
+			// Meldung "Alle Zähler wurden rückgesetzt, Spielstandtabellen initialisiert! ".
+			meldung.setMeldung("Alle Zähler wurden rückgesetzt, Spielstandtabellen initialisiert! "); 
+			aktualisiereMeldeleiste((Label) btab.getChildrenUnmodifiable().get(0));
+			Button wknopf = (Button) wtab.getChildrenUnmodifiable().get(4);
+			deaktiviereWuerfelnKnopf(wknopf);
+			HBox knepf = (HBox) btab.getChildrenUnmodifiable().get(1);
+			Button noamoi = (Button) knepf.getChildrenUnmodifiable().get(0);
+			Button wexel = (Button) knepf.getChildrenUnmodifiable().get(1);
+			Button auss = (Button) knepf.getChildrenUnmodifiable().get(2);
+			noamoi.setDisable(false);
+			wexel.setDisable(true);
+			auss.setDisable(true);
 		}
 	
 		public void initialisiereAlleZaehler() {
@@ -342,11 +397,11 @@ public class EscaleroBedienpaneel extends Application {
 			spielstandansichten.setSide(Side.BOTTOM);
 			ObservableList<Tab> spielstandansicht = spielstandansichten.getTabs(); 
 			// System.out.println("spielstandansichten; ObservableList = " + spielstandansicht);
-			spielstandansicht.get(0).setContent(willkommenstafel);
-			spielstandansicht.get(1).setContent(spielstandtafel1);
-			spielstandansicht.get(2).setContent(spielstandtafel2);
-			spielstandansicht.get(3).setContent(spielstandtafel3);
-			spielstandansicht.get(4).setContent(spielstandtafel4);
+			// spielstandansicht.get(0).setContent(willkommenstafel); Kein Willkommen (nth)
+			spielstandansicht.get(0).setContent(spielstandtafel1);
+			spielstandansicht.get(1).setContent(spielstandtafel2);
+			spielstandansicht.get(2).setContent(spielstandtafel3);
+			spielstandansicht.get(3).setContent(spielstandtafel4);
 			// 
 
 		
@@ -377,10 +432,10 @@ public class EscaleroBedienpaneel extends Application {
 		 SingleSelectionModel<Tab> selectionModel = tabp.getSelectionModel();
 		 // selectionModel.select(tab); //select by object
 		 // selectionModel.select(1); //select by index starting with 0
-		if(aktueller_spieler == 4) {selectionModel.select(1);}
-		if(aktueller_spieler == 3) {selectionModel.select(2);}
-		if(aktueller_spieler == 2) {selectionModel.select(3);}
-		if(aktueller_spieler == 1) {selectionModel.select(4);}
+		if(aktueller_spieler == 4) {selectionModel.select(0);}
+		if(aktueller_spieler == 3) {selectionModel.select(1);}
+		if(aktueller_spieler == 2) {selectionModel.select(2);}
+		if(aktueller_spieler == 1) {selectionModel.select(3);}
 		// Da Spieler gewechselt Koordinaten auf 0!!  
 		spielstand_X = 0; 
 		spielstand_Y = 0;		
@@ -784,8 +839,8 @@ public class EscaleroBedienpaneel extends Application {
 	public TabPane hinzufuegenSpielstandAnsichten() {
 		// TODO 
 		Tab willkommen = new Tab(); 
-		willkommen.setText("Willkommen!");
-		willkommen.setClosable(false);
+		// willkommen.setText("Willkommen!"); Kein Willkommen (nth)
+		// willkommen.setClosable(false);
 		Tab meins = new Tab(); 
 			meins.setText(SPITZNAME_SPIELER_1);
 			meins.setClosable(false);
@@ -800,7 +855,8 @@ public class EscaleroBedienpaneel extends Application {
 			drei.setClosable(false);
 		TabPane ssansichten = new TabPane();
 		// TODO
-			 ssansichten.getTabs().addAll(willkommen, meins, eins, zwei, drei);
+			 // ssansichten.getTabs().addAll(willkommen, meins, eins, zwei, drei);
+			 ssansichten.getTabs().addAll(meins, eins, zwei, drei); // Kein Willkommen (nth)
 			 SingleSelectionModel<Tab> selectionModel = ssansichten.getSelectionModel();
 			 // selectionModel.select(tab); //select by object
 			 // selectionModel.select(1); //select by index starting with 0
@@ -1023,6 +1079,7 @@ public class EscaleroBedienpaneel extends Application {
 		for(int z = 0; z < 11 ; z++) {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
+			// Integer[] lade = eintragetabelle1.get(0); 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
 			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
@@ -1033,6 +1090,7 @@ public class EscaleroBedienpaneel extends Application {
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
+			// olist1.add(0, zeile); 
 			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
 		}
 				
@@ -1179,9 +1237,11 @@ public class EscaleroBedienpaneel extends Application {
 	}
 	
 	public void aktualisiereSpielstand1() {
-		olist1.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+		 olist1.clear(); // Vor dem beschreiben löschen!! Empfehlung DI Taus, 21.3.18/Email. 
+			
 		for(int z = 0; z < 11 ; z++) {
-			Spielstandzeile zeile = new Spielstandzeile(); 
+			Spielstandzeile zeile = new Spielstandzeile(); 	
+			// olist1.clear(); 
 			Integer[] lade = eintragetabelle1.get(z); // lade das Integer-Array aus der HashMap eintragetabelle1. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
 			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
@@ -1193,7 +1253,12 @@ public class EscaleroBedienpaneel extends Application {
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe3(konvertiert[2]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
-			olist1.add(z, zeile); // setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+			// olist1.add(zeile); // wieder alle 11 gleich! 
+			olist1.add(z, zeile); // alle 11 gleich! ; setzte ObservableList-Eintrag an Index 0 auf Spielstandzeile; add(int index, Spielstandzeile element).
+			// olist1.addAll(olist1); // Kein Content!
+			// olist1.addAll(zeile); // wieder alle 11 gleich! 
+			
+			
 		}	
 	}
 		
@@ -1407,7 +1472,7 @@ public class EscaleroBedienpaneel extends Application {
 		etableau.setVgap(10);
 		// Das Reihenfeld mit Label (Rundenzahler), Label (Was?), Buttons [Reihe1], [Reihe2], [Reihe3].
 		HBox reihenfeld = hinzufuegenReihenfeld(); 
-			Label rundenZaehler = hinzufuegenRundenzaehler(rundenzaehler);
+			Label rundenZaehler = hinzufuegenRundenzaehler();
 			Label eintragenWas = hinzufuegenEintragenWas(); 
 			Button[] reihenKnopf = hinzufuegenReihenknoepfe();
 				reihenKnopf[0].setOnAction(event->aktionReihe1());
@@ -1446,10 +1511,9 @@ public class EscaleroBedienpaneel extends Application {
 	}
 	
 	// Aktualisierungsmethode. 	
-	public void neustartErgebnistableau(GridPane ergebnistableau) {
+	public void neustartErgebnistableau(GridPane ergtableau) {
 		// Definierter Ausgangszustand, alle Knöpfe im Ergebnistableau deaktiviert. 
 		initialisiereErgebnisknoepfe(); 
-
 		
 	}
 	
@@ -1467,18 +1531,24 @@ public class EscaleroBedienpaneel extends Application {
 
 	// D e r  R u n d e n z ä h l e r:
 	// Da kommt er ans Licht. 	
-	public Label hinzufuegenRundenzaehler(Rundenzaehler ruze) {
+	public Label hinzufuegenRundenzaehler() {
 		Label rundz = new Label(); 
 		rundz.setMinSize(20, 20);
 		rundz.setAlignment(Pos.CENTER);
 		rundz.setTextFill(Color.OLIVE);
 		rundz.setFont(Font.font("Tahoma", 18));
-		Integer rz = ruze.getRunden();
+		Integer rz = aktuelle_runde;
 		String rzz = rz.toString() + ".";
 		rundz.setText(rzz);
 		return rundz;
 	}
 
+	public void aktualisiereRundenzaehler(Label rundz) {
+		Integer rz = aktuelle_runde;
+		String rzz = rz.toString() + ".";
+		rundz.setText(rzz);
+	}
+	
 	// D a s  E i n t r a g e n W a s f e l d: 
 	// Hier wird angezeigt was mit den Reihenknöpfen eingetragen werden kann. 
 	public Label hinzufuegenEintragenWas() {
@@ -1830,14 +1900,14 @@ public class EscaleroBedienpaneel extends Application {
 			Muster[3].setDisable(false);
 			}
 		Muster[4].setDisable(false); // Knopf [streiche] hat kein Muster. 
-		Muster[5].setDisable(false); // Knopf [lösche] hat kein Muster.
+		Muster[5].setDisable(true); // Knopf [lösche] hat kein Muster. // Lösche immer aus!! 22.3.18-23.25 Feature (nth). 
 	}
 	
 	// Wenn ein Eintrageknopf geklickt wurde alle bis auf [lösche] deaktivieren. Wird im Aktionskode für jeden Eintrageknopf verwendet. 
 	public void deaktiviereAlleKnoepfeBisAufLoesche() {
 		deaktiviereBilderknoepfe();
 		deaktiviereMusterknoepfe(); 
-		Muster[5].setDisable(false);
+		Muster[5].setDisable(true); // Lösche immer aus!! 22.3.18-23.25 Feature (nth). 
 	}
 	
 	// Hier oberhalb Methoden und Kode zu den einzelnen FX-Nodes vom ERGEBNISTABLEAU. 
@@ -1922,7 +1992,7 @@ public class EscaleroBedienpaneel extends Application {
 		return wurfz;
 	}
 
-	// Hier wird er manipuliert; spätestens nach dreimal Würfeln ist die Runde vorbei. 
+	// Hier wird er manipuliert; spätestens nach dreimal Würfeln ist die Runde für den jeweiligen Spieler vorbei. 
 	public void aktualisiereWurfzaehler(Wurf w, Label wurfz, Button bt) {
 		Integer wz = w.getWurfzaehler();
 		System.out.println("aktualisiereWurfzaehler; getWurfzahler = " + wz); 

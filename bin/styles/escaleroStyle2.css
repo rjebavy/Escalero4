@@ -2482,7 +2482,8 @@ is being used to size a border should also be in pixels.
     -fx-padding: 0.166667em; /* 2px, plus border adds 1px */
     -fx-background-color: null;
     -fx-border-color: transparent -fx-table-cell-border-color transparent transparent;
-    -fx-cell-size: 2.0em; /* 24 */
+    -fx-cell-size: 2.0832em; /* 22 */
+    /* -fx-cell-size: 2.0em; // 24 */
     -fx-text-fill: -fx-text-background-color;
 }
 .table-view > .virtual-flow > .clipped-container > .sheet > .table-row-cell .table-cell:selected,
@@ -2515,13 +2516,14 @@ is being used to size a border should also be in pixels.
 /* The column header row is made up of a number of column-header, one for each
    TableColumn, and a 'filler' area that extends from the right-most column
    to the edge of the tableview, or up to the 'column control' button. */
+/*   
 .table-view .column-header,
 .tree-table-view .column-header,
 .table-view .filler,
 .tree-table-view .filler,
 .table-view > .column-header-background > .show-hide-columns-button,
 .tree-table-view > .column-header-background > .show-hide-columns-button,
-/* .table-view:constrained-resize .filler,   // MAG KEINEN FILLER RECHTS DER TABELLE */
+.table-view:constrained-resize .filler,   
 .tree-table-view:constrained-resize .filler {
     -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0, 0 1 1 0, 1 2 2 1;
@@ -2542,6 +2544,7 @@ is being used to size a border should also be in pixels.
 .tree-table-view:constrained-resize .filler {
     -fx-background-insets: 0, 0 0 1 0, 1 1 2 1;
 }
+  // MAG KEINEN FILLER RECHTS DER TABELLE */ 
 .table-view > .column-header-background > .show-hide-columns-button,
 .tree-table-view > .column-header-background > .show-hide-columns-button {
     -fx-background-insets: 0, 0 0 1 1, 1 1 2 2;
@@ -2552,7 +2555,8 @@ is being used to size a border should also be in pixels.
 }
 .table-view .column-header .sort-order,
 .tree-table-view .column-header .sort-order{
-    -fx-font-size: 0.916667em; /* 11pt - 1 less than the default font */
+    /*  -fx-font-size: 0.916667em; // 11pt - 1 less than the default font */
+    -fx-font-size: 0.750000em; /* 9pt */
 }
 .table-view .column-header .sort-order-dot,
 .tree-table-view .column-header .sort-order-dot {
