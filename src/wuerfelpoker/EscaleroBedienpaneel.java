@@ -87,7 +87,7 @@ public class EscaleroBedienpaneel extends Application {
 	static final String SPITZNAME_SPIELER_3 = "Spieler3"; 
 	static final String SPITZNAME_SPIELER_4 = "Spieler4"; 
 	static final int ANZAHL_SPIELER = 4;
-	static final int ANZAHL_RUNDEN = 11; // 11 mit einer Extrastreichung, normalerweise nur 10. 
+	static final int ANZAHL_RUNDEN = 33; // Basisrunden mal 3 Reihen; Basisrunden 11 mit einer Extrastreichung, normalerweise nur 10. 
 	static final int ANZAHL_WUERFE = 3;
 	
 	
@@ -309,6 +309,8 @@ public class EscaleroBedienpaneel extends Application {
 			aktualisiereMeldeleiste((Label) btab.getChildrenUnmodifiable().get(0));
 			wexel.setDisable(true);
 			}
+			// EintragenWas-Feld initialisieren: 
+			ergebnisfeld.initialisiereErgebnisfeld();
 		}
 
 		//Aktionskode für Knopf [Abbrechen]
