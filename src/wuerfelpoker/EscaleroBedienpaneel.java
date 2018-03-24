@@ -123,7 +123,10 @@ public class EscaleroBedienpaneel extends Application {
 	Integer spielstand_X = new Integer(0); 
 	Integer spielstand_Y = new Integer(0);
 	// Brauch ich für Reihensummen
-	Summenbalken reihensumme = new Summenbalken();
+	IntegerProperty[] rsummen1 = new SimpleIntegerProperty[3];
+	IntegerProperty[] rsummen2 = new SimpleIntegerProperty[3];
+	IntegerProperty[] rsummen3 = new SimpleIntegerProperty[3];
+	IntegerProperty[] rsummen4 = new SimpleIntegerProperty[3];
 	// Sonstiges 
 	Meldung meldung = new Meldung(); // Inhalt für das Bedienfeld einer Meldeleiste, für Statusmeldungen oder Hinweise an den Spieler. 
 	boolean servierung = false; // Indikator für Servierung, für Zuschlagsberechnung in den Ergebnismethoden der Musterknöpfe. 
@@ -149,12 +152,12 @@ public class EscaleroBedienpaneel extends Application {
 // Top Level FX Node item: ESCALEROBEDIENPANEEL: 
 		// Würfeltableau ist kein Dummy NODE! 
 		GridPane wuerfeltableau = erzeugeWuerfeltableau();
-		// Ergebnistableau ist kein Dummy NODE! 
-		GridPane ergebnistableau = erzeugeErgebnistableau();
 		// Bedientableau ist kein Dummy NODE! 
 		BorderPane bedientableau = erzeugeBedientableau(); 
 		// Spielstandtableau ist kein Dummy NODE! 
 		VBox spielstandtableau = erzeugeSpielstandtableau(bedientableau); // hier wird das Bedientableau übergeben wegen Meldeleiste!!
+		// Ergebnistableau ist kein Dummy NODE! 
+		GridPane ergebnistableau = erzeugeErgebnistableau(spielstandtableau);
 		
 		
 		
@@ -193,35 +196,16 @@ public class EscaleroBedienpaneel extends Application {
 		// TEST: Meldeleiste aktualisieren. 
 		// meldung.setMeldung("das ist eine neue Meldung"); 
 		// aktualisiereMeldeleiste((Label) bedientableau.getChildrenUnmodifiable().get(0)); 
-
-		
-		// teste, HashMap, Reihen aufsummieren. 
-		berechneReihensumme(); // berechnet Reihensummen aller 4 Spieler. 
-		
-		// zeige, X- & Y-Koordinaten fürs Eintragen. 
-		System.out.println("\nGlobale Variable, spielstand_X = " + spielstand_X); 
-		System.out.println("Globale Variable, spielstand_Y = " + spielstand_Y); 
-		
-		// Test: welche ObjektID haben die 4 Tabellen bzw HashMaps ? 
-		System.out.println("eintragtabelle1; Objekt ist: " + eintragetabelle1);
-		System.out.println("eintragtabelle2; Objekt ist: " + eintragetabelle2);
-		System.out.println("eintragtabelle3; Objekt ist: " + eintragetabelle3);
-		System.out.println("eintragtabelle4; Objekt ist: " + eintragetabelle4);
-
-		// Test: alle Zähler ? 
-		System.out.println("\nalle Zähler: "); 
-		System.out.println("aktueller_spieler: " + aktueller_spieler); // globaler Spielerzähler. 
-		System.out.println("aktuelle_runde: " + aktuelle_runde); // globaler Rundenzähler. 
-		System.out.println("aktueller_wurf: " + aktueller_wurf); // globaler Wurfzähler
-
 	
+		
+
 
 	// Top-top-level Container Escalero Bedienpaneel
 	VBox escalerobedienpaneel = new VBox();
 	escalerobedienpaneel.setMinSize(340, 666);
 	escalerobedienpaneel.setAlignment(Pos.TOP_CENTER);
 	escalerobedienpaneel.getChildren().addAll(spielstandtableau, wuerfeltableau, ergebnistableau, bedientableau);
-
+	
 	primaryStage.setScene(new Scene(escalerobedienpaneel, 340, 666));
 	// Stylesheet Verbindugn funktioniert, aber mit dem aus dem JDK kopierten schaut es trotzdem anders aus. (nth)
 	escalerobedienpaneel.getStylesheets().add(EscaleroBedienpaneel.class.getResource("/styles/escaleroStyle2.css").toExternalForm());
@@ -616,15 +600,16 @@ public class EscaleroBedienpaneel extends Application {
 		
 	// R e i h e n s u m m e n berechnen und in Zeile 12 eintragen. 
 	// Alle Reihensummen berechnen. 
-	public void berechneReihensumme() {
-		if(aktueller_spieler == 4) {berechneReihensummen1();}
-		if(aktueller_spieler == 3) {berechneReihensummen2();}
-		if(aktueller_spieler == 2) {berechneReihensummen3();}
-		if(aktueller_spieler == 1) {berechneReihensummen4();}	
+	public void berechneReihensumme(VBox spielstandtableau, IntegerProperty[] rsummen1, IntegerProperty[] rsummen2, IntegerProperty[] rsummen3, IntegerProperty[] rsummen4) {
+		VBox sstab = spielstandtableau;
+		if(aktueller_spieler == 4) {berechneReihensummen1(sstab, rsummen1, rsummen2, rsummen3, rsummen4);}
+		if(aktueller_spieler == 3) {berechneReihensummen2(sstab, rsummen1, rsummen2, rsummen3, rsummen4);}
+		if(aktueller_spieler == 2) {berechneReihensummen3(sstab, rsummen1, rsummen2, rsummen3, rsummen4);}
+		if(aktueller_spieler == 1) {berechneReihensummen4(sstab, rsummen1, rsummen2, rsummen3, rsummen4);}	
 	}
 	
 	// Reihensummen Spieler1. 
-		public void berechneReihensummen1() {
+		public void berechneReihensummen1(VBox sstab, IntegerProperty[] rsummen1, IntegerProperty[] rsummen2, IntegerProperty[] rsummen3, IntegerProperty[] rsummen4) {
 			Integer[] summe = new Integer[3];
 			Integer[] zeile = new Integer[3];
 			Integer[] filter = new Integer[3];		
@@ -650,9 +635,43 @@ public class EscaleroBedienpaneel extends Application {
 			}
 			// Summe in Zeile 12 (index/key 11) eintragen. 
 			eintragetabelle1.put(11, summe);
+			// Die Summenwerte einer IntegerPorperty rsummeN[i] zuweisen. 
+			//rsummen1[0].set(summe[0]); 
+			//rsummen1[1].set(summe[1]); 
+			//rsummen1[2].set(summe[2]); 
+			// Den Summenbalken aus dem Spielstandtableau extrahieren. 
+			TabPane ssansicht = (TabPane) sstab.getChildrenUnmodifiable().get(1);
+			Node stab = ssansicht.getChildrenUnmodifiable().get(0);
+			// BorderPane ssans = (BorderPane) ((BorderPane) stab).getChildrenUnmodifiable().get(0);
+				// HIER KRIEG ich die BorderPAne nicht aus den Tabs!! 
+					// java.lang.ClassCastException: com.sun.javafx.scene.control.skin.TabPaneSkin$TabContentRegion cannot be cast to javafx.scene.layout.BorderPane
+			/* //HBox sbalken = (HBox) ssans.getChildrenUnmodifiable().get(2); 
+			// Die Labels aus dem Summenbalken extrahieren
+			Label sum1 = (Label) sbalken.getChildrenUnmodifiable().get(0); 
+			Label sum2 = (Label) sbalken.getChildrenUnmodifiable().get(1); 
+			Label sum3 = (Label) sbalken.getChildrenUnmodifiable().get(2); 
+			/*
+			// Jedes einzelne Label an die ReihensummeN[i] binden. 
+			// Summenlabel Reihe1
+			StringProperty sp1 = sum1.textProperty();
+			IntegerProperty ip1 = 99; // rsummen1[0];
+			NumberStringConverter converter1 = new NumberStringConverter();
+			Bindings.bindBidirectional(sp1, ip1, converter1);
+			// Summenlabel Reihe1
+			StringProperty sp2 = sum2.textProperty();
+			IntegerProperty ip2 = rsummen1[1];
+			NumberStringConverter converter2 = new NumberStringConverter();
+			Bindings.bindBidirectional(sp2, ip2, converter2);
+			// Summenlabel Reihe1
+			StringProperty sp3 = sum3.textProperty();
+			IntegerProperty ip3 = rsummen1[2];
+			NumberStringConverter converter3 = new NumberStringConverter();
+			Bindings.bindBidirectional(sp3, ip3, converter3);
+			*/
+
 		}
 	// Reihensummen Spieler2. 
-		public void berechneReihensummen2() {
+		public void berechneReihensummen2(VBox sstab, IntegerProperty[] rsummen1, IntegerProperty[] rsummen2, IntegerProperty[] rsummen3, IntegerProperty[] rsummen4) {
 			Integer[] summe = new Integer[3];
 			Integer[] zeile = new Integer[3];
 			Integer[] filter = new Integer[3];		
@@ -680,7 +699,7 @@ public class EscaleroBedienpaneel extends Application {
 			eintragetabelle2.put(11, summe);
 		}
 	// Reihensummen Spieler3. 
-		public void berechneReihensummen3() {
+		public void berechneReihensummen3(VBox sstab, IntegerProperty[] rsummen1, IntegerProperty[] rsummen2, IntegerProperty[] rsummen3, IntegerProperty[] rsummen4) {
 			Integer[] summe = new Integer[3];
 			Integer[] zeile = new Integer[3];
 			Integer[] filter = new Integer[3];		
@@ -708,7 +727,7 @@ public class EscaleroBedienpaneel extends Application {
 			eintragetabelle3.put(11, summe);
 		}
 	// Reihensummen Spieler4. 
-		public void berechneReihensummen4() {
+		public void berechneReihensummen4(VBox sstab, IntegerProperty[] rsummen1, IntegerProperty[] rsummen2, IntegerProperty[] rsummen3, IntegerProperty[] rsummen4) {
 			Integer[] summe = new Integer[3];
 			Integer[] zeile = new Integer[3];
 			Integer[] filter = new Integer[3];		
@@ -1142,7 +1161,7 @@ public class EscaleroBedienpaneel extends Application {
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
-			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// System.out.println("hinzufuegenSpielStand2; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
 			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
@@ -1184,7 +1203,7 @@ public class EscaleroBedienpaneel extends Application {
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
-			// System.out.println("hinzufuegenSpielStand1; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
+			// System.out.println("hinzufuegenSpielStand3; konvertiert-array, konvertiert[0]: " + konvertiert[0] + ", konvertiert[1] " + konvertiert[1] + ", konvertiert[2] "  + konvertiert[2]);
 			// erweitere Kode um Integer-String-Konversion: 0 = "-", 1 bis 100 = "1" bis "100" (as is), 255 = "X". 
 			zeile.setReihe1(konvertiert[0]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
 			zeile.setReihe2(konvertiert[1]); // zerpflücke IntegerArray in Array-Element n von 3, konvertiere auf String und setze Spielstandzeilenelement n von 3. 
@@ -1222,7 +1241,7 @@ public class EscaleroBedienpaneel extends Application {
 			Spielstandzeile zeile = new Spielstandzeile(); 
 			Integer[] lade = eintragetabelle4.get(z); // lade das Integer-Array aus der HashMap eintragetabelle4. 
 			String[] konvertiert = new String[] {" ", " ", " "}; 
-			// System.out.println("\nhinzufuegenSpielStand1; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
+			// System.out.println("\nhinzufuegenSpielStand4; lade-array, lade[0]: " + lade[0] + ", lade[1] " + lade[1] + ", lade[2] "  + lade[2]);
 			konvertiert[0] = konvertiereIntegerToString(lade[0]);
 			konvertiert[1] = konvertiereIntegerToString(lade[1]);
 			konvertiert[2] = konvertiereIntegerToString(lade[2]);
@@ -1477,7 +1496,8 @@ public class EscaleroBedienpaneel extends Application {
 			
 // ERGEBNISTABLEAU, FX-Nodes & Eigenschaften: 
 	// Erzeugermethode. 
-	public GridPane erzeugeErgebnistableau() {
+	public GridPane erzeugeErgebnistableau(VBox spielstandtableau) {
+		VBox sstableau = spielstandtableau;
 		// Alle FX Nodes erzeugen
 		GridPane etableau = new GridPane();
 		etableau.setMinSize(340, 112);
@@ -1489,9 +1509,9 @@ public class EscaleroBedienpaneel extends Application {
 			Label rundenZaehler = hinzufuegenRundenzaehler();
 			Label eintragenWas = hinzufuegenEintragenWas(); 
 			Button[] reihenKnopf = hinzufuegenReihenknoepfe();
-				reihenKnopf[0].setOnAction(event->aktionReihe1());
-				reihenKnopf[1].setOnAction(event->aktionReihe2());
-				reihenKnopf[2].setOnAction(event->aktionReihe3());
+				reihenKnopf[0].setOnAction(event->aktionReihe1(sstableau));
+				reihenKnopf[1].setOnAction(event->aktionReihe2(sstableau));
+				reihenKnopf[2].setOnAction(event->aktionReihe3(sstableau));
 			reihenfeld.getChildren().addAll(rundenZaehler, eintragenWas, reihenKnopf[0], reihenKnopf[1], reihenKnopf[2]);
 		VBox eintrageknopffelder = hinzufuegenEintrageknopffelder(); 
 			eintrageknopffelder.setSpacing(5);
@@ -1599,7 +1619,7 @@ public class EscaleroBedienpaneel extends Application {
 	}
 
 	// Aktionskode Knopf [Reihe1]
-	public void aktionReihe1() {
+	public void aktionReihe1(VBox spielstandtableau) {
 		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintragungen nicht an gelöst ist. 
 		Integer wert = 0; 
 		spielstand_X = 0;
@@ -1620,10 +1640,12 @@ public class EscaleroBedienpaneel extends Application {
 			eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert);
 			}
 		deaktiviereReihenknoepfe();
+		berechneReihensumme(spielstandtableau, rsummen1, rsummen2, rsummen3, rsummen4);
 		aktualisiereSpielstand();
+		
 	}
 	// Aktionskode Knopf [Reihe2]
-	public void aktionReihe2() {
+	public void aktionReihe2(VBox spielstandtableau) {
 		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintragungen nicht an gelöst ist. 
 		Integer wert = 0; 
 		spielstand_X = 1;
@@ -1644,10 +1666,11 @@ public class EscaleroBedienpaneel extends Application {
 			eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert);
 			}
 		deaktiviereReihenknoepfe();
+		berechneReihensumme(spielstandtableau, rsummen1, rsummen2, rsummen3, rsummen4);
 		aktualisiereSpielstand();
 	}
 	// Aktionskode Knopf [Reihe3]
-	public void aktionReihe3() {
+	public void aktionReihe3(VBox spielstandtableau) {
 		// TODO zusätzlicher Übergabeparameter eintragen nur temporär bis Problem mit TableView zeigt Eintragungen nicht an gelöst ist. 
 		Integer wert = 0; 
 		spielstand_X = 2;
@@ -1668,6 +1691,7 @@ public class EscaleroBedienpaneel extends Application {
 			eintragenReihe(eintragetabelle4, spielstand_Y, spielstand_X, wert);
 			}
 		deaktiviereReihenknoepfe();
+		berechneReihensumme(spielstandtableau, rsummen1, rsummen2, rsummen3, rsummen4);
 		aktualisiereSpielstand();
 	}	
 	
