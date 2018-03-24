@@ -156,9 +156,10 @@ public class EscaleroBedienpaneel extends Application {
 		// Spielstandtableau ist kein Dummy NODE! 
 		VBox spielstandtableau = erzeugeSpielstandtableau(bedientableau); // hier wird das Bedientableau übergeben wegen Meldeleiste!!
 		
-		// Je Spieler eine 
 		
-		// TODO Temporär um nicht immer schließen und starten zu müssen. 
+		
+		// D i e  B e d i e n t a b l e a u k n ö p f e. 
+		// Knopfchameleon [Spielen] bzw. [Nochmal!] : 
 		Button nochmal = new Button(); 
 		if(aktuelle_runde == ANZAHL_RUNDEN) {
 			nochmal.setText("Spielen");
@@ -169,13 +170,13 @@ public class EscaleroBedienpaneel extends Application {
 		nochmal.setFont(Font.font("Tahoma", 10));
 		nochmal.setMinSize(50, 16); 
 		nochmal.setOnAction(event->aktionNochmal(wuerfeltableau, ergebnistableau, bedientableau, spielstandtableau));
-		// TODO Temporär um Eintragen in 4 Tabellen zu testen: 
+		// Knopf [Wechsle Spieler] : 
 		Button wechsle = new Button("Wechsle Spieler"); 
 		wechsle.setFont(Font.font("Tahoma", 10));
 		wechsle.setMinSize(80, 16); 
 		wechsle.setDisable(true);
 		wechsle.setOnAction(event->aktionWechsleSpieler(spielstandtableau, wuerfeltableau, bedientableau, ergebnistableau));
-		// TODO Temporär als Notausgang für Hauptprogrammschleife: 
+		// Knopf [Abbrechen] , ein Notausgang: 
 		Button abbrechen = new Button("Abbrechen"); 
 		abbrechen.setFont(Font.font("Tahoma", 10));
 		abbrechen.setMinSize(50, 16); 
@@ -195,7 +196,7 @@ public class EscaleroBedienpaneel extends Application {
 
 		
 		// teste, HashMap, Reihen aufsummieren. 
-		berechneReihensummen1();
+		berechneReihensumme(); // berechnet Reihensummen aller 4 Spieler. 
 		
 		// zeige, X- & Y-Koordinaten fürs Eintragen. 
 		System.out.println("\nGlobale Variable, spielstand_X = " + spielstand_X); 
@@ -250,8 +251,7 @@ public class EscaleroBedienpaneel extends Application {
 	
 	// Hier drunter Methoden und Kode zu den einzelnen FX-Nodes vom BEDIENTABLEAU. 
 	
-	// temporärer Aktionskode für Knopf [Nochmal!]
-		// TODO Wenn Endversion wieder entfernen. 
+	// Aktionskode für Knopfchameleon [Spielen] bzw. [Nochmal!]
 		public void aktionNochmal(GridPane wtableau, GridPane etableau, BorderPane btab, VBox sstableau) {
 			neustartSpielstandtableau(sstableau); 
 			HBox rfeld = (HBox) etableau.getChildrenUnmodifiable().get(0);
@@ -260,6 +260,7 @@ public class EscaleroBedienpaneel extends Application {
 			neustartWuerfeltableau(wtableau);
 			neustartErgebnistableau(etableau);
 			ergebnisfeld.initialisiereErgebnisfeld();
+			// Bedientableauknöpfe besorgen: 
 			HBox knepf = (HBox) btab.getChildrenUnmodifiable().get(1);
 			Button noamoi = (Button) knepf.getChildrenUnmodifiable().get(0);
 			Button wexel = (Button) knepf.getChildrenUnmodifiable().get(1);
@@ -267,11 +268,16 @@ public class EscaleroBedienpaneel extends Application {
 			noamoi.setDisable(true);
 			wexel.setDisable(false);
 			auss.setDisable(false);
+			// Würfeltableauknöpfe besorgen: 
+			Button wiafe = (Button) wtableau.getChildrenUnmodifiable().get(4);
+			Button schreib = (Button) wtableau.getChildrenUnmodifiable().get(5);
+			// Würfelnknopf aktivieren. 
+			aktiviereWuerfelnKnopf(wiafe); 
+
 			
 		}
 	
-		// temporärer Aktionskode für Knopf [Wechsle Spieler]
-		// TODO Wenn Endversion wieder entfernen. 
+		// Aktionskode für Knopf [Wechsle Spieler]
 		public void aktionWechsleSpieler(VBox sstableau, GridPane wuerfeltableau, BorderPane btab, GridPane ergtableau) {
 			if(aktuelle_runde != 0) {
 				if(aktueller_spieler != 0) {
@@ -305,8 +311,7 @@ public class EscaleroBedienpaneel extends Application {
 			}
 		}
 
-		// temporärer Aktionskode für Knopf [Abbrechen]
-		// TODO Wenn Endversion wieder entfernen. 
+		//Aktionskode für Knopf [Abbrechen]
 		public void aktionAbbrechen(BorderPane btab, GridPane wtab) {
 			initialisiereAlleZaehler(); 
 			// Meldung "Alle Zähler wurden rückgesetzt, Spielstandtabellen initialisiert! ".
@@ -597,7 +602,8 @@ public class EscaleroBedienpaneel extends Application {
 			if(leer & !gestrichen) {
 				eintragezeile[spielstand_X] = wert; 
 				eintragtabelle.put(spielstand_Y, eintragezeile);
-				System.out.println("eintragenReihe; es wurde der Wert " + wert + " in die Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " eingetragen! "); 
+				System.out.println("eintragenReihe; es wurde der Wert " + wert + " in die Zelle mit Y-Koordinate " + spielstand_Y + " und X-Koordinate " + spielstand_X + " eingetragen! ");
+				// TODO Alarm Message-Box bzw. Meldung: es wurde Wert in koordinate Y, Koordinate X eingetragen!! 
 			}
 			for(int z =0; z < 11; z++) {
 				eintragezeile = eintragtabelle.get(z);
@@ -1935,9 +1941,11 @@ public class EscaleroBedienpaneel extends Application {
 		// Haltemaske erst verfügbar nach mind. 1 Wurf, da von 3 runter sprich ab Wurfzählerstand = 2.
 		if(wurf.getWurfzaehler() == 3) {deaktiviereHaltefeld(haltefeld);} 
 		Button wuerfeln = hinzufuegenWuerfelnKnopf();
+		// Beim Starten des Programmes [W] deaktivieren: 
+		deaktiviereWuerfelnKnopf(wuerfeln);
 		Button schrift = hinzufuegenSchriftKnopf();
 		// [Schrift] erst verfügbar nach mind. 1 Wurf, da von 3 runter sprich ab Wurfzählerstand = 2. 
-		if(wurf.getWurfzaehler() == 3) { deaktiviereSchriftKnopf(schrift); } 
+		if (aktueller_wurf == 3) {deaktiviereSchriftKnopf(schrift);} 
 		schrift.setOnAction(event->aktionSchrift(wtableau));
 		wuerfeln.setOnAction(event->wuerfleWurf(wurf, wurfzaehler, serviert, wuerfeln, schrift, haltefeld, wsatz, wuerfelfeld, ergebnis));
 		wtableau.setMinSize(340, 84);
