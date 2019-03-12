@@ -80,7 +80,7 @@ public class EscaleroBedienpaneel extends Application {
 
 	
 	// KONSTANTEN
-	static final boolean WAHLFREIER_EINTRAGEMODUS = true; // Der Speilmodus "in aufsteigender Reihenfolge eintragen" geht sich bis 23.3.18 nicht mehr aus. 
+	static final boolean WAHLFREIER_EINTRAGEMODUS = true; // Der Spielmodus "in aufsteigender Reihenfolge eintragen" geht sich bis 23.3.18 nicht mehr aus. 
 	static final boolean EXTRA_STREICHUNG = true; 
 	static final String SPITZNAME_SPIELER_1 = "Rinaldo"; 
 	static final String SPITZNAME_SPIELER_2 = "Spieler2"; 
@@ -185,11 +185,17 @@ public class EscaleroBedienpaneel extends Application {
 		abbrechen.setMinSize(50, 16); 
 		abbrechen.setDisable(true);
 		abbrechen.setOnAction(event->aktionAbbrechen(bedientableau, wuerfeltableau));
+		// Knopf [Summieren] , Workaround bis automatisches Aufsummieren funktioniert: 	
+		Button summen = new Button("Summieren"); 
+		summen.setFont(Font.font("Tahoma", 10));
+		summen.setMinSize(50, 16); 
+		summen.setDisable(true);
+		summen.setOnAction(event->aktionAbbrechen(bedientableau, wuerfeltableau));		
 		// Sammelbox für alle obigen Knöpfe. 
 		HBox knoepfe = new HBox(); 
 		knoepfe.setAlignment(Pos.CENTER);
 		knoepfe.setSpacing(10);
-		knoepfe.getChildren().addAll(nochmal, wechsle, abbrechen);
+		knoepfe.getChildren().addAll(nochmal, wechsle, abbrechen, summen);
 		bedientableau.setCenter(knoepfe);
 		
 		
@@ -379,9 +385,9 @@ public class EscaleroBedienpaneel extends Application {
 					HBox summenbalken4 = hinzufuegenSummenBalken4();
 			// Die 4 Spielstandtafeln, mit Bilderbalken links, Spielstand in der Mitte und Summenbalken unten. 
 			BorderPane spielstandtafel1 = hinzufuegenSpielstandTafeln1(bilderbalken1, spielstand1, summenbalken1);
-			BorderPane spielstandtafel2 = hinzufuegenSpielstandTafeln1(bilderbalken2, spielstand2, summenbalken2); 
-			BorderPane spielstandtafel3 = hinzufuegenSpielstandTafeln1(bilderbalken3, spielstand3, summenbalken3); 
-			BorderPane spielstandtafel4 = hinzufuegenSpielstandTafeln1(bilderbalken4, spielstand4, summenbalken4); 
+			BorderPane spielstandtafel2 = hinzufuegenSpielstandTafeln2(bilderbalken2, spielstand2, summenbalken2); 
+			BorderPane spielstandtafel3 = hinzufuegenSpielstandTafeln3(bilderbalken3, spielstand3, summenbalken3); 
+			BorderPane spielstandtafel4 = hinzufuegenSpielstandTafeln4(bilderbalken4, spielstand4, summenbalken4); 
 		// Die Karteitafel, TabPane; als Container für 1 TableView und bis zu 3 SplitPanes.	
 		TabPane spielstandansichten = hinzufuegenSpielstandAnsichten(); 
 			spielstandansichten.setTabMaxHeight(16);
@@ -635,7 +641,7 @@ public class EscaleroBedienpaneel extends Application {
 			}
 			// Summe in Zeile 12 (index/key 11) eintragen. 
 			eintragetabelle1.put(11, summe);
-			// Die Summenwerte einer IntegerPorperty rsummeN[i] zuweisen. 
+			// Die Summenwerte einer IntegerProperty rsummeN[i] zuweisen. 
 			//rsummen1[0].set(summe[0]); 
 			//rsummen1[1].set(summe[1]); 
 			//rsummen1[2].set(summe[2]); 
